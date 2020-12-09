@@ -20,8 +20,8 @@
                     |v $ {} (:type :expr) (:by |u0) (:at 1607499818367)
                       :data $ {}
                         |T $ {} (:type :leaf) (:by |u0) (:at 1607499819906) (:text |[])
-                        |j $ {} (:type :leaf) (:by |u0) (:at 1607499834540) (:text |stir-html)
                         |r $ {} (:type :leaf) (:by |u0) (:at 1607513634580) (:text |<*>)
+                        |f $ {} (:type :leaf) (:by |u0) (:at 1607523361163) (:text |stir-html)
                 |r $ {} (:type :expr) (:by |u0) (:at 1607513617299)
                   :data $ {}
                     |T $ {} (:type :leaf) (:by |u0) (:at 1607513617602) (:text |[])
@@ -36,6 +36,7 @@
                         |x $ {} (:type :leaf) (:by |u0) (:at 1607515623465) (:text |textarea)
                         |y $ {} (:type :leaf) (:by |u0) (:at 1607515625175) (:text |input)
                         |yT $ {} (:type :leaf) (:by |u0) (:at 1607515626948) (:text |button)
+                        |yj $ {} (:type :leaf) (:by |u0) (:at 1607523262100) (:text |)
         :defs $ {}
           |render-page $ {} (:type :expr) (:by |u0) (:at 1607499771053)
             :data $ {}
@@ -200,7 +201,7 @@
           |stir-html $ {} (:type :expr) (:by |u0) (:at 1607499789667)
             :data $ {}
               |T $ {} (:type :leaf) (:by |u0) (:at 1607499789667) (:text |defn)
-              |j $ {} (:type :leaf) (:by |u0) (:at 1607499789667) (:text |stir-html)
+              |j $ {} (:type :leaf) (:by |u0) (:at 1607523272080) (:text |stir-html)
               |r $ {} (:type :expr) (:by |u0) (:at 1607499789667)
                 :data $ {}
                   |T $ {} (:type :leaf) (:by |u0) (:at 1607512302410) (:text |args)

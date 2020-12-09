@@ -4,7 +4,7 @@
   :files $ {}
     |stir-template.main $ {}
       :ns $ quote
-        ns stir-template.main $ :require ([] stir-template.core :refer $ [] stir-html <*>) ([] stir-template.alias :refer $ [] body head div textarea input button)
+        ns stir-template.main $ :require ([] stir-template.core :refer $ [] stir-html <*>) ([] stir-template.alias :refer $ [] body head div textarea input button )
       :defs $ {}
         |render-page $ quote
           defn render-page ()

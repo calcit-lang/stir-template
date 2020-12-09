@@ -28,9 +28,14 @@ Config dependency in `calcit.cirru`(and then generate `compact.cirru`)
 Use in code:
 
 ```nim
-stir-template.core/stir-html
-  div ({} (:class-name "demo"))
-    a ({} (:href "http://calcit-lang.org")) (:innerText "Lang")
+ns demo.core $ :require
+  [] stir-template.core :refer $ [] <*> stir-html
+  [] stir-template.alias :refer $ [] div a
+
+stir-html
+  div ({} (:class-name |demo))
+    a ({} (:href |http://calcit-lang.org)) (:innerText |Lang)
+    <*> :section $ {} (:inner-text |demo)
 ```
 
 ### Workflow
