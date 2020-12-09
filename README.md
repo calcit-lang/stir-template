@@ -1,21 +1,37 @@
 
-Phlox Calcit Workflow
+Stir Template
 ----
 
-> for phlox.calcit .
+> for calcit-runner
+
+Based on old works on:
+
+* https://github.com/mvc-works/stir-template
+* https://github.com/Respo/respo/blob/master/src/respo/render/html.cljs
 
 ### Usages
 
-Install [calcit-runner](https://github.com/Cirru/calcit-runner.nim) to run demo:
+Download source:
+
 ```bash
-cr
+cd ~/.config/calcit/modules/
+git clone https://github.com/calcit-lang/stir-template
 ```
 
-Notice that the loaded modules comes from [phlox.calcit](https://github.com/Quamolit/phlox.calcit).
+Config dependency in `calcit.cirru`(and then generate `compact.cirru`)
 
-### Difference from `phlox-workflow`.
+```cirru
+  :configs $ {}
+    :modules [] |stir-template/compact.cirru
+```
 
-Originally Phlox as implemented based on ClojureScript and PIXI.js . However current implementation with Nim and Cario costs less memory, although with far fewer features. I prefer using Nim's version since it's controlled by Cirru ecosystem.
+Use in code:
+
+```nim
+stir-template.core/stir-html
+  div ({} (:class-name "demo"))
+    a ({} (:href "http://calcit-lang.org")) (:innerText "Lang")
+```
 
 ### Workflow
 
