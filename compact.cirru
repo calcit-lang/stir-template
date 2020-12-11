@@ -1,10 +1,10 @@
 
 {} (:package |stir-template)
-  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:version |0.0.1-a1)
+  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:version |0.0.1-a2)
   :files $ {}
     |stir-template.main $ {}
       :ns $ quote
-        ns stir-template.main $ :require ([] stir-template.core :refer $ [] stir-html <*>) ([] stir-template.alias :refer $ [] body head div textarea input button ) ([] stir-template.shell-page :refer $ [] make-page)
+        ns stir-template.main $ :require ([] stir-template.core :refer $ [] stir-html <*>) ([] stir-template.alias :refer $ [] body head div textarea input button span ) ([] stir-template.shell-page :refer $ [] make-page)
       :defs $ {}
         |render-page $ quote
           defn render-page ()
@@ -17,6 +17,8 @@
                     input $ {} (:value "\"A")
                     input $ {} (:value "\"b")
             echo $ make-page "\"CONTENT" ({})
+            echo $ stir-html
+              span ({}) (span $ {}) (span nil) (, 1 nil "\"demo" "\"with space<>")
         |main! $ quote
           defn main! () (render-page) (echo "\"Started")
         |reload! $ quote
@@ -56,29 +58,40 @@
               :else $ str x
         |element->string $ quote
           defn element->string (element)
-            if (nil? element) "\"" $ let
-                tag-name $ turn-str (:name element)
-                attrs $ :attrs element
-                styles $ either (:style element) ({})
-                text-inside $ if
-                  = (:name element) :textarea
-                  escape-html $ :value attrs
-                  either (:innerHTML attrs) (text->html $ :inner-text attrs)
-                tailored-props $ -> attrs (dissoc :innerHTML) (dissoc :inner-text)
-                    fn (props)
-                      if (empty? styles) props $ assoc props :style styles
-                props-in-string $ props->string tailored-props
-                children $ ->>
-                  either (:children element) ([])
-                  mapcat $ fn (child)
-                    if (list? child) (->> child $ map element->string) ([] $ element->string child)
-              str |< tag-name
-                if
-                  > (count props-in-string) 0
-                  , "| " |
-                , props-in-string |>
-                either text-inside $ join-str | children
-                , |</ tag-name |>
+            cond
+                nil? element
+                , "\""
+              (string? element)
+                escape-html element
+              (number? element)
+                &str element
+              (bool? element)
+                &str element
+              (map? element)
+                let
+                    tag-name $ turn-str (:name element)
+                    attrs $ :attrs element
+                    styles $ either (:style element) ({})
+                    text-inside $ if
+                      = (:name element) :textarea
+                      escape-html $ :value attrs
+                      either (:innerHTML attrs) (text->html $ :inner-text attrs)
+                    tailored-props $ -> attrs (dissoc :innerHTML) (dissoc :inner-text)
+                        fn (props)
+                          if (empty? styles) props $ assoc props :style styles
+                    props-in-string $ props->string tailored-props
+                    children $ ->>
+                      either (:children element) ([])
+                      mapcat $ fn (child)
+                        if (list? child) (->> child $ map element->string) ([] $ element->string child)
+                  str |< tag-name
+                    if
+                      > (count props-in-string) 0
+                      , "| " |
+                    , props-in-string |>
+                    either text-inside $ join-str | children
+                    , |</ tag-name |>
+              true $ raise (str "\"unexpected type for element: " $ type-of element)
         |element-creator $ quote
           defmacro element-creator (tag-name) (defn  $ attrs & children)
         |props->string $ quote
