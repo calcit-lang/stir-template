@@ -1,6 +1,6 @@
 
 {} (:package |stir-template)
-  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:version |0.0.1-a2)
+  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:version |0.0.1-a3)
   :files $ {}
     |stir-template.main $ {}
       :ns $ quote
@@ -55,7 +55,7 @@
                 , x
               (keyword? x)
                 turn-str x
-              :else $ str x
+              true $ str x
         |element->string $ quote
           defn element->string (element)
             cond
@@ -261,7 +261,7 @@
                       (and (map? path) (or (= :script $ :type path) (nil? $ :type path)))
                         script $ {} (:src $ :src path)
                           :defer $ if (:defer? path) true false
-                      :else $ println "\"[Shell Page]: unknown path" path
+                      true $ println "\"[Shell Page]: unknown path" path
               body ({})
                 div $ {} (:class-name |app) (:innerHTML html-content)
                 if (some? $ :inline-html resources)

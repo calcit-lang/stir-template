@@ -367,7 +367,7 @@
                           |j $ {} (:type :leaf) (:by |u0) (:at 1607500209439) (:text |x)
                   |v $ {} (:type :expr) (:by |u0) (:at 1607500209439)
                     :data $ {}
-                      |T $ {} (:type :leaf) (:by |u0) (:at 1607500209439) (:text |:else)
+                      |T $ {} (:type :leaf) (:by |u0) (:at 1607679789931) (:text |true)
                       |j $ {} (:type :expr) (:by |u0) (:at 1607500209439)
                         :data $ {}
                           |T $ {} (:type :leaf) (:by |u0) (:at 1607500209439) (:text |str)
@@ -1908,7 +1908,7 @@
                                                               |v $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |false)
                                           |x $ {} (:type :expr) (:by |u0) (:at 1607665142863)
                                             :data $ {}
-                                              |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |:else)
+                                              |T $ {} (:type :leaf) (:by |u0) (:at 1607679811579) (:text |true)
                                               |j $ {} (:type :expr) (:by |u0) (:at 1607665142863)
                                                 :data $ {}
                                                   |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |println)
@@ -2095,4 +2095,4 @@
                                               |j $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |resources)
         :proc $ {} (:type :expr) (:by |u0) (:at 1607665103154) (:data $ {})
         :configs $ {}
-  :configs $ {} (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:output |src) (:port 6001) (:extension |.cljs) (:local-ui? false) (:init-fn |stir-template.main/main!) (:compact-output? true) (:version |0.0.1-a2)
+  :configs $ {} (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:output |src) (:port 6001) (:extension |.cljs) (:local-ui? false) (:init-fn |stir-template.main/main!) (:compact-output? true) (:version |0.0.1-a3)
