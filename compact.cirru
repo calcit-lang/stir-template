@@ -1,6 +1,6 @@
 
 {} (:package |stir-template)
-  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:version nil)
+  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:version |0.0.1-a1)
   :files $ {}
     |stir-template.main $ {}
       :ns $ quote

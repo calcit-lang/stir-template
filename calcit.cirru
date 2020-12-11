@@ -2017,3 +2017,4 @@
         :proc $ {} (:type :expr) (:by |u0) (:at 1607665103154) (:data $ {})
         :configs $ {}
   :configs $ {} (:extension |.cljs) (:output |src) (:port 6001) (:local-ui? false) (:compact-output? true) (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru)
+    :version |0.0.1-a1
