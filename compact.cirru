@@ -1,10 +1,10 @@
 
 {} (:package |stir-template)
-  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru) (:version nil)
+  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:version nil)
   :files $ {}
     |stir-template.main $ {}
       :ns $ quote
-        ns stir-template.main $ :require ([] stir-template.core :refer $ [] stir-html <*>) ([] stir-template.alias :refer $ [] body head div textarea input button )
+        ns stir-template.main $ :require ([] stir-template.core :refer $ [] stir-html <*>) ([] stir-template.alias :refer $ [] body head div textarea input button ) ([] stir-template.shell-page :refer $ [] make-page)
       :defs $ {}
         |render-page $ quote
           defn render-page ()
@@ -16,6 +16,7 @@
                   []
                     input $ {} (:value "\"A")
                     input $ {} (:value "\"b")
+            echo $ make-page "\"CONTENT" ({})
         |main! $ quote
           defn main! () (render-page) (echo "\"Started")
         |reload! $ quote
@@ -41,7 +42,7 @@
                 let
                     k $ first entry
                     v $ last entry
-                  str (name k) |:
+                  str (turn-str k) |:
                     if (string? v) (escape-html v) (ensure-string v)
                     , |;
               join-str |
@@ -51,11 +52,11 @@
                 string? x
                 , x
               (keyword? x)
-                name x
+                turn-str x
               :else $ str x
         |element->string $ quote
           defn element->string (element)
-            let
+            if (nil? element) "\"" $ let
                 tag-name $ turn-str (:name element)
                 attrs $ :attrs element
                 styles $ either (:style element) ({})
@@ -112,7 +113,7 @@
                   (number? v)
                     str v
                   (keyword? v)
-                    name v
+                    turn-str v
                   (string? v)
                     escape-html v
                   true $ str v
@@ -182,5 +183,77 @@
         |button $ quote
           defmacro button (attrs & children)
             quote-replace $ <*> :button (~ attrs) & (~ children)
+      :proc $ quote ()
+      :configs $ {}
+    |stir-template.shell-page $ {}
+      :ns $ quote
+        ns stir-template.shell-page $ :require ([] lilac.core :refer $ [] dev-check string+ record+ record+ optional+ boolean+ keyword+ list+ or+) ([] stir-template.core :refer $ [] stir-html <*>) ([] stir-template.alias :refer $ [] html body div title script style span link)
+      :defs $ {}
+        |get-indexed $ quote
+          defn get-indexed (xs)
+            ->> xs
+              map-indexed $ fn (idx x) ([] idx x)
+              filter $ fn
+                  [] idx x
+                some? x
+        |lilac-resource $ quote
+          def lilac-resource $ record+
+            {} (:title $ string+) (:icon $ string+) (:ssr $ string+)
+              :styles $ list+ (string+)
+              :inline-styles $ list+ (string+)
+              :scripts $ list+
+                or+ $ [] (string+)
+                  record+
+                    {}
+                      :type $ optional+ (keyword+)
+                      :src $ string+
+                      :defer? $ boolean+
+                    {} $ :check-keys? true
+                {} $ :allow-seq? true
+              :inline-html $ string+
+              :append-html $ string+
+              :manifest $ string+
+            {} (:all-optional? true) (:check-keys? true)
+        |make-page $ quote
+          defn make-page (html-content resources)
+            assert (string? html-content) "\"1st argument should be string"
+            assert (map? resources) "\"2nd argument should be hashmap"
+            dev-check resources lilac-resource
+            stir-html $ html ({})
+              <*> :head ({}) (title $ :title resources)
+                link $ {} (:rel "\"icon") (:type "\"image/png") (:href $ :icon resources)
+                let
+                    manifest $ :manifest resources
+                  if (some? manifest)
+                    link $ {} (:rel "\"manifest") (:href manifest)
+                <*> :meta $ {} (:charset |utf8)
+                <*> :meta $ {} (:name "\"viewport")
+                  :content $ either (:viewport resources) "\"width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+                if (some? $ :ssr resources)
+                  meta' $ {} (:class $ :ssr resources)
+                ->> (:styles resources)
+                  map $ fn (path)
+                    link $ {} (:rel "\"stylesheet") (:type "\"text/css") (:href path)
+                ->> (:inline-styles resources)
+                  map $ fn (content)
+                    style $ {} (:innerHTML content)
+                ->> (:scripts resources)
+                  map $ fn (path)
+                    cond
+                        string? path
+                        script $ {} (:src path)
+                      (and (map? path) (= :module $ :type path))
+                        script $ {} (:type "\"module") (:src $ :src path)
+                          :defer $ if (:defer? path) true false
+                      (and (map? path) (or (= :script $ :type path) (nil? $ :type path)))
+                        script $ {} (:src $ :src path)
+                          :defer $ if (:defer? path) true false
+                      :else $ println "\"[Shell Page]: unknown path" path
+              body ({})
+                div $ {} (:class-name |app) (:innerHTML html-content)
+                if (some? $ :inline-html resources)
+                  div $ {} (:innerHTML $ :inline-html resources)
+                if (some? $ :append-html resources)
+                  div $ {} (:innerHTML $ :append-html resources)
       :proc $ quote ()
       :configs $ {}
