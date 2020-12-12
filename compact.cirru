@@ -1,15 +1,15 @@
 
 {} (:package |stir-template)
-  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:version |0.0.1-a3)
+  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:version |0.0.1-a4)
   :files $ {}
     |stir-template.main $ {}
       :ns $ quote
-        ns stir-template.main $ :require ([] stir-template.core :refer $ [] stir-html <*>) ([] stir-template.alias :refer $ [] body head div textarea input button span ) ([] stir-template.shell-page :refer $ [] make-page)
+        ns stir-template.main $ :require ([] stir-template.core :refer $ [] stir-html <*>) ([] stir-template.alias :refer $ [] body head div textarea input button span ) ([] stir-template.shell-page :refer $ [] make-page) ([] stir-template.ui :as ui)
       :defs $ {}
         |render-page $ quote
           defn render-page ()
             echo $ stir-html (head $ {})
-              body ({})
+              body ({} $ :style ui/global)
                 div ({})
                   div $ {} (:class "\"DEMO DE") (:inner-text "\"demo")
                   textarea $ {} (:value "\"1")
@@ -270,3 +270,84 @@
                   div $ {} (:innerHTML $ :append-html resources)
       :proc $ quote ()
       :configs $ {}
+    |stir-template.ui $ {}
+      :ns $ quote (ns stir-template.ui)
+      :defs $ {}
+        |expand $ quote
+          def expand $ {} (:flex 1) (:overflow :auto)
+        |text-label $ quote
+          def text-label $ {} (:line-height |32px) (:font-size "\"14px") (:color $ hsl 0 0 20) (:display :inline-block) (:vertical-align :top)
+        |hsl $ quote
+          defn hsl (h s l & args)
+            if (empty? args) (str "|hsl(" h "|, " s "|%, " l "|%)")
+              &let (a $ first args) (str "|hsl(" h "|, " s "|%, " l |%, a "|)")
+        |row-evenly $ quote
+          def row-evenly $ {} (:display |flex) (:align-items |center) (:flex-direction |row) (:justify-content "\"space-evenly")
+        |center $ quote
+          def center $ {} (:display |flex) (:flex-direction |column) (:justify-content |center) (:align-items |center)
+        |column-evenly $ quote
+          def column-evenly $ {} (:display |flex) (:align-items |center) (:justify-content |space-evenly) (:flex-direction |column)
+        |select $ quote
+          def select $ {} (:height "\"32px") (:outline :none) (:font-size "\"14px") (:min-width "\"120px")
+            :border $ str "\"1px solid " (hsl 0 0 80)
+            :border-radius "\"4px"
+            :font-family default-fonts
+            :vertical-align :top
+        |column-parted $ quote
+          def column-parted $ {} (:display :flex) (:align-items :stretch) (:justify-content :space-between) (:flex-direction :column)
+        |default-fonts $ quote (def default-fonts "|Hind,Verdana,'Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft Yahei',sans-serif")
+        |input $ quote
+          def input $ merge global
+            {} (:border :none) (:outline :none)
+              :border $ str "\"1px solid " (hsl 0 0 80)
+              :border-radius "\"4px"
+              :font-size |14px
+              :padding "|8px 8px"
+              :min-width |120px
+              :line-height |16px
+              :height "\"32px"
+              :font-family default-fonts
+              :vertical-align :top
+        |column $ quote
+          def column $ {} (:display |flex) (:align-items |stretch) (:flex-direction |column)
+        |column-dispersive $ quote
+          def column-dispersive $ {} (:display |flex) (:align-items |center) (:justify-content |space-around) (:flex-direction |column)
+        |font-code $ quote (def font-code "|Source Code Pro, Menlo, Ubuntu Mono, Consolas, monospace")
+        |textarea $ quote
+          def textarea $ {} (:outline :none) (:border :none) (:font-size "\"14px") (:font-family default-fonts)
+            :border $ str "\"1px solid " (hsl 0 0 80)
+            :border-radius "\"4px"
+            :padding "\"8px"
+            :min-width "\"240px"
+            :vertical-align :top
+        |link $ quote
+          def link $ {} (:color $ hsl 200 100 76) (:text-decoration :underline) (:user-select :no-select) (:height "\"24px") (:line-height |24px) (:margin "\"4px") (:display :inline-block) (:cursor :pointer)
+        |row $ quote
+          def row $ {} (:display |flex) (:align-items |stretch) (:flex-direction |row)
+        |font-fancy $ quote (def font-fancy "|Josefin Sans, Helvetica neue, Arial, sans-serif")
+        |fullscreen $ quote
+          def fullscreen $ {} (:position "\"absolute") (:left "\"0px") (:top "\"0px") (:width "\"100%") (:height "\"100%") (:overflow :auto)
+        |row-parted $ quote
+          def row-parted $ {} (:display |flex) (:align-items |center) (:justify-content |space-between) (:flex-direction |row)
+        |global $ quote
+          def global $ {} (:line-height "\"2") (:font-size "\"14px") (:font-family default-fonts) (:color $ hsl 0 0 20)
+        |row-middle $ quote
+          def row-middle $ {} (:display :flex) (:align-items :center) (:justify-content :flex-start) (:flex-direction :row)
+        |font-normal $ quote (def font-normal "|Hind, Helvatica, Arial, sans-serif")
+        |row-dispersive $ quote
+          def row-dispersive $ {} (:display |flex) (:align-items |center) (:justify-content |space-around) (:flex-direction |row)
+        |flex $ quote
+          def flex $ {} (:flex 1)
+        |row-center $ quote
+          def row-center $ {} (:display |flex) (:align-items |center) (:justify-content |center) (:flex-direction |row)
+        |button $ quote
+          def button $ {} (:min-width |80px) (:line-height |30px) (:border-radius "\"16px") (:font-size |14px) (:text-align |center)
+            :border $ str "\"1px solid " (hsl 200 100 76)
+            :color $ hsl 200 100 76
+            :cursor |pointer
+            :display |inline-block
+            :padding "|0 8px"
+            :outline :none
+            :vertical-align :top
+            :background-color :white
+      :proc $ quote ()
