@@ -6,8 +6,9 @@ Stir Template
 
 Based on old works on:
 
-* https://github.com/mvc-works/stir-template
-* https://github.com/Respo/respo/blob/master/src/respo/render/html.cljs
+- https://github.com/Respo/respo/blob/master/src/respo/render/html.cljs
+- https://github.com/mvc-works/stir-template
+- https://github.com/mvc-works/shell-page
 
 ### Usages
 
@@ -31,11 +32,18 @@ Use in code:
 ns demo.core $ :require
   [] stir-template.core :refer $ [] <*> stir-html
   [] stir-template.alias :refer $ [] div a
+  [] stir-template.shell-page :refer $ [] make-page
 
 stir-html
   div ({} (:class-name |demo))
     a ({} (:href |http://calcit-lang.org)) (:innerText |Lang)
     <*> :section $ {} (:inner-text |demo)
+
+make-page "|inner content" $ {}
+  :title "|title"
+  :styles $ [] |a.css
+  :scripts $ [] |b.css
+  :manifest "manifest.json"
 ```
 
 ### Workflow
