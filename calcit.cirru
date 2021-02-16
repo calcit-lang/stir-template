@@ -226,7 +226,7 @@
                   |T $ {} (:type :leaf) (:by |u0) (:at 1607500140442) (:text |when)
                   |j $ {} (:type :expr) (:by |u0) (:at 1607500140442)
                     :data $ {}
-                      |T $ {} (:type :leaf) (:by |u0) (:at 1607512094809) (:text |contains?)
+                      |T $ {} (:type :leaf) (:by |u0) (:at 1613487415525) (:text |includes?)
                       |j $ {} (:type :leaf) (:by |u0) (:at 1607500140442) (:text |x)
                       |r $ {} (:type :leaf) (:by |u0) (:at 1607500140442) (:text "|\"?")
                   |r $ {} (:type :expr) (:by |u0) (:at 1607500140442)
@@ -1741,10 +1741,16 @@
                           |yT $ {} (:type :expr) (:by |u0) (:at 1607665142863)
                             :data $ {}
                               |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |->>)
-                              |j $ {} (:type :expr) (:by |u0) (:at 1607665142863)
+                              |j $ {} (:type :expr) (:by |u0) (:at 1613487803510)
                                 :data $ {}
-                                  |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |:inline-styles)
-                                  |j $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |resources)
+                                  |T $ {} (:type :expr) (:by |u0) (:at 1607665142863)
+                                    :data $ {}
+                                      |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |:inline-styles)
+                                      |j $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |resources)
+                                  |D $ {} (:type :leaf) (:by |u0) (:at 1613487804663) (:text |either)
+                                  |j $ {} (:type :expr) (:by |u0) (:at 1613487805351)
+                                    :data $ {}
+                                      |T $ {} (:type :leaf) (:by |u0) (:at 1613487805671) (:text |[])
                               |r $ {} (:type :expr) (:by |u0) (:at 1607665142863)
                                 :data $ {}
                                   |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |map)
@@ -1786,10 +1792,16 @@
                           |yj $ {} (:type :expr) (:by |u0) (:at 1607665142863)
                             :data $ {}
                               |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |->>)
-                              |j $ {} (:type :expr) (:by |u0) (:at 1607665142863)
+                              |j $ {} (:type :expr) (:by |u0) (:at 1613487799322)
                                 :data $ {}
-                                  |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |:scripts)
-                                  |j $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |resources)
+                                  |T $ {} (:type :expr) (:by |u0) (:at 1607665142863)
+                                    :data $ {}
+                                      |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |:scripts)
+                                      |j $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |resources)
+                                  |D $ {} (:type :leaf) (:by |u0) (:at 1613487800641) (:text |either)
+                                  |j $ {} (:type :expr) (:by |u0) (:at 1613487801359)
+                                    :data $ {}
+                                      |T $ {} (:type :leaf) (:by |u0) (:at 1613487801691) (:text |[])
                               |r $ {} (:type :expr) (:by |u0) (:at 1607665142863)
                                 :data $ {}
                                   |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |map)
@@ -1963,10 +1975,16 @@
                           |y $ {} (:type :expr) (:by |u0) (:at 1607665142863)
                             :data $ {}
                               |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |->>)
-                              |j $ {} (:type :expr) (:by |u0) (:at 1607665142863)
+                              |j $ {} (:type :expr) (:by |u0) (:at 1613487793362)
                                 :data $ {}
-                                  |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |:styles)
-                                  |j $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |resources)
+                                  |T $ {} (:type :expr) (:by |u0) (:at 1607665142863)
+                                    :data $ {}
+                                      |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |:styles)
+                                      |j $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |resources)
+                                  |D $ {} (:type :leaf) (:by |u0) (:at 1613487795066) (:text |either)
+                                  |j $ {} (:type :expr) (:by |u0) (:at 1613487795913)
+                                    :data $ {}
+                                      |T $ {} (:type :leaf) (:by |u0) (:at 1613487797542) (:text |[])
                               |r $ {} (:type :expr) (:by |u0) (:at 1607665142863)
                                 :data $ {}
                                   |T $ {} (:type :leaf) (:by |u0) (:at 1607665142863) (:text |map)
@@ -2825,4 +2843,4 @@
                       |T $ {} (:type :leaf) (:by |u0) (:at 1607769704706) (:text |:display)
                       |j $ {} (:type :leaf) (:by |u0) (:at 1607769704706) (:text ||inline-block)
         :proc $ {} (:type :expr) (:by |u0) (:at 1607769704706) (:data $ {})
-  :configs $ {} (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:output |src) (:port 6001) (:extension |.cljs) (:local-ui? false) (:init-fn |stir-template.main/main!) (:compact-output? true) (:version |0.0.1-a4)
+  :configs $ {} (:reload-fn |stir-template.main/reload!) (:modules $ [] |lilac/compact.cirru) (:output |src) (:port 6001) (:extension |.cljs) (:local-ui? false) (:init-fn |stir-template.main/main!) (:compact-output? true) (:version |0.0.2)
