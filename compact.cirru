@@ -1,6 +1,6 @@
 
 {} (:package |stir-template)
-  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |phlox/compact.cirru |lilac/compact.cirru) (:version |0.0.1-a4)
+  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:modules $ [] |lilac/compact.cirru) (:version |0.0.2)
   :files $ {}
     |stir-template.main $ {}
       :ns $ quote
@@ -32,7 +32,7 @@
       :defs $ {}
         |prop->attr $ quote
           defn prop->attr (x)
-            when (contains? x "\"?") (println "\"[Respo] warning: property contains `?` in" x)
+            when (includes? x "\"?") (println "\"[Respo] warning: property contains `?` in" x)
             case x (|class-name |class) (|tab-index |tabindex) (|read-only |readonly) (x x)
         |stir-html $ quote
           defn stir-html (& args)
@@ -244,13 +244,16 @@
                   :content $ either (:viewport resources) "\"width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
                 if (some? $ :ssr resources)
                   meta' $ {} (:class $ :ssr resources)
-                ->> (:styles resources)
+                ->>
+                  either (:styles resources) ([])
                   map $ fn (path)
                     link $ {} (:rel "\"stylesheet") (:type "\"text/css") (:href path)
-                ->> (:inline-styles resources)
+                ->>
+                  either (:inline-styles resources) ([])
                   map $ fn (content)
                     style $ {} (:innerHTML content)
-                ->> (:scripts resources)
+                ->>
+                  either (:scripts resources) ([])
                   map $ fn (path)
                     cond
                         string? path
