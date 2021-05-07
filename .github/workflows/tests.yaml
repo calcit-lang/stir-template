@@ -12,9 +12,9 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: wget
-      run: mkdir ci-bin/ && wget -O ci-bin/cr_once http://repo.calcit-lang.org/binaries/linux/cr_once
+      run: mkdir ci-bin/ && wget -O ci-bin/calcit_runner http://repo.calcit-lang.org/binaries/linux/calcit_runner
     - name: "permission"
-      run: chmod +x ci-bin/cr_once
+      run: chmod +x ci-bin/calcit_runner
 
     - name: "prepare modules"
       run: >
@@ -22,4 +22,4 @@ jobs:
         && git clone https://github.com/calcit-lang/lilac
 
     - name: "test"
-      run: env=ci ./ci-bin/cr_once
+      run: env=ci ./ci-bin/calcit_runner --once
