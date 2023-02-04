@@ -3,18 +3,25 @@ name: Tests
 on:
   push:
     branches:
-      - master
+      - main
   pull_request: {}
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: wget
-      run: mkdir ci-bin/ && wget -O ci-bin/calcit_runner http://repo.calcit-lang.org/binaries/linux/calcit_runner
-    - name: "permission"
-      run: chmod +x ci-bin/calcit_runner
+    - uses: actions/checkout@v2
+
+    - name: ACTIONS_ALLOW_UNSECURE_COMMANDS
+      id: ACTIONS_ALLOW_UNSECURE_COMMANDS
+      run: echo 'ACTIONS_ALLOW_UNSECURE_COMMANDS=true' >> $GITHUB_ENV
+
+    - name: add cr
+      run: |
+        mkdir -p $GITHUB_WORKSPACE/bin
+        wget -O $GITHUB_WORKSPACE/bin/cr https://github.com/calcit-lang/calcit/releases/download/0.6.21/cr
+        chmod +x $GITHUB_WORKSPACE/bin/cr
+        echo "::add-path::$GITHUB_WORKSPACE/bin"
 
     - name: "prepare modules"
       run: >
@@ -22,4 +29,4 @@ jobs:
         && git clone https://github.com/calcit-lang/lilac
 
     - name: "test"
-      run: env=ci ./ci-bin/calcit_runner --once
+      run: env=ci cr -1
