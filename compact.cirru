@@ -1,6 +1,6 @@
 
 {} (:package |stir-template)
-  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:version |0.0.6)
+  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:version |0.0.7)
     :modules $ [] |lilac/compact.cirru
   :entries $ {}
   :files $ {}
@@ -39,7 +39,7 @@
           defn make-page (resources)
             assert (map? resources) "\"2nd argument should be hashmap"
             dev-check resources lilac-resource
-            stir-html $ html ({})
+            doctype-html $ html ({})
               <*> :head ({})
                 let
                     t $ :title resources
@@ -88,7 +88,7 @@
                     content $ :content resources
                   if (string? content)
                     div $ {} (:class-name |app) (:innerHTML content)
-                    stir-html content
+                    , content
                 if
                   some? $ :inline-html resources
                   div $ {}
@@ -111,7 +111,7 @@
           defn title (attrs & children) (<*> :title attrs & children)
       :ns $ quote
         ns stir-template.alias $ :require
-          stir-template.core :refer $ <*> stir-html
+          stir-template.core :refer $ <*> doctype-html
           stir-template.validation :refer $ lilac-resource
           lilac.core :refer $ dev-check
     |stir-template.core $ {}
@@ -125,6 +125,9 @@
                 :name $ ~ tag-name
                 :attrs $ either attrs-value ({})
                 :children $ [] (~@ children)
+        |doctype-html $ quote
+          defn doctype-html (& args)
+            &str:concat "\"<!DOCTYPE html>" $ -> args (map element->string) (join-str "\"")
         |element->string $ quote
           defn element->string (element)
             cond
@@ -198,9 +201,6 @@
         |props->string $ quote
           defn props->string (props)
             -> props .to-list (map entry->string) (join-str "| ")
-        |stir-html $ quote
-          defn stir-html (& args)
-            &str:concat "\"<!DOCTYPE html>" $ -> args (map element->string) (join-str "\"")
         |style->string $ quote
           defn style->string (styles)
             -> styles .to-list
@@ -228,7 +228,7 @@
           defn reload! () (echo "\"Reload!") (render-page)
         |render-page $ quote
           defn render-page ()
-            echo $ stir-html
+            echo $ doctype-html
               head $ {}
               body
                 {} $ :style ui/global
@@ -243,11 +243,11 @@
             echo $ make-page
               {} $ :content
                 div $ {} (:class "\"DEMO DE") (:inner-text "\"demo")
-            echo $ stir-html
+            echo $ doctype-html
               span nil (span nil) (span nil) 1 nil "\"demo" "\"with space<>"
       :ns $ quote
         ns stir-template.main $ :require
-          stir-template.core :refer $ stir-html <*>
+          stir-template.core :refer $ doctype-html <*>
           stir-template.alias :refer $ make-page body head div textarea input button span a
           stir-template.ui :as ui
     |stir-template.ui $ {}

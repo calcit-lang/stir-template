@@ -33,11 +33,6 @@ ns demo.core $ :require
   stir-template.core :refer $ <*> stir-html
   stir-template.alias :refer $ make-page div a
 
-stir-html
-  div ({} (:class-name |demo))
-    a ({} (:href |http://calcit-lang.org)) (:innerText |Lang)
-    <*> :section $ {} (:inner-text |demo)
-
 make-page $ {}
   :title "|title"
   :styles $ [] |a.css
