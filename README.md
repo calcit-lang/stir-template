@@ -31,8 +31,7 @@ Use in code:
 ```cirru
 ns demo.core $ :require
   stir-template.core :refer $ <*> stir-html
-  stir-template.alias :refer $ div a
-  stir-template.shell-page :refer $ make-page
+  stir-template.alias :refer $ make-page div a
 
 stir-html
   div ({} (:class-name |demo))

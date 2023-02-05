@@ -1,6 +1,6 @@
 
 {} (:package |stir-template)
-  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:version |0.0.5)
+  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:version |0.0.6)
     :modules $ [] |lilac/compact.cirru
   :entries $ {}
   :files $ {}
@@ -35,6 +35,68 @@
             quasiquote $ <*> :input (~ attrs) (~@ children)
         |link $ quote
           defn link (attrs & children) (<*> :link attrs & children)
+        |make-page $ quote
+          defn make-page (resources)
+            assert (map? resources) "\"2nd argument should be hashmap"
+            dev-check resources lilac-resource
+            stir-html $ html ({})
+              <*> :head ({})
+                let
+                    t $ :title resources
+                  if (string? t)
+                    title $ {} (:innerHTML t)
+                    title t
+                if-let
+                  icon $ :icon resources
+                  link $ {} (:rel "\"icon") (:type "\"image/png") (:href icon)
+                let
+                    manifest $ :manifest resources
+                  if (some? manifest)
+                    link $ {} (:rel "\"manifest") (:href manifest)
+                <*> :meta $ {} (:charset |utf8)
+                <*> :meta $ {} (:name "\"viewport")
+                  :content $ either (:viewport resources) "\"width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+                if
+                  some? $ :ssr resources
+                  <*> :meta $ {}
+                    :class $ :ssr resources
+                ->
+                  either (:styles resources) ([])
+                  map $ fn (path)
+                    link $ {} (:rel "\"stylesheet") (:type "\"text/css") (:href path)
+                ->
+                  either (:inline-styles resources) ([])
+                  map $ fn (content)
+                    style $ {} (:innerHTML content)
+                ->
+                  either (:scripts resources) ([])
+                  map $ fn (path)
+                    cond
+                        string? path
+                        script $ {} (:src path)
+                      (and (map? path) (= :module (:type path)))
+                        script $ {} (:type "\"module")
+                          :src $ :src path
+                          :defer $ if (:defer? path) true false
+                      (and (map? path) (or (= :script (:type path)) (nil? (:type path))))
+                        script $ {}
+                          :src $ :src path
+                          :defer $ if (:defer? path) true false
+                      true $ println "\"[Shell Page]: unknown path" path
+              body ({})
+                let
+                    content $ :content resources
+                  if (string? content)
+                    div $ {} (:class-name |app) (:innerHTML content)
+                    stir-html content
+                if
+                  some? $ :inline-html resources
+                  div $ {}
+                    :innerHTML $ :inline-html resources
+                if
+                  some? $ :append-html resources
+                  div $ {}
+                    :innerHTML $ :append-html resources
         |meta $ quote
           defn meta (attrs & children) (<*> :meta attrs & children)
         |script $ quote
@@ -49,7 +111,9 @@
           defn title (attrs & children) (<*> :title attrs & children)
       :ns $ quote
         ns stir-template.alias $ :require
-          stir-template.core :refer $ <*>
+          stir-template.core :refer $ <*> stir-html
+          stir-template.validation :refer $ lilac-resource
+          lilac.core :refer $ dev-check
     |stir-template.core $ {}
       :defs $ {}
         |<*> $ quote
@@ -184,107 +248,8 @@
       :ns $ quote
         ns stir-template.main $ :require
           stir-template.core :refer $ stir-html <*>
-          stir-template.alias :refer $ body head div textarea input button span a
-          stir-template.shell-page :refer $ make-page
+          stir-template.alias :refer $ make-page body head div textarea input button span a
           stir-template.ui :as ui
-    |stir-template.shell-page $ {}
-      :defs $ {}
-        |get-indexed $ quote
-          defn get-indexed (xs)
-            ->> xs
-              map-indexed $ fn (idx x) ([] idx x)
-              filter $ fn
-                  [] idx x
-                some? x
-        |lilac-resource $ quote
-          def lilac-resource $ record+
-            {}
-              :title $ string+
-              :icon $ string+
-              :ssr $ string+
-              :styles $ list+ (string+)
-              :inline-styles $ list+ (string+)
-              :scripts $ list+
-                or+ $ [] (string+)
-                  record+
-                    {}
-                      :type $ optional+ (keyword+)
-                      :src $ string+
-                      :defer? $ bool+
-                    {} $ :check-keys? true
-                {} $ :allow-seq? true
-              :inline-html $ string+
-              :append-html $ string+
-              :manifest $ string+
-              :content $ or+
-                [] (string+) (any+)
-            {} (:all-optional? true) (:check-keys? true)
-        |make-page $ quote
-          defn make-page (resources)
-            assert (map? resources) "\"2nd argument should be hashmap"
-            dev-check resources lilac-resource
-            stir-html $ html ({})
-              <*> :head ({})
-                let
-                    t $ :title resources
-                  if (string? t)
-                    title $ {} (:innerHTML t)
-                    title t
-                link $ {} (:rel "\"icon") (:type "\"image/png")
-                  :href $ :icon resources
-                let
-                    manifest $ :manifest resources
-                  if (some? manifest)
-                    link $ {} (:rel "\"manifest") (:href manifest)
-                <*> :meta $ {} (:charset |utf8)
-                <*> :meta $ {} (:name "\"viewport")
-                  :content $ either (:viewport resources) "\"width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
-                if
-                  some? $ :ssr resources
-                  <*> :meta $ {}
-                    :class $ :ssr resources
-                ->
-                  either (:styles resources) ([])
-                  map $ fn (path)
-                    link $ {} (:rel "\"stylesheet") (:type "\"text/css") (:href path)
-                ->
-                  either (:inline-styles resources) ([])
-                  map $ fn (content)
-                    style $ {} (:innerHTML content)
-                ->
-                  either (:scripts resources) ([])
-                  map $ fn (path)
-                    cond
-                        string? path
-                        script $ {} (:src path)
-                      (and (map? path) (= :module (:type path)))
-                        script $ {} (:type "\"module")
-                          :src $ :src path
-                          :defer $ if (:defer? path) true false
-                      (and (map? path) (or (= :script (:type path)) (nil? (:type path))))
-                        script $ {}
-                          :src $ :src path
-                          :defer $ if (:defer? path) true false
-                      true $ println "\"[Shell Page]: unknown path" path
-              body ({})
-                let
-                    content $ :app-content resources
-                  if (string? content)
-                    div $ {} (:class-name |app) (:innerHTML content)
-                    stir-html content
-                if
-                  some? $ :inline-html resources
-                  div $ {}
-                    :innerHTML $ :inline-html resources
-                if
-                  some? $ :append-html resources
-                  div $ {}
-                    :innerHTML $ :append-html resources
-      :ns $ quote
-        ns stir-template.shell-page $ :require
-          lilac.core :refer $ dev-check string+ record+ record+ optional+ bool+ keyword+ list+ or+ any+
-          stir-template.core :refer $ stir-html <*>
-          stir-template.alias :refer $ html body div title script style span link
     |stir-template.ui $ {}
       :defs $ {}
         |button $ quote
@@ -379,3 +344,33 @@
             :min-width "\"240px"
             :vertical-align :top
       :ns $ quote (ns stir-template.ui)
+    |stir-template.validation $ {}
+      :defs $ {}
+        |lilac-resource $ quote
+          def lilac-resource $ record+
+            {}
+              :title $ string+
+              :icon $ string+
+              :ssr $ string+
+              :styles $ list+ (string+)
+              :inline-styles $ list+ (string+)
+              :scripts $ list+
+                or+ $ [] (string+)
+                  record+
+                    {}
+                      :type $ optional+ (keyword+)
+                      :src $ string+
+                      :defer? $ bool+
+                    {} $ :check-keys? true
+                {} $ :allow-seq? true
+              :inline-html $ string+
+              :append-html $ string+
+              :manifest $ string+
+              :content $ or+
+                [] (string+) (any+)
+            {} (:all-optional? true) (:check-keys? true)
+      :ns $ quote
+        ns stir-template.validation $ :require
+          lilac.core :refer $ dev-check string+ record+ record+ optional+ bool+ keyword+ list+ or+ any+
+          stir-template.core :refer $ stir-html <*>
+          stir-template.alias :refer $ html body div title script style span link
