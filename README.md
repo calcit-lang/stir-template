@@ -39,11 +39,16 @@ stir-html
     a ({} (:href |http://calcit-lang.org)) (:innerText |Lang)
     <*> :section $ {} (:inner-text |demo)
 
-make-page "|inner content" $ {}
+make-page $ {}
   :title "|title"
   :styles $ [] |a.css
   :scripts $ [] |b.css
-  :manifest "manifest.json"
+  :manifest "|manifest.json"
+  :content "|inner content"
+
+make-html $ {}
+  :content $ div nil
+    span nil "|some text"
 ```
 
 ### Workflow

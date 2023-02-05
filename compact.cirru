@@ -1,6 +1,6 @@
 
 {} (:package |stir-template)
-  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:version |0.0.4)
+  :configs $ {} (:init-fn |stir-template.main/main!) (:reload-fn |stir-template.main/reload!) (:version |0.0.5)
     :modules $ [] |lilac/compact.cirru
   :entries $ {}
   :files $ {}
@@ -174,12 +174,13 @@
                   input $ {} (:value "\"A")
                   input $ {} (:value "\"b l a n k")
                   a $ {} (:href |http://demo.com)
-            echo $ make-page "\"CONTENT" ({})
+            echo $ make-page
+              {} $ :content "\"CONTENT"
+            echo $ make-page
+              {} $ :content
+                div $ {} (:class "\"DEMO DE") (:inner-text "\"demo")
             echo $ stir-html
-              span ({})
-                span $ {}
-                span nil
-                , 1 nil "\"demo" "\"with space<>"
+              span nil (span nil) (span nil) 1 nil "\"demo" "\"with space<>"
       :ns $ quote
         ns stir-template.main $ :require
           stir-template.core :refer $ stir-html <*>
@@ -215,15 +216,20 @@
               :inline-html $ string+
               :append-html $ string+
               :manifest $ string+
+              :content $ or+
+                [] (string+) (any+)
             {} (:all-optional? true) (:check-keys? true)
         |make-page $ quote
-          defn make-page (html-content resources)
-            assert (string? html-content) "\"1st argument should be string"
+          defn make-page (resources)
             assert (map? resources) "\"2nd argument should be hashmap"
             dev-check resources lilac-resource
             stir-html $ html ({})
               <*> :head ({})
-                title $ :title resources
+                let
+                    t $ :title resources
+                  if (string? t)
+                    title $ {} (:innerHTML t)
+                    title t
                 link $ {} (:rel "\"icon") (:type "\"image/png")
                   :href $ :icon resources
                 let
@@ -261,7 +267,11 @@
                           :defer $ if (:defer? path) true false
                       true $ println "\"[Shell Page]: unknown path" path
               body ({})
-                div $ {} (:class-name |app) (:innerHTML html-content)
+                let
+                    content $ :app-content resources
+                  if (string? content)
+                    div $ {} (:class-name |app) (:innerHTML content)
+                    stir-html content
                 if
                   some? $ :inline-html resources
                   div $ {}
@@ -272,7 +282,7 @@
                     :innerHTML $ :append-html resources
       :ns $ quote
         ns stir-template.shell-page $ :require
-          lilac.core :refer $ dev-check string+ record+ record+ optional+ bool+ keyword+ list+ or+
+          lilac.core :refer $ dev-check string+ record+ record+ optional+ bool+ keyword+ list+ or+ any+
           stir-template.core :refer $ stir-html <*>
           stir-template.alias :refer $ html body div title script style span link
     |stir-template.ui $ {}
