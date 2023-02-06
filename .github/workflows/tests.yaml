@@ -3,18 +3,20 @@ name: Tests
 on:
   push:
     branches:
-      - master
+      - main
   pull_request: {}
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: wget
-      run: mkdir ci-bin/ && wget -O ci-bin/calcit_runner http://repo.calcit-lang.org/binaries/linux/calcit_runner
-    - name: "permission"
-      run: chmod +x ci-bin/calcit_runner
+    - uses: actions/checkout@v3
+
+    - uses: supplypike/setup-bin@v3
+      with:
+        uri: 'https://github.com/calcit-lang/calcit/releases/download/0.6.21/cr'
+        name: 'cr'
+        version: '0.6.21'
 
     - name: "prepare modules"
       run: >
@@ -22,4 +24,4 @@ jobs:
         && git clone https://github.com/calcit-lang/lilac
 
     - name: "test"
-      run: env=ci ./ci-bin/calcit_runner --once
+      run: env=ci cr -1

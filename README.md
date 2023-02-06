@@ -2,7 +2,7 @@
 Stir Template
 ----
 
-> for calcit-runner
+> for Calcit
 
 Based on old works on:
 
@@ -28,22 +28,21 @@ Config dependency in `calcit.cirru`(and then generate `compact.cirru`)
 
 Use in code:
 
-```nim
+```cirru
 ns demo.core $ :require
-  [] stir-template.core :refer $ [] <*> stir-html
-  [] stir-template.alias :refer $ [] div a
-  [] stir-template.shell-page :refer $ [] make-page
+  stir-template.core :refer $ <*> stir-html
+  stir-template.alias :refer $ make-page div a
 
-stir-html
-  div ({} (:class-name |demo))
-    a ({} (:href |http://calcit-lang.org)) (:innerText |Lang)
-    <*> :section $ {} (:inner-text |demo)
-
-make-page "|inner content" $ {}
+make-page $ {}
   :title "|title"
   :styles $ [] |a.css
   :scripts $ [] |b.css
-  :manifest "manifest.json"
+  :manifest "|manifest.json"
+  :content "|inner content"
+
+make-html $ {}
+  :content $ div nil
+    span nil "|some text"
 ```
 
 ### Workflow
