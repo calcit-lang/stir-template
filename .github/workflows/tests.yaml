@@ -10,18 +10,19 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - uses: supplypike/setup-bin@v3
       with:
-        uri: 'https://github.com/calcit-lang/calcit/releases/download/0.6.21/cr'
+        uri: 'https://github.com/calcit-lang/calcit/releases/download/0.8.9/cr'
         name: 'cr'
-        version: '0.6.21'
+        version: '0.8.9'
 
-    - name: "prepare modules"
-      run: >
-        mkdir -p ~/.config/calcit/modules/ && cd ~/.config/calcit/modules/
-        && git clone https://github.com/calcit-lang/lilac
+    - uses: supplypike/setup-bin@v3
+      with:
+        uri: 'https://github.com/calcit-lang/calcit/releases/download/0.8.5/caps'
+        name: 'caps'
+        version: '0.8.5'
 
     - name: "test"
-      run: env=ci cr -1
+      run: caps --ci && env=ci cr -1
