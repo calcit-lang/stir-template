@@ -12,17 +12,29 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - uses: supplypike/setup-bin@v3
+    - uses: actions/setup-node@v6
       with:
-        uri: 'https://github.com/calcit-lang/calcit/releases/download/0.8.9/cr'
-        name: 'cr'
-        version: '0.8.9'
+        node-version: 24
 
-    - uses: supplypike/setup-bin@v3
-      with:
-        uri: 'https://github.com/calcit-lang/calcit/releases/download/0.8.5/caps'
-        name: 'caps'
-        version: '0.8.5'
+    - name: Enable Corepack
+      run: |
+        corepack enable
+        corepack prepare yarn@4.12.0 --activate
+        yarn --version
+
+    - uses: calcit-lang/setup-cr@0.0.9
+
+    - name: "load deps"
+      run: caps --ci && yarn install --immutable
+
+    - name: Validate Calcit snapshot and types
+      run: |
+        cr calcit.cirru edit format
+        git diff --exit-code -- calcit.cirru
+        cr calcit.cirru --check-only
+        cr calcit.cirru analyze check-types --summary-only --format json
+        cr calcit.cirru analyze weak-types --only schema-dynamic,code-dynamic --intent unresolved --summary-only --format json
+        cr calcit.cirru analyze deprecated --summary-only --format json
 
     - name: "test"
-      run: caps --ci && env=ci cr -1
+      run: env=ci cr calcit.cirru
