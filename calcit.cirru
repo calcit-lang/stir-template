@@ -86,61 +86,61 @@
               doctype-html $ html ({})
                 <*> :head ({})
                   let
-                      t $ &map:get resources :title
+                      t $ option:unwrap-or (get resources :title) |
                     if (string? t)
                       title $ {} (:innerHTML t)
                       title t
                   if-let
-                    icon $ &map:get resources :icon
+                    icon $ get resources :icon
                     link $ {} (:rel |icon) (:type |image/png) (:href icon)
                   let
-                      manifest $ &map:get resources :manifest
+                      manifest $ get resources :manifest
                     if (option:some? manifest)
                       link $ {} (:rel |manifest) (:href manifest)
                   <*> :meta $ {} (:charset |utf8)
                   <*> :meta $ {} (:name |viewport)
-                    :content $ option:unwrap-or (&map:get resources :viewport) "|width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+                    :content $ option:unwrap-or (get resources :viewport) "|width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
                   if
-                    option:some? $ &map:get resources :ssr
+                    option:some? $ get resources :ssr
                     <*> :meta $ {}
-                      :class $ &map:get resources :ssr
+                      :class $ get resources :ssr
                   ->
-                    option:unwrap-or (&map:get resources :styles) ([])
+                    option:unwrap-or (get resources :styles) ([])
                     map $ fn (path)
                       link $ {} (:rel |stylesheet) (:type |text/css) (:href path)
                   ->
-                    option:unwrap-or (&map:get resources :inline-styles) ([])
+                    option:unwrap-or (get resources :inline-styles) ([])
                     map $ fn (content)
                       style $ {} (:innerHTML content)
                   ->
-                    option:unwrap-or (&map:get resources :scripts) ([])
+                    option:unwrap-or (get resources :scripts) ([])
                     map $ fn (path)
                       cond
                           string? path
                           script $ {} (:src path)
-                        (and (map? path) (= :module (&map:get path :type)))
+                        (and (map? path) (= :module (option:unwrap-or (get path :type) nil)))
                           script $ {} (:type |module)
-                            :src $ &map:get path :src
-                            :defer $ if (&map:get path :defer?) true false
-                        (and (map? path) (or (= :script (&map:get path :type)) (nil? (&map:get path :type))))
+                            :src $ get path :src
+                            :defer $ if (get path :defer?) true false
+                        (and (map? path) (or (= :script (option:unwrap-or (get path :type) nil)) (option:none? (get path :type))))
                           script $ {}
-                            :src $ &map:get path :src
-                            :defer $ if (&map:get path :defer?) true false
+                            :src $ get path :src
+                            :defer $ if (get path :defer?) true false
                         true $ println "|[Shell Page]: unknown path" path
                 body ({})
                   let
-                      content $ &map:get resources :content
+                      content $ option:unwrap-or (get resources :content) nil
                     if (string? content)
                       div $ {} (:class-name |app) (:innerHTML content)
                       , content
                   if
-                    option:some? $ &map:get resources :inline-html
+                    option:some? $ get resources :inline-html
                     div $ {}
-                      :innerHTML $ &map:get resources :inline-html
+                      :innerHTML $ get resources :inline-html
                   if
-                    option:some? $ &map:get resources :append-html
+                    option:some? $ get resources :append-html
                     div $ {}
-                      :innerHTML $ &map:get resources :append-html
+                      :innerHTML $ get resources :append-html
           :examples $ []
           :schema $ :: 'Dynamic
         |meta $ %{} 'CodeEntry (:doc |)
@@ -203,26 +203,29 @@
           :code $ quote
             defn element->string (element)
               cond
-                  option:none? element
+                  nil? element
                   , |
                 (string? element) (escape-html element)
                 (number? element) (&str element)
                 (bool? element) (&str element)
                 (map? element)
                   let
-                      tag-name $ turn-str (&map:get element :name)
-                      attrs $ option:unwrap-or (&map:get element :attrs) ({})
-                      styles $ option:unwrap-or (&map:get element :style) ({})
+                      tag-name $ turn-str
+                        option:unwrap-or (get element :name) :unknown
+                      attrs $ option:unwrap-or (get element :attrs) ({})
+                      styles $ option:unwrap-or (get element :style) ({})
                       text-inside $ if
-                        = (&map:get element :name) :textarea
-                        escape-html $ &map:get attrs :value
-                        option:unwrap-or (&map:get attrs :innerHTML)
-                          text->html $ &map:get attrs :inner-text
+                        =
+                          option:unwrap-or (get element :name) nil
+                          , :textarea
+                        escape-html $ option:unwrap-or (get attrs :value) |
+                        option:unwrap-or (get attrs :innerHTML)
+                          text->html $ option:unwrap-or (get attrs :inner-text) nil
                       tailored-props $ -> attrs (dissoc :innerHTML) (dissoc :inner-text)
                         (fn (props) (if (empty? styles) props (assoc props :style styles)))
                       props-in-string $ props->string tailored-props
                       children $ ->
-                        option:unwrap-or (&map:get element :children) ([])
+                        option:unwrap-or (get element :children) ([])
                         mapcat $ fn (child)
                           if (list? child)
                             -> child $ map element->string
@@ -232,7 +235,7 @@
                         > (count props-in-string) 0
                         , "| " |
                       , props-in-string |>
-                        option:unwrap-or text-inside $ join-str children |
+                        if (some? text-inside) text-inside $ join-str children |
                         , |</ tag-name |>
                 true $ raise
                   str "|Unknown element: " $ to-lispy-string element
@@ -258,8 +261,8 @@
           :code $ quote
             defn entry->string (entry)
               let
-                  k $ first entry
-                  v $ last entry
+                  k $ option:unwrap-or (first entry) nil
+                  v $ option:unwrap-or (last entry) nil
                 str
                   prop->attr $ turn-str k
                   , |= $ &str:escape
@@ -298,8 +301,8 @@
               -> styles .to-list
                 map $ fn (entry)
                   let
-                      k $ first entry
-                      v $ last entry
+                      k $ option:unwrap-or (first entry) nil
+                      v $ option:unwrap-or (last entry) nil
                     str (turn-str k) |:
                       if (string? v) (escape-html v) (ensure-string v)
                       , |;
