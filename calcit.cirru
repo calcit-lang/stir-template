@@ -81,7 +81,7 @@
         |make-page $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn make-page (resources)
-              assert (map? resources) "|2nd argument should be hashmap"
+              assert (map? resources) "|argument should be hashmap"
               dev-check resources lilac-resource
               doctype-html $ html ({})
                 <*> :head ({})
@@ -103,7 +103,7 @@
                   if
                     option:some? $ get resources :ssr
                     <*> :meta $ {}
-                      :class $ get resources :ssr
+                      :class $ option:unwrap-or (get resources :ssr) |
                   ->
                     option:unwrap-or (get resources :styles) ([])
                     map $ fn (path)
@@ -124,8 +124,10 @@
                             :defer $ if (get path :defer?) true false
                         (and (map? path) (or (= :script (option:unwrap-or (get path :type) nil)) (option:none? (get path :type))))
                           script $ {}
-                            :src $ get path :src
-                            :defer $ if (get path :defer?) true false
+                            :src $ option:unwrap-or (get path :src) |
+                            :defer $ if
+                              option:unwrap-or (get path :defer?) false
+                              , true false
                         true $ println "|[Shell Page]: unknown path" path
                 body ({})
                   let
