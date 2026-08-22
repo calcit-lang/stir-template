@@ -19,11 +19,11 @@ cd ~/.config/calcit/modules/
 git clone https://github.com/calcit-lang/stir-template
 ```
 
-Config dependency in `calcit.cirru`(and then generate `compact.cirru`)
+Add the module dependency to `deps.cirru`; the canonical snapshot is `calcit.cirru`.
 
 ```cirru
-  :configs $ {}
-    :modules [] |stir-template/compact.cirru
+{} (:calcit-version |0.13.29)
+  :dependencies $ {} (|calcit-lang/stir-template |main)
 ```
 
 Use in code:
