@@ -3,7 +3,7 @@
   :entries $ {}
     :default $ {} (:description |) (:init-fn 'stir-template.main/main!) (:mode :native) (:reload-fn 'stir-template.main/reload!)
       :feature-policy $ {}
-      :modules $ [] |lilac/
+      :modules $ []
       :type-slots $ {}
   :files $ {}
     'stir-template.alias $ %{} 'FileEntry
@@ -86,71 +86,69 @@
           :schema $ :: 'Dynamic
         'make-page $ %{} 'CodeEntry (:doc |)
           :code $ quote
-            defn make-page (resources)
-              assert (map? resources) "|argument should be hashmap"
-              dev-check resources lilac-resource
-              doctype-html $ html ({})
-                <*> :head ({})
-                  let
-                      t $ option:unwrap-or (get resources :title) |
-                    if (string? t)
-                      title $ {} (:innerHTML t)
-                      title t
-                  if-let
-                    icon $ get resources :icon
-                    link $ {} (:rel |icon) (:type |image/png) (:href icon)
-                  let
-                      manifest $ get resources :manifest
-                    if (option:some? manifest)
+            defn make-page (raw-resources)
+              let
+                  resources $ decode-map-as raw-resources stir-template.schema/StirPageResources
+                doctype-html $ html ({})
+                  <*> :head ({})
+                    let
+                        t $ option:unwrap-or (:title resources) |
+                      if (string? t)
+                        title $ {} (:innerHTML t)
+                        title t
+                    if-let
+                      icon $ :icon resources
+                      link $ {} (:rel |icon) (:type |image/png) (:href icon)
+                    if-let
+                      manifest $ :manifest resources
                       link $ {} (:rel |manifest) (:href manifest)
-                  <*> :meta $ {} (:charset |utf8)
-                  <*> :meta $ {} (:name |viewport)
-                    :content $ option:unwrap-or (get resources :viewport) "|width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
-                  if
-                    option:some? $ get resources :ssr
-                    <*> :meta $ {}
-                      :class $ option:unwrap-or (get resources :ssr) |
-                  ->
-                    option:unwrap-or (get resources :styles) ([])
-                    map $ fn (path)
-                      link $ {} (:rel |stylesheet) (:type |text/css) (:href path)
-                  ->
-                    option:unwrap-or (get resources :inline-styles) ([])
-                    map $ fn (content)
-                      style $ {} (:innerHTML content)
-                  ->
-                    option:unwrap-or (get resources :scripts) ([])
-                    map $ fn (path)
-                      cond
-                          string? path
+                    <*> :meta $ {} (:charset |utf8)
+                    <*> :meta $ {} (:name |viewport)
+                      :content $ option:unwrap-or (:viewport resources) "|width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+                    if-let
+                      ssr $ :ssr resources
+                      <*> :meta $ {} (:class ssr)
+                    ->
+                      option:unwrap-or (:styles resources) ([])
+                      map $ fn (path)
+                        link $ {} (:rel |stylesheet) (:type |text/css) (:href path)
+                    ->
+                      option:unwrap-or (:inline-styles resources) ([])
+                      map $ fn (content)
+                        style $ {} (:innerHTML content)
+                    ->
+                      option:unwrap-or (:scripts resources) ([])
+                      map $ fn (path)
+                        if (string? path)
                           script $ {} (:src path)
-                        (and (map? path) (= :module (option:unwrap-or (get path :type) :unknown)))
-                          script $ {} (:type |module)
-                            :src $ get path :src
-                            :defer $ if (get path :defer?) true false
-                        (and (map? path) (or (= :script (option:unwrap-or (get path :type) :unknown)) (option:none? (get path :type))))
-                          script $ {}
-                            :src $ option:unwrap-or (get path :src) |
-                            :defer $ if
-                              option:unwrap-or (get path :defer?) false
-                              , true false
-                        true $ println "|[Shell Page]: unknown path" path
-                body ({})
-                  let
-                      content $ option:unwrap-or (get resources :content) nil
-                    if (string? content)
-                      div $ {} (:class-name |app) (:innerHTML content)
-                      , content
-                  if
-                    option:some? $ get resources :inline-html
-                    div $ {}
-                      :innerHTML $ get resources :inline-html
-                  if
-                    option:some? $ get resources :append-html
-                    div $ {}
-                      :innerHTML $ get resources :append-html
+                          let
+                              resource $ decode-map-as path stir-template.schema/StirScriptResource
+                              script-type $ option:unwrap-or (:type resource) :script
+                            case-default script-type (println "|[Shell Page]: unknown script type" script-type)
+                              :module $ script
+                                {} (:type |module)
+                                  :src $ :src resource
+                                  :defer $ option:unwrap-or (:defer? resource) false
+                              :script $ script
+                                {}
+                                  :src $ :src resource
+                                  :defer $ option:unwrap-or (:defer? resource) false
+                  body ({})
+                    let
+                        content $ option:unwrap-or (:content resources) nil
+                      if (string? content)
+                        div $ {} (:class-name |app) (:innerHTML content)
+                        , content
+                    if-let
+                      content $ :inline-html resources
+                      div $ {} (:innerHTML content)
+                    if-let
+                      content $ :append-html resources
+                      div $ {} (:innerHTML content)
           :examples $ []
-          :schema $ :: 'Dynamic
+          :schema $ :: 'Fn
+            {} (:return 'String)
+              :args $ [] 'Dynamic
         'meta $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn meta (attrs & children) (<*> :meta attrs & children)
@@ -185,8 +183,6 @@
         :code $ quote
           ns stir-template.alias $ :require
             stir-template.core :refer $ <*> doctype-html
-            stir-template.validation :refer $ lilac-resource
-            lilac.core :refer $ dev-check
     'stir-template.core $ %{} 'FileEntry
       :defs $ {}
         '<*> $ %{} 'CodeEntry (:doc |)
@@ -381,6 +377,34 @@
             stir-template.core :refer $ doctype-html <*>
             stir-template.alias :refer $ make-page body head div textarea input button span a
             stir-template.ui :as ui
+    'stir-template.schema $ %{} 'FileEntry
+      :defs $ {}
+        'StirPageResources $ %{} 'CodeEntry (:doc |)
+          :code $ quote
+            defstruct StirPageResources
+              :title $ :: 'Option 'String
+              :icon $ :: 'Option 'String
+              :manifest $ :: 'Option 'String
+              :viewport $ :: 'Option 'String
+              :ssr $ :: 'Option 'String
+              :styles $ :: 'Option (:: 'List 'String)
+              :inline-styles $ :: 'Option (:: 'List 'String)
+              :scripts $ :: 'Option (:: 'List 'Dynamic)
+              :content $ :: 'Option 'Dynamic
+              :inline-html $ :: 'Option 'String
+              :append-html $ :: 'Option 'String
+          :examples $ []
+          :schema $ :: 'Struct
+        'StirScriptResource $ %{} 'CodeEntry (:doc |)
+          :code $ quote
+            defstruct StirScriptResource
+              :type $ :: 'Option 'Tag
+              :src 'String
+              :defer? $ :: 'Option 'Bool
+          :examples $ []
+          :schema $ :: 'Struct
+      :ns $ %{} 'NsEntry (:doc |)
+        :code $ quote (ns stir-template.schema)
     'stir-template.ui $ %{} 'FileEntry
       :defs $ {}
         'button $ %{} 'CodeEntry (:doc |)
@@ -554,37 +578,3 @@
           :schema $ :: 'Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote (ns stir-template.ui)
-    'stir-template.validation $ %{} 'FileEntry
-      :defs $ {}
-        'lilac-resource $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            def lilac-resource $ record+
-              {}
-                :title $ string+
-                :icon $ string+
-                :ssr $ string+
-                :styles $ list+ (string+)
-                :inline-styles $ list+ (string+)
-                :scripts $ list+
-                  or+ $ [] (string+)
-                    record+
-                      {}
-                        :type $ optional+ (tag+)
-                        :src $ string+
-                        :defer? $ bool+
-                      {} $ :check-keys? true
-                  {} $ :allow-seq? true
-                :inline-html $ string+
-                :append-html $ string+
-                :manifest $ string+
-                :content $ or+
-                  [] (string+) (any+)
-              {} (:all-optional? true) (:check-keys? true)
-          :examples $ []
-          :schema $ :: 'Dynamic
-      :ns $ %{} 'NsEntry (:doc |)
-        :code $ quote
-          ns stir-template.validation $ :require
-            lilac.core :refer $ dev-check string+ record+ optional+ bool+ tag+ list+ or+ any+
-            stir-template.core :refer $ stir-html <*>
-            stir-template.alias :refer $ html body div title script style span link
