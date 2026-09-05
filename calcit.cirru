@@ -3,175 +3,178 @@
   :entries $ {}
     :default $ {} (:description |) (:init-fn 'stir-template.main/main!) (:mode :native) (:reload-fn 'stir-template.main/reload!)
       :feature-policy $ {}
-      :modules $ [] |lilac/
+      :modules $ []
       :type-slots $ {}
   :files $ {}
-    |stir-template.alias $ %{} 'FileEntry
+    'stir-template.alias $ %{} 'FileEntry
       :defs $ {}
-        |a $ %{} 'CodeEntry (:doc |)
+        'a $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn a (attrs & children) (<*> :a attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |body $ %{} 'CodeEntry (:doc |)
+        'body $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn body (attrs & children) (<*> :body attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |button $ %{} 'CodeEntry (:doc |)
+        'button $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn button (attrs & children) (<*> :button attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |canvas $ %{} 'CodeEntry (:doc |)
+        'canvas $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn canvas (attrs & children) (<*> :canvas attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |code $ %{} 'CodeEntry (:doc |)
+        'code $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn code (attrs & children) (<*> :code attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |div $ %{} 'CodeEntry (:doc |)
+        'div $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn div (attrs & children) (<*> :div attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |h1 $ %{} 'CodeEntry (:doc |)
+        'h1 $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn h1 (attrs & children) (<*> :h1 attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |h2 $ %{} 'CodeEntry (:doc |)
+        'h2 $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn h2 (attrs & children) (<*> :h2 attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |h3 $ %{} 'CodeEntry (:doc |)
+        'h3 $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn h3 (attrs & children) (<*> :h3 attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |head $ %{} 'CodeEntry (:doc |)
+        'head $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn head (attrs & children) (<*> :head attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |html $ %{} 'CodeEntry (:doc |)
+        'html $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn html (attrs & children) (<*> :html attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |img $ %{} 'CodeEntry (:doc |)
+        'img $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn img (attrs & children) (<*> :img attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |input $ %{} 'CodeEntry (:doc |)
+        'input $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defmacro input (attrs & children)
               quasiquote $ <*> :input (~ attrs) (~@ children)
           :examples $ []
-          :schema $ :: 'Dynamic
-        |link $ %{} 'CodeEntry (:doc |)
+          :schema $ :: 'Macro
+            {}
+              :capabilities $ #{}
+              :expansion $ :: 'Expr 'Dynamic
+              :required $ [] (:: 'Expr 'Dynamic)
+              :rest $ :: 'Expr 'Dynamic
+        'link $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn link (attrs & children) (<*> :link attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |make-page $ %{} 'CodeEntry (:doc |)
+        'make-page $ %{} 'CodeEntry (:doc |)
           :code $ quote
-            defn make-page (resources)
-              assert (map? resources) "|argument should be hashmap"
-              dev-check resources lilac-resource
-              doctype-html $ html ({})
-                <*> :head ({})
-                  let
-                      t $ option:unwrap-or (get resources :title) |
-                    if (string? t)
-                      title $ {} (:innerHTML t)
-                      title t
-                  if-let
-                    icon $ get resources :icon
-                    link $ {} (:rel |icon) (:type |image/png) (:href icon)
-                  let
-                      manifest $ get resources :manifest
-                    if (option:some? manifest)
+            defn make-page (raw-resources)
+              let
+                  resources $ decode-map-as raw-resources stir-template.schema/StirPageResources
+                doctype-html $ html ({})
+                  <*> :head ({})
+                    let
+                        t $ option:unwrap-or (:title resources) |
+                      if (string? t)
+                        title $ {} (:innerHTML t)
+                        title t
+                    if-let
+                      icon $ :icon resources
+                      link $ {} (:rel |icon) (:type |image/png) (:href icon)
+                    if-let
+                      manifest $ :manifest resources
                       link $ {} (:rel |manifest) (:href manifest)
-                  <*> :meta $ {} (:charset |utf8)
-                  <*> :meta $ {} (:name |viewport)
-                    :content $ option:unwrap-or (get resources :viewport) "|width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
-                  if
-                    option:some? $ get resources :ssr
-                    <*> :meta $ {}
-                      :class $ option:unwrap-or (get resources :ssr) |
-                  ->
-                    option:unwrap-or (get resources :styles) ([])
-                    map $ fn (path)
-                      link $ {} (:rel |stylesheet) (:type |text/css) (:href path)
-                  ->
-                    option:unwrap-or (get resources :inline-styles) ([])
-                    map $ fn (content)
-                      style $ {} (:innerHTML content)
-                  ->
-                    option:unwrap-or (get resources :scripts) ([])
-                    map $ fn (path)
-                      cond
-                          string? path
+                    <*> :meta $ {} (:charset |utf8)
+                    <*> :meta $ {} (:name |viewport)
+                      :content $ option:unwrap-or (:viewport resources) "|width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+                    if-let
+                      ssr $ :ssr resources
+                      <*> :meta $ {} (:class ssr)
+                    ->
+                      option:unwrap-or (:styles resources) ([])
+                      map $ fn (path)
+                        link $ {} (:rel |stylesheet) (:type |text/css) (:href path)
+                    ->
+                      option:unwrap-or (:inline-styles resources) ([])
+                      map $ fn (content)
+                        style $ {} (:innerHTML content)
+                    ->
+                      option:unwrap-or (:scripts resources) ([])
+                      map $ fn (path)
+                        if (string? path)
                           script $ {} (:src path)
-                        (and (map? path) (= :module (option:unwrap-or (get path :type) nil)))
-                          script $ {} (:type |module)
-                            :src $ get path :src
-                            :defer $ if (get path :defer?) true false
-                        (and (map? path) (or (= :script (option:unwrap-or (get path :type) nil)) (option:none? (get path :type))))
-                          script $ {}
-                            :src $ option:unwrap-or (get path :src) |
-                            :defer $ if
-                              option:unwrap-or (get path :defer?) false
-                              , true false
-                        true $ println "|[Shell Page]: unknown path" path
-                body ({})
-                  let
-                      content $ option:unwrap-or (get resources :content) nil
-                    if (string? content)
-                      div $ {} (:class-name |app) (:innerHTML content)
-                      , content
-                  if
-                    option:some? $ get resources :inline-html
-                    div $ {}
-                      :innerHTML $ get resources :inline-html
-                  if
-                    option:some? $ get resources :append-html
-                    div $ {}
-                      :innerHTML $ get resources :append-html
+                          let
+                              resource $ decode-map-as path stir-template.schema/StirScriptResource
+                              script-type $ option:unwrap-or (:type resource) :script
+                            case-default script-type (println "|[Shell Page]: unknown script type" script-type)
+                              :module $ script
+                                {} (:type |module)
+                                  :src $ :src resource
+                                  :defer $ option:unwrap-or (:defer? resource) false
+                              :script $ script
+                                {}
+                                  :src $ :src resource
+                                  :defer $ option:unwrap-or (:defer? resource) false
+                  body ({})
+                    let
+                        content $ option:unwrap-or (:content resources) nil
+                      if (string? content)
+                        div $ {} (:class-name |app) (:innerHTML content)
+                        , content
+                    if-let
+                      content $ :inline-html resources
+                      div $ {} (:innerHTML content)
+                    if-let
+                      content $ :append-html resources
+                      div $ {} (:innerHTML content)
           :examples $ []
-          :schema $ :: 'Dynamic
-        |meta $ %{} 'CodeEntry (:doc |)
+          :schema $ :: 'Fn
+            {} (:return 'String)
+              :args $ [] 'Dynamic
+        'meta $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn meta (attrs & children) (<*> :meta attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |script $ %{} 'CodeEntry (:doc |)
+        'script $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn script (attrs & children) (<*> :script attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |span $ %{} 'CodeEntry (:doc |)
+        'span $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn span (attrs & children) (<*> :span attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |style $ %{} 'CodeEntry (:doc |)
+        'style $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn style (attrs & children) (<*> :style attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |textarea $ %{} 'CodeEntry (:doc |)
+        'textarea $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn textarea (attrs & children) (<*> :textarea attrs & children)
           :examples $ []
           :schema $ :: 'Dynamic
-        |title $ %{} 'CodeEntry (:doc |)
+        'title $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn title (attrs & children) (<*> :title attrs & children)
           :examples $ []
@@ -180,11 +183,9 @@
         :code $ quote
           ns stir-template.alias $ :require
             stir-template.core :refer $ <*> doctype-html
-            stir-template.validation :refer $ lilac-resource
-            lilac.core :refer $ dev-check
-    |stir-template.core $ %{} 'FileEntry
+    'stir-template.core $ %{} 'FileEntry
       :defs $ {}
-        |<*> $ %{} 'CodeEntry (:doc |)
+        '<*> $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defmacro <*> (tag-name attrs & children)
               quasiquote $ &let
@@ -195,14 +196,19 @@
                   :attrs $ either attrs-value ({})
                   :children $ [] (~@ children)
           :examples $ []
-          :schema $ :: 'Dynamic
-        |doctype-html $ %{} 'CodeEntry (:doc |)
+          :schema $ :: 'Macro
+            {}
+              :capabilities $ #{}
+              :expansion $ :: 'Expr 'Dynamic
+              :required $ [] (:: 'Expr 'Dynamic) (:: 'Expr 'Dynamic)
+              :rest $ :: 'Expr 'Dynamic
+        'doctype-html $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn doctype-html (& args)
               &str:concat "|<!DOCTYPE html>" $ -> args (map element->string) (join-str |)
           :examples $ []
           :schema $ :: 'Dynamic
-        |element->string $ %{} 'CodeEntry (:doc |)
+        'element->string $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn element->string (element)
               cond
@@ -219,7 +225,7 @@
                       styles $ option:unwrap-or (get element :style) ({})
                       text-inside $ if
                         =
-                          option:unwrap-or (get element :name) nil
+                          option:unwrap-or (get element :name) :unknown
                           , :textarea
                         escape-html $ option:unwrap-or (get attrs :value) |
                         option:unwrap-or (get attrs :innerHTML)
@@ -244,13 +250,17 @@
                   str "|Unknown element: " $ to-lispy-string element
           :examples $ []
           :schema $ :: 'Dynamic
-        |element-creator $ %{} 'CodeEntry (:doc |)
+        'element-creator $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defmacro element-creator (tag-name)
               defn $ attrs & children
           :examples $ []
-          :schema $ :: 'Dynamic
-        |ensure-string $ %{} 'CodeEntry (:doc |)
+          :schema $ :: 'Macro
+            {}
+              :capabilities $ #{}
+              :expansion $ :: 'Expr 'Dynamic
+              :required $ [] (:: 'Expr 'Dynamic)
+        'ensure-string $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn ensure-string (x)
               cond
@@ -260,11 +270,11 @@
                 true $ str x
           :examples $ []
           :schema $ :: 'Dynamic
-        |entry->string $ %{} 'CodeEntry (:doc |)
+        'entry->string $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn entry->string (entry)
               let
-                  k $ option:unwrap-or (first entry) nil
+                  k $ option:unwrap-or (first entry) :unknown
                   v $ option:unwrap-or (last entry) nil
                 str
                   prop->attr $ turn-str k
@@ -279,26 +289,26 @@
                       true $ str v
           :examples $ []
           :schema $ :: 'Dynamic
-        |escape-html $ %{} 'CodeEntry (:doc |)
+        'escape-html $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn escape-html (text)
               if (nil? text) | $ -> text (&str:replace "|\"" |&quot;) (&str:replace |< |&lt;) (&str:replace |> |&gt;) (&str:replace |\n |&#13;&#10;)
           :examples $ []
           :schema $ :: 'Dynamic
-        |prop->attr $ %{} 'CodeEntry (:doc |)
+        'prop->attr $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn prop->attr (x)
               when (includes? x |?) (println "|[Respo] warning: property contains `?` in" x)
               case x (|class-name |class) (|tab-index |tabindex) (|read-only |readonly) (x x)
           :examples $ []
           :schema $ :: 'Dynamic
-        |props->string $ %{} 'CodeEntry (:doc |)
+        'props->string $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn props->string (props)
               -> props .to-list (map entry->string) (join-str "| ")
           :examples $ []
           :schema $ :: 'Dynamic
-        |style->string $ %{} 'CodeEntry (:doc |)
+        'style->string $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn style->string (styles)
               -> styles .to-list
@@ -312,7 +322,7 @@
                 join-str |
           :examples $ []
           :schema $ :: 'Dynamic
-        |text->html $ %{} 'CodeEntry (:doc |)
+        'text->html $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn text->html (x)
               if (some? x)
@@ -322,24 +332,24 @@
           :schema $ :: 'Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote (ns stir-template.core)
-    |stir-template.main $ %{} 'FileEntry
+    'stir-template.main $ %{} 'FileEntry
       :defs $ {}
-        |main! $ %{} 'CodeEntry (:doc |)
+        'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn main! () (render-page) (echo |Started)
           :examples $ []
           :schema $ :: 'Dynamic
-        |on-error $ %{} 'CodeEntry (:doc |)
+        'on-error $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn on-error (message) (; draw-error-message message)
           :examples $ []
           :schema $ :: 'Dynamic
-        |reload! $ %{} 'CodeEntry (:doc |)
+        'reload! $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn reload! () (echo |Reload!) (render-page)
           :examples $ []
           :schema $ :: 'Dynamic
-        |render-page $ %{} 'CodeEntry (:doc |)
+        'render-page $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn render-page ()
               echo $ doctype-html
@@ -367,9 +377,37 @@
             stir-template.core :refer $ doctype-html <*>
             stir-template.alias :refer $ make-page body head div textarea input button span a
             stir-template.ui :as ui
-    |stir-template.ui $ %{} 'FileEntry
+    'stir-template.schema $ %{} 'FileEntry
       :defs $ {}
-        |button $ %{} 'CodeEntry (:doc |)
+        'StirPageResources $ %{} 'CodeEntry (:doc |)
+          :code $ quote
+            defstruct StirPageResources
+              :title $ :: 'Option 'String
+              :icon $ :: 'Option 'String
+              :manifest $ :: 'Option 'String
+              :viewport $ :: 'Option 'String
+              :ssr $ :: 'Option 'String
+              :styles $ :: 'Option (:: 'List 'String)
+              :inline-styles $ :: 'Option (:: 'List 'String)
+              :scripts $ :: 'Option (:: 'List 'Dynamic)
+              :content $ :: 'Option 'Dynamic
+              :inline-html $ :: 'Option 'String
+              :append-html $ :: 'Option 'String
+          :examples $ []
+          :schema $ :: 'Struct
+        'StirScriptResource $ %{} 'CodeEntry (:doc |)
+          :code $ quote
+            defstruct StirScriptResource
+              :type $ :: 'Option 'Tag
+              :src 'String
+              :defer? $ :: 'Option 'Bool
+          :examples $ []
+          :schema $ :: 'Struct
+      :ns $ %{} 'NsEntry (:doc |)
+        :code $ quote (ns stir-template.schema)
+    'stir-template.ui $ %{} 'FileEntry
+      :defs $ {}
+        'button $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def button $ {} (:min-width |80px) (:line-height |30px) (:border-radius |16px) (:font-size |14px) (:text-align |center)
               :border $ str "|1px solid " (hsl 200 100 76)
@@ -382,69 +420,69 @@
               :background-color :white
           :examples $ []
           :schema $ :: 'Dynamic
-        |center $ %{} 'CodeEntry (:doc |)
+        'center $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def center $ {} (:display |flex) (:flex-direction |column) (:justify-content |center) (:align-items |center)
           :examples $ []
           :schema $ :: 'Dynamic
-        |column $ %{} 'CodeEntry (:doc |)
+        'column $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def column $ {} (:display |flex) (:align-items |stretch) (:flex-direction |column)
           :examples $ []
           :schema $ :: 'Dynamic
-        |column-dispersive $ %{} 'CodeEntry (:doc |)
+        'column-dispersive $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def column-dispersive $ {} (:display |flex) (:align-items |center) (:justify-content |space-around) (:flex-direction |column)
           :examples $ []
           :schema $ :: 'Dynamic
-        |column-evenly $ %{} 'CodeEntry (:doc |)
+        'column-evenly $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def column-evenly $ {} (:display |flex) (:align-items |center) (:justify-content |space-evenly) (:flex-direction |column)
           :examples $ []
           :schema $ :: 'Dynamic
-        |column-parted $ %{} 'CodeEntry (:doc |)
+        'column-parted $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def column-parted $ {} (:display :flex) (:align-items :stretch) (:justify-content :space-between) (:flex-direction :column)
           :examples $ []
           :schema $ :: 'Dynamic
-        |default-fonts $ %{} 'CodeEntry (:doc |)
+        'default-fonts $ %{} 'CodeEntry (:doc |)
           :code $ quote (def default-fonts "|Hind,Verdana,'Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft Yahei',sans-serif")
           :examples $ []
           :schema $ :: 'Dynamic
-        |expand $ %{} 'CodeEntry (:doc |)
+        'expand $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def expand $ {} (:flex 1) (:overflow :auto)
           :examples $ []
           :schema $ :: 'Dynamic
-        |flex $ %{} 'CodeEntry (:doc |)
+        'flex $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def flex $ {} (:flex 1)
           :examples $ []
           :schema $ :: 'Dynamic
-        |font-code $ %{} 'CodeEntry (:doc |)
+        'font-code $ %{} 'CodeEntry (:doc |)
           :code $ quote (def font-code "|Source Code Pro, Menlo, Ubuntu Mono, Consolas, monospace")
           :examples $ []
           :schema $ :: 'Dynamic
-        |font-fancy $ %{} 'CodeEntry (:doc |)
+        'font-fancy $ %{} 'CodeEntry (:doc |)
           :code $ quote (def font-fancy "|Josefin Sans, Helvetica neue, Arial, sans-serif")
           :examples $ []
           :schema $ :: 'Dynamic
-        |font-normal $ %{} 'CodeEntry (:doc |)
+        'font-normal $ %{} 'CodeEntry (:doc |)
           :code $ quote (def font-normal "|Hind, Helvatica, Arial, sans-serif")
           :examples $ []
           :schema $ :: 'Dynamic
-        |fullscreen $ %{} 'CodeEntry (:doc |)
+        'fullscreen $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def fullscreen $ {} (:position |absolute) (:left |0px) (:top |0px) (:width |100%) (:height |100%) (:overflow :auto)
           :examples $ []
           :schema $ :: 'Dynamic
-        |global $ %{} 'CodeEntry (:doc |)
+        'global $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def global $ {} (:line-height |2) (:font-size |14px) (:font-family default-fonts)
               :color $ hsl 0 0 20
           :examples $ []
           :schema $ :: 'Dynamic
-        |hsl $ %{} 'CodeEntry (:doc |)
+        'hsl $ %{} 'CodeEntry (:doc |)
           :code $ quote
             defn hsl (h s l & args)
               if (empty? args) (str "|hsl(" h "|, " s "|%, " l "|%)")
@@ -453,7 +491,7 @@
                   str "|hsl(" h "|, " s "|%, " l |%, a "|)"
           :examples $ []
           :schema $ :: 'Dynamic
-        |input $ %{} 'CodeEntry (:doc |)
+        'input $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def input $ merge global
               {} (:border :none) (:outline :none)
@@ -468,7 +506,7 @@
                 :vertical-align :top
           :examples $ []
           :schema $ :: 'Dynamic
-        |link $ %{} 'CodeEntry (:doc |)
+        'link $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def link $ {}
               :color $ hsl 200 100 76
@@ -481,37 +519,37 @@
               :cursor :pointer
           :examples $ []
           :schema $ :: 'Dynamic
-        |row $ %{} 'CodeEntry (:doc |)
+        'row $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def row $ {} (:display |flex) (:align-items |stretch) (:flex-direction |row)
           :examples $ []
           :schema $ :: 'Dynamic
-        |row-center $ %{} 'CodeEntry (:doc |)
+        'row-center $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def row-center $ {} (:display |flex) (:align-items |center) (:justify-content |center) (:flex-direction |row)
           :examples $ []
           :schema $ :: 'Dynamic
-        |row-dispersive $ %{} 'CodeEntry (:doc |)
+        'row-dispersive $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def row-dispersive $ {} (:display |flex) (:align-items |center) (:justify-content |space-around) (:flex-direction |row)
           :examples $ []
           :schema $ :: 'Dynamic
-        |row-evenly $ %{} 'CodeEntry (:doc |)
+        'row-evenly $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def row-evenly $ {} (:display |flex) (:align-items |center) (:flex-direction |row) (:justify-content |space-evenly)
           :examples $ []
           :schema $ :: 'Dynamic
-        |row-middle $ %{} 'CodeEntry (:doc |)
+        'row-middle $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def row-middle $ {} (:display :flex) (:align-items :center) (:justify-content :flex-start) (:flex-direction :row)
           :examples $ []
           :schema $ :: 'Dynamic
-        |row-parted $ %{} 'CodeEntry (:doc |)
+        'row-parted $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def row-parted $ {} (:display |flex) (:align-items |center) (:justify-content |space-between) (:flex-direction |row)
           :examples $ []
           :schema $ :: 'Dynamic
-        |select $ %{} 'CodeEntry (:doc |)
+        'select $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def select $ {} (:height |32px) (:outline :none) (:font-size |14px) (:min-width |120px)
               :border $ str "|1px solid " (hsl 0 0 80)
@@ -520,7 +558,7 @@
               :vertical-align :top
           :examples $ []
           :schema $ :: 'Dynamic
-        |text-label $ %{} 'CodeEntry (:doc |)
+        'text-label $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def text-label $ {} (:line-height |32px) (:font-size |14px)
               :color $ hsl 0 0 20
@@ -528,7 +566,7 @@
               :vertical-align :top
           :examples $ []
           :schema $ :: 'Dynamic
-        |textarea $ %{} 'CodeEntry (:doc |)
+        'textarea $ %{} 'CodeEntry (:doc |)
           :code $ quote
             def textarea $ {} (:outline :none) (:border :none) (:font-size |14px) (:font-family default-fonts)
               :border $ str "|1px solid " (hsl 0 0 80)
@@ -540,37 +578,3 @@
           :schema $ :: 'Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote (ns stir-template.ui)
-    |stir-template.validation $ %{} 'FileEntry
-      :defs $ {}
-        |lilac-resource $ %{} 'CodeEntry (:doc |)
-          :code $ quote
-            def lilac-resource $ record+
-              {}
-                :title $ string+
-                :icon $ string+
-                :ssr $ string+
-                :styles $ list+ (string+)
-                :inline-styles $ list+ (string+)
-                :scripts $ list+
-                  or+ $ [] (string+)
-                    record+
-                      {}
-                        :type $ optional+ (tag+)
-                        :src $ string+
-                        :defer? $ bool+
-                      {} $ :check-keys? true
-                  {} $ :allow-seq? true
-                :inline-html $ string+
-                :append-html $ string+
-                :manifest $ string+
-                :content $ or+
-                  [] (string+) (any+)
-              {} (:all-optional? true) (:check-keys? true)
-          :examples $ []
-          :schema $ :: 'Dynamic
-      :ns $ %{} 'NsEntry (:doc |)
-        :code $ quote
-          ns stir-template.validation $ :require
-            lilac.core :refer $ dev-check string+ record+ optional+ bool+ tag+ list+ or+ any+
-            stir-template.core :refer $ stir-html <*>
-            stir-template.alias :refer $ html body div title script style span link

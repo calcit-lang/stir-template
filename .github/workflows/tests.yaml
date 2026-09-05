@@ -15,7 +15,10 @@ jobs:
     - uses: calcit-lang/setup-calcit@v1
 
     - name: "load deps"
-      run: caps --ci
+      run: caps --strict --ci
+
+    - name: Verify Calcit runtime toolchain
+      run: caps verify --toolchain
 
     - name: Validate Calcit snapshot and types
       run: |
