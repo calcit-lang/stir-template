@@ -127,12 +127,19 @@
                             resource $ decode-map-as path stir-template.schema/StirScriptResource
                             script-type $ option:unwrap-or (:type resource) :script
                           case-default script-type (println "|[Shell Page]: unknown script type" script-type)
-                            :module $ script $ {} (:type |module)
-                              :src $ :src resource
-                              :defer $ option:unwrap-or (:defer? resource) false
-                            :script $ script $ {}
-                              :src $ :src resource
-                              :defer $ option:unwrap-or (:defer? resource) false
+                            :module $ script $ let
+                                base $ {} (:type |module)
+                                  :src $ :src resource
+                              if
+                                option:unwrap-or (:defer? resource) false
+                                assoc base :defer |defer
+                                , base
+                            :script $ script $ let
+                                base $ {} $ :src (:src resource)
+                              if
+                                option:unwrap-or (:defer? resource) false
+                                assoc base :defer |defer
+                                , base
                 body ({})
                   let
                       content $ option:unwrap-or (:content resources) nil
@@ -260,14 +267,6 @@
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
             :args $ [] 'Dynamic
-        'element-creator $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defmacro element-creator (tag-name)
-            defn $ attrs & children
-          :examples $ []
-          :schema $ :: 'Macro $ {}
-            :capabilities $ #{}
-            :expansion $ :: 'Expr 'Dynamic
-            :required $ [] $ :: 'Expr 'Dynamic
         'ensure-string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn ensure-string (x)
             cond
