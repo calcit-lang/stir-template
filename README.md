@@ -22,8 +22,8 @@ git clone https://github.com/calcit-lang/stir-template
 Add the module dependency to `deps.cirru`; the canonical snapshot is `calcit.cirru`.
 
 ```cirru
-{} (:calcit-version |0.13.29)
-  :dependencies $ {} (|calcit-lang/stir-template |main)
+{} (:calcit-version |0.14.17)
+  :dependencies $ {} (|calcit-lang/stir-template |0.0.13)
 ```
 
 Use in code:
