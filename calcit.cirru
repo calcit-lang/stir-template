@@ -297,7 +297,7 @@
             :args $ [] 'Dynamic
         'escape-html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn escape-html (text)
-            if (nil? text) | $ -> text (&str:replace "|\"" |&quot;) (&str:replace |< |&lt;) (&str:replace |> |&gt;) (&str:replace |\n |&#13;&#10;)
+            if (nil? text) | $ -> text (&str:replace |& |&amp;) (&str:replace "|\"" |&quot;) (&str:replace |< |&lt;) (&str:replace |> |&gt;) (&str:replace |\n |&#13;&#10;)
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
             :args $ [] 'Dynamic
@@ -331,7 +331,7 @@
         'text->html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn text->html (x)
             if (some? x)
-              -> (str x) (&str:replace |> |&gt;) (&str:replace |< |&lt;)
+              -> (str x) (&str:replace |& |&amp;) (&str:replace |> |&gt;) (&str:replace |< |&lt;)
               , nil
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Dynamic)
@@ -487,8 +487,8 @@
           :code $ quote $ defn hsl (h s l & args)
             if (empty? args) (str "|hsl(" h "|, " s "|%, " l "|%)")
               &let
-                a $ first args
-                str "|hsl(" h "|, " s "|%, " l |%, a "|)"
+                a $ option:unwrap $ first args
+                str "|hsl(" h "|, " s "|%, " l "|%, " a "|)"
           :examples $ []
           :schema $ :: 'Fn $ {} (:rest 'Number) (:return 'String)
             :args $ [] 'Number 'Number 'Number
