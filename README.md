@@ -58,6 +58,14 @@ Dynamic/Nil 的历史 HTML 输入与开放值边界仍存在，不声称类型�
 不增加 quality baseline、不以数量报告替代类型检查、不新增编译器 fix/proof。
 CI 保留原 native demo，公开门禁和附带测试直接使用 Calcit，未新增验证脚本。
 
+原 CI 的三个 `--summary-only` 探针（`check-types`、`weak-types`、`deprecated`）
+只输出统计，没有配置诊断/数量失败条件；本次明确退役这些重复报告，不把它们
+描述为已被 `check-public` 全部替代。严格入口与全 namespace 的 `check-public`
+检查类型合同，附带测试与 demo 检查渲染行为；它们不证明动态债务或 deprecated
+调用清零。需要定位迁移时仍可按需运行原分析命令，由 AI 根据诊断修改项目代码。
+此次按需复查得到 52 个 partial 定义、50 个定义中 89 个 unresolved 动态槽，
+deprecated 调用为 0；这些是当前清单，不是新增质量预算，也不是长期零债务承诺。
+
 ```bash
 caps --strict --ci
 caps verify --toolchain
