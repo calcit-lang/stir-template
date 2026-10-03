@@ -3,7 +3,7 @@
   :about "|Machine-generated snapshot. Do not edit directly — changes will be overwritten. Use `calcit query` to inspect and `calcit edit`/`calcit tree` to modify. Run `calcit docs agents --contract` before mutations; use `--full` for first orientation or changed contract digest. Manual edits must follow format and schema conventions, then run `calcit edit format`."
   :package |stir-template
   :entries $ {} $ :default
-    {} (:description |) (:init-fn 'stir-template.main/main!) (:mode :native) (:reload-fn 'stir-template.main/reload!)
+    {} (:description |) (:init-fn 'stir-template.main/main!) (:mode :native) (:reload-fn 'stir-template.main/reload!) (:target :native)
       :feature-policy $ {}
       :modules $ []
       :type-slots $ {}
@@ -280,8 +280,8 @@
         'entry->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn entry->string (entry)
             let
-                k $ option:unwrap-or (first entry) :unknown
-                v $ option:unwrap-or (last entry) nil
+                k $ :key entry
+                v $ :value entry
               str
                 prop->attr $ turn-str k
                 , |= $ &str:escape $ cond
@@ -294,7 +294,7 @@
                   true $ str v
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
-            :args $ [] 'Dynamic
+            :args $ [] $ :: 'MapEntry 'Tag 'Dynamic
         'escape-html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn escape-html (text)
             if (nil? text) | $ -> text (&str:replace |& |&amp;) (&str:replace "|\"" |&quot;) (&str:replace |< |&lt;) (&str:replace |> |&gt;) (&str:replace |\n |&#13;&#10;)
@@ -310,17 +310,21 @@
             :args $ [] 'String
         'props->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn props->string (props)
-            -> (&map:to-list props) (map entry->string) (join-str "| ")
+            -> (map-entries props) (map entry->string) (join-str "| ")
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
             :args $ [] $ :: 'Map 'Tag 'Dynamic
+          :tests $ [] $ %{} 'TestEntry (:name |typed-attributes)
+            :code $ quote $ do
+              assert= "|title=\"&lt;&amp;&gt;\"" $ props->string $ {} (:title |<&>)
+              assert= "|disabled=\"true\"" $ props->string $ {} (:disabled true)
         'style->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn style->string (styles)
-            -> (&map:to-list styles)
+            -> (map-entries styles)
               map $ fn (entry)
                 let
-                    k $ option:unwrap-or (first entry) nil
-                    v $ option:unwrap-or (last entry) nil
+                    k $ :key entry
+                    v $ :value entry
                   str (turn-str k) |:
                     if (string? v) (escape-html v) (ensure-string v)
                     , |;
@@ -328,6 +332,10 @@
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
             :args $ [] $ :: 'Map 'Tag 'Dynamic
+          :tests $ [] $ %{} 'TestEntry (:name |typed-style)
+            :code $ quote $ do
+              assert= |color:red; $ style->string $ {} (:color |red)
+              assert= |color:&lt;&amp;&gt;; $ style->string $ {} (:color |<&>)
         'text->html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn text->html (x)
             if (some? x)
@@ -346,7 +354,7 @@
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []
         'on-error $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn on-error (message) (; draw-error-message message)
+          :code $ quote $ defn on-error (message) (; draw-error-message message) &unit
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ [] 'String
