@@ -22,7 +22,7 @@ git clone https://github.com/calcit-lang/stir-template
 Add the module dependency to `deps.cirru`; the canonical snapshot is `calcit.cirru`.
 
 ```cirru
-{} (:calcit-version |0.28.0)
+{} (:calcit-version |0.29.0)
   :dependencies $ {} $ |calcit-lang/stir-template |0.0.15
 ```
 
@@ -41,9 +41,9 @@ make-page $ {} $ :content
   div nil $ span nil "|some text"
 ```
 
-### 正式 0.28 迁移
+### 正式 0.29 迁移
 
-本源码分支使用正式 Calcit 0.28.0 / Caps 0.1.1。当前分支模块版本 0.0.16
+本源码分支使用正式 Calcit 0.29.0 / Caps 0.1.1。当前分支模块版本 0.0.16
 仍未发布；上方依赖示例保持已发布的 0.0.15，不把分支版本冒充正式 release。
 原生 HTML 模板没有前端部署产物，不新增 COS/CDN 上传任务。
 
@@ -60,11 +60,16 @@ CI 保留原 native demo，公开门禁和附带测试直接使用 Calcit，未�
 
 原 CI 的三个 `--summary-only` 探针（`check-types`、`weak-types`、`deprecated`）
 只输出统计，没有配置诊断/数量失败条件；本次明确退役这些重复报告，不把它们
-描述为已被 `check-public` 全部替代。严格入口与全 namespace 的 `check-public`
+描述为已被公开检查全部替代。严格入口与全 namespace 的 `--check-only --ns`
 检查类型合同，附带测试与 demo 检查渲染行为；它们不证明动态债务或 deprecated
 调用清零。需要定位迁移时仍可按需运行原分析命令，由 AI 根据诊断修改项目代码。
 此次按需复查得到 52 个 partial 定义、50 个定义中 89 个 unresolved 动态槽，
 deprecated 调用为 0；这些是当前清单，不是新增质量预算，也不是长期零债务承诺。
+
+0.29 迁移将 `join-str`、`some?`、`turn-str`、`case-default` 与旧 Option helper
+改为当前首选写法。HTML Map/List 输入由运行时 `decode-map-as` 校验，不再用
+`assert-type` 冒充校验；`:style` 属性在传入 `Map<Tag,Dynamic>` API 前也显式解码。
+开放 HTML 内容仍保留 Dynamic，渲染及 escaping 行为由现有 demo 和附带测试验证。
 
 ```bash
 caps --strict --ci
