@@ -91,66 +91,67 @@
               doctype-html $ html ({})
                 <*> :head ({})
                   let
-                      t $ option:unwrap-or (:title resources) |
+                      t $ .unwrap-or (:title resources) |
                     if (string? t)
                       title $ {} $ :innerHTML t
                       title t
-                  option:fold (:icon resources)
+                  .fold (:icon resources)
                     fn () $ []
                     fn (icon)
                       [] $ link $ {} (:rel |icon) (:type |image/png) (:href icon)
-                  option:fold (:manifest resources)
+                  .fold (:manifest resources)
                     fn () $ []
                     fn (manifest)
                       [] $ link $ {} (:rel |manifest) (:href manifest)
                   <*> :meta $ {} $ :charset |utf8
                   <*> :meta $ {} (:name |viewport)
-                    :content $ option:unwrap-or (:viewport resources) "|width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
-                  option:fold (:ssr resources)
+                    :content $ .unwrap-or (:viewport resources) "|width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+                  .fold (:ssr resources)
                     fn () $ []
                     fn (ssr)
                       [] $ <*> :meta $ {} (:class ssr)
                   ->
-                    option:unwrap-or (:styles resources) ([])
+                    .unwrap-or (:styles resources) ([])
                     map $ fn (path)
                       link $ {} (:rel |stylesheet) (:type |text/css) (:href path)
                   ->
-                    option:unwrap-or (:inline-styles resources) ([])
+                    .unwrap-or (:inline-styles resources) ([])
                     map $ fn (content)
                       style $ {} $ :innerHTML content
                   ->
-                    option:unwrap-or (:scripts resources) ([])
+                    .unwrap-or (:scripts resources) ([])
                     map $ fn (path)
                       if (string? path)
                         script $ {} $ :src path
                         let
                             resource $ decode-map-as path stir-template.schema/StirScriptResource
-                            script-type $ option:unwrap-or (:type resource) :script
-                          case-default script-type (println "|[Shell Page]: unknown script type" script-type)
+                            script-type $ .unwrap-or (:type resource) :script
+                          match script-type
                             :module $ script $ let
                                 base $ {} (:type |module)
                                   :src $ :src resource
                               if
-                                option:unwrap-or (:defer? resource) false
+                                .unwrap-or (:defer? resource) false
                                 assoc base :defer |defer
                                 , base
                             :script $ script $ let
                                 base $ {} $ :src (:src resource)
                               if
-                                option:unwrap-or (:defer? resource) false
+                                .unwrap-or (:defer? resource) false
                                 assoc base :defer |defer
                                 , base
+                            _ $ println "|[Shell Page]: unknown script type" script-type
                 body ({})
                   let
-                      content $ option:unwrap-or (:content resources) nil
+                      content $ .unwrap-or (:content resources) nil
                     if (string? content)
                       div $ {} (:class-name |app) (:innerHTML content)
                       , content
-                  option:fold (:inline-html resources)
+                  .fold (:inline-html resources)
                     fn () $ []
                     fn (content)
                       [] $ div $ {} (:innerHTML content)
-                  option:fold (:append-html resources)
+                  .fold (:append-html resources)
                     fn () $ []
                     fn (content)
                       [] $ div $ {} (:innerHTML content)
@@ -211,7 +212,7 @@
           :code $ quote $ defn child->strings (child)
             if (list? child)
               map
-                assert-type child $ :: 'List 'Dynamic
+                decode-map-as child $ :: 'List 'Dynamic
                 , element->string
               [] $ element->string child
           :examples $ []
@@ -220,7 +221,7 @@
             :return $ :: 'List 'String
         'doctype-html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn doctype-html (& args)
-            &str:concat "|<!DOCTYPE html>" $ -> args (map element->string) (join-str |)
+            &str:concat "|<!DOCTYPE html>" $ -> args (map element->string) (join-string |)
           :examples $ []
           :schema $ :: 'Fn $ {} (:rest 'Dynamic) (:return 'String)
             :args $ []
@@ -234,26 +235,26 @@
               (bool? element) (&str element)
               (map? element)
                 let
-                    name-value $ assert-type
-                      option:unwrap-or (get element :name) :unknown
+                    name-value $ decode-map-as
+                      .unwrap-or (get element :name) :unknown
                       , 'Tag
-                    tag-name $ turn-str name-value
-                    attrs $ assert-type
-                      option:unwrap-or (get element :attrs) ({})
+                    tag-name $ to-string name-value
+                    attrs $ decode-map-as
+                      .unwrap-or (get element :attrs) ({})
                       :: 'Map 'Tag 'Dynamic
-                    styles $ assert-type
-                      option:unwrap-or (get element :style) ({})
+                    styles $ decode-map-as
+                      .unwrap-or (get element :style) ({})
                       :: 'Map 'Tag 'Dynamic
                     text-inside $ if (= name-value :textarea)
-                      escape-html $ option:unwrap-or (get attrs :value) |
-                      option:unwrap-or (get attrs :innerHTML)
-                        text->html $ option:unwrap-or (get attrs :inner-text) nil
+                      escape-html $ .unwrap-or (get attrs :value) |
+                      .unwrap-or (get attrs :innerHTML)
+                        text->html $ .unwrap-or (get attrs :inner-text) nil
                     tailored-props $ -> attrs (dissoc :innerHTML) (dissoc :inner-text)
                       (fn (props) (if (empty? styles) props (assoc props :style styles)))
                     props-in-string $ props->string tailored-props
                     children $ ->
-                      assert-type
-                        option:unwrap-or (get element :children) ([])
+                      decode-map-as
+                        .unwrap-or (get element :children) ([])
                         :: 'List 'Dynamic
                       mapcat child->strings
                   str |< tag-name
@@ -261,7 +262,7 @@
                       > (count props-in-string) 0
                       , "| " |
                     , props-in-string |>
-                      if (some? text-inside) text-inside $ join-str children |
+                      if (non-nil? text-inside) text-inside $ join-string children |
                       , |</ tag-name |>
               true $ raise $ str "|Unknown element: " (to-lispy-string element)
           :examples $ []
@@ -272,7 +273,7 @@
             cond
                 string? x
                 , x
-              (tag? x) (turn-str x)
+              (tag? x) (to-string x)
               true $ str x
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
@@ -283,13 +284,13 @@
                 k $ :key entry
                 v $ :value entry
               str
-                prop->attr $ turn-str k
+                prop->attr $ to-string k
                 , |= $ &str:escape $ cond
                     = k :style
-                    style->string v
+                    style->string $ decode-map-as v $ :: 'Map 'Tag 'Dynamic
                   (bool? v) (str v)
                   (number? v) (str v)
-                  (tag? v) (turn-str v)
+                  (tag? v) (to-string v)
                   (string? v) (escape-html v)
                   true $ str v
           :examples $ []
@@ -310,7 +311,7 @@
             :args $ [] 'String
         'props->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn props->string (props)
-            -> (map-entries props) (map entry->string) (join-str "| ")
+            -> (map-entries props) (map entry->string) (join-string "| ")
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
             :args $ [] $ :: 'Map 'Tag 'Dynamic
@@ -325,10 +326,10 @@
                 let
                     k $ :key entry
                     v $ :value entry
-                  str (turn-str k) |:
+                  str (to-string k) |:
                     if (string? v) (escape-html v) (ensure-string v)
                     , |;
-              join-str |
+              join-string |
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
             :args $ [] $ :: 'Map 'Tag 'Dynamic
@@ -338,7 +339,7 @@
               assert= |color:&lt;&amp;&gt;; $ style->string $ {} (:color |<&>)
         'text->html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn text->html (x)
-            if (some? x)
+            if (non-nil? x)
               -> (str x) (&str:replace |& |&amp;) (&str:replace |> |&gt;) (&str:replace |< |&lt;)
               , nil
           :examples $ []
@@ -495,7 +496,7 @@
           :code $ quote $ defn hsl (h s l & args)
             if (empty? args) (str "|hsl(" h "|, " s "|%, " l "|%)")
               &let
-                a $ option:unwrap $ first args
+                a $ .unwrap $ first args
                 str "|hsl(" h "|, " s "|%, " l "|%, " a "|)"
           :examples $ []
           :schema $ :: 'Fn $ {} (:rest 'Number) (:return 'String)
