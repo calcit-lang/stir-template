@@ -12,17 +12,17 @@ Based on old works on:
 
 ### Usages
 
-安装正式模块：
-
-```bash
-caps --strict --ci
-```
-
 Add the module dependency to `deps.cirru`; the canonical snapshot is `calcit.cirru`.
 
 ```cirru
 {} (:calcit-version |0.29.1)
   :dependencies $ {} $ |calcit-lang/stir-template |0.0.16
+```
+
+声明依赖后安装正式模块：
+
+```bash
+caps --strict --ci
 ```
 
 Use in code:
