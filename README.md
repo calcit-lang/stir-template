@@ -12,18 +12,17 @@ Based on old works on:
 
 ### Usages
 
-Download source:
-
-```bash
-cd ~/.config/calcit/modules/
-git clone https://github.com/calcit-lang/stir-template
-```
-
 Add the module dependency to `deps.cirru`; the canonical snapshot is `calcit.cirru`.
 
 ```cirru
-{} (:calcit-version |0.29.0)
-  :dependencies $ {} $ |calcit-lang/stir-template |0.0.15
+{} (:calcit-version |0.29.1)
+  :dependencies $ {} $ |calcit-lang/stir-template |0.0.16
+```
+
+声明依赖后安装正式模块：
+
+```bash
+caps --strict --ci
 ```
 
 Use in code:
@@ -43,15 +42,21 @@ make-page $ {} $ :content
 
 ### 正式 0.29 迁移
 
-本源码分支使用正式 Calcit 0.29.0 / Caps 0.1.1。当前分支模块版本 0.0.16
-仍未发布；上方依赖示例保持已发布的 0.0.15，不把分支版本冒充正式 release。
+本源码分支使用正式 Calcit 0.29.1 / Caps 0.1.1。发布候选版本为 0.0.17；
+上方依赖示例使用已发布的 0.0.16，0.0.17 发版后可直接更新依赖标签。
+本模块负责原生 HTML 字符串生成，不是前端应用模板；源码合同以
+`calcit.cirru` 为准，依赖与工具链版本以 `deps.cirru` 为准。
 原生 HTML 模板没有前端部署产物，不新增 COS/CDN 上传任务。
+
+19 个普通标签函数（如 `div`、`span`）明确返回 `Map<Tag, Dynamic>` 元素描述，
+而不是擦除为整体 Dynamic；属性及子元素仍是开放值。`input` 是宏，保持原有
+表达式契约。此次仅加强返回类型，不改变元素 Map、escaping 或渲染顺序。
 
 属性和样式遍历使用 `map-entries` 保留 Tag key 与 value 类型，而不是把异构
 key/value 转成 List 后再用 first/last 读回。`style->string` / `props->string`
 仍接收 `Map<Tag,Dynamic>` 并返回 String，escaping、属性名映射及样式格式不变。
 `entry->string` 改为接收 `MapEntry<Tag,Dynamic>`，不再接收旧二元 List；这是直接
-调用此辅助 API 的签名变化，发布前必须核对消费者。普通属性渲染无需改调用方式。
+调用此辅助 API 的签名变化，已随 0.0.16 发布。普通属性渲染无需改调用方式。
 
 严格 native 入口、66 个公开定义和两项附带回归通过，原 demo 渲染也保留。
 Dynamic/Nil 的历史 HTML 输入与开放值边界仍存在，不声称类型债务全部清零。
@@ -80,7 +85,7 @@ env=ci calcit
 ```
 
 Actions 使用正式版本标签而非 hash；标签仍可移动。只读权限及关闭 checkout
-凭据持久化只降低风险，不代表不可变。此迁移修复 [#22](https://github.com/calcit-lang/stir-template/issues/22)，未自动合并或发布。
+凭据持久化只降低风险，不代表不可变。0.0.16 的迁移由 [#22](https://github.com/calcit-lang/stir-template/issues/22) 追踪。
 
 ### Workflow
 
