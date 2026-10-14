@@ -317,7 +317,9 @@
             :args $ [] $ :: 'MapEntry 'Tag 'Dynamic
         'escape-html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn escape-html (text)
-            if (nil? text) | $ -> text (&str:replace |& |&amp;) (&str:replace "|\"" |&quot;) (&str:replace |< |&lt;) (&str:replace |> |&gt;) (&str:replace |\n |&#13;&#10;)
+            if (nil? text) | $ if (string? text)
+              -> text (&str:replace |& |&amp;) (&str:replace "|\"" |&quot;) (&str:replace |< |&lt;) (&str:replace |> |&gt;) (&str:replace |\n |&#13;&#10;)
+              raise "|HTML escaping expected a String or nil"
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
             :args $ [] 'Dynamic
@@ -369,7 +371,7 @@
     'stir-template.main $ %{} 'FileEntry
       :defs $ {}
         'main! $ %{} 'CodeEntry (:doc |)
-          :code $ quote $ defn main! () (render-page) (echo |Started)
+          :code $ quote $ defn main! () (render-page) (echo |Started) &unit
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []
@@ -399,6 +401,7 @@
             echo $ make-page $ {}
               :content $ div $ {} (:class "|DEMO DE") (:inner-text |demo)
             echo $ doctype-html $ span nil (span nil) (span nil) 1 nil |demo "|with space<>"
+            , &unit
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'Unit)
             :args $ []

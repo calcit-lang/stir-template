@@ -15,7 +15,7 @@ Based on old works on:
 Add the module dependency to `deps.cirru`; the canonical snapshot is `calcit.cirru`.
 
 ```cirru
-{} (:calcit-version |0.29.1)
+{} (:calcit-version |0.29.3)
   :dependencies $ {} $ |calcit-lang/stir-template |0.0.16
 ```
 
@@ -42,11 +42,16 @@ make-page $ {} $ :content
 
 ### 正式 0.29 迁移
 
-本源码分支使用正式 Calcit 0.29.1 / Caps 0.1.1。发布候选版本为 0.0.17；
-上方依赖示例使用已发布的 0.0.16，0.0.17 发版后可直接更新依赖标签。
+本源码分支使用正式 Calcit 0.29.3 / Caps 0.1.1。发布候选版本为 0.0.18；
+上方依赖示例使用已发布的 0.0.16，候选版本发版后可直接更新依赖标签。
 本模块负责原生 HTML 字符串生成，不是前端应用模板；源码合同以
 `calcit.cirru` 为准，依赖与工具链版本以 `deps.cirru` 为准。
 原生 HTML 模板没有前端部署产物，不新增 COS/CDN 上传任务。
+
+0.0.18 在 `escape-html` 的实际边界检查 String；nil 仍渲染为空字符串，
+非法类型仍报错，不隐式转换。demo 的 effect 返回真实 Unit，原 HTML 输出保留。
+完整 strict workflow 检查没有诊断；19 个标签 helper 的任意长度参数转发仍需
+人工理解，保留原 variadic API，不为消除建议而改成固定参数。
 
 19 个普通标签函数（如 `div`、`span`）明确返回 `Map<Tag, Dynamic>` 元素描述，
 而不是擦除为整体 Dynamic；属性及子元素仍是开放值。`input` 是宏，保持原有
