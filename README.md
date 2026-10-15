@@ -15,8 +15,8 @@ Based on old works on:
 Add the module dependency to `deps.cirru`; the canonical snapshot is `calcit.cirru`.
 
 ```cirru
-{} (:calcit-version |0.29.3)
-  :dependencies $ {} $ |calcit-lang/stir-template |0.0.16
+{} (:calcit-version |0.30.0)
+  :dependencies $ {} $ |calcit-lang/stir-template |0.0.18
 ```
 
 声明依赖后安装正式模块：
@@ -40,10 +40,14 @@ make-page $ {} $ :content
   div nil $ span nil "|some text"
 ```
 
-### 正式 0.29 迁移
+### 正式 0.30 迁移
 
-本源码分支使用正式 Calcit 0.29.3 / Caps 0.1.1。发布候选版本为 0.0.18；
-上方依赖示例使用已发布的 0.0.16，候选版本发版后可直接更新依赖标签。
+本源码分支使用正式 Calcit 0.30.0 / Caps 0.1.1。上方模块 0.0.18 已正式发布；
+本轮只对齐工具链和 CI，不改变模块版本、模板源码或类型合同。
+原 HTML demo 的内容、标签及属性值保留；Map 遍历导致属性和 style 声明顺序不固定，
+旧版本多次运行也会不同，不把输出描述为字节完全一致。
+Calcit 0.30.1 尚未正式发布，不混入 alpha/hash 依赖。旧的开放 HTML 边界仍明确保留，
+不为升级增加硬编码规则、checker、预算或断言。此原生模块无需 @calcit/procs。
 本模块负责原生 HTML 字符串生成，不是前端应用模板；源码合同以
 `calcit.cirru` 为准，依赖与工具链版本以 `deps.cirru` 为准。
 原生 HTML 模板没有前端部署产物，不新增 COS/CDN 上传任务。
