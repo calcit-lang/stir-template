@@ -32,13 +32,11 @@ jobs:
 
     - name: Validate Calcit snapshot and types
       run: |
+        set -euo pipefail
         calcit calcit.cirru edit format
         git diff --exit-code -- calcit.cirru
-        calcit calcit.cirru --check-only
+        calcit calcit.cirru --check-only --all-defs
         calcit calcit.cirru fix --workflow strict --verify --format json
-        calcit calcit.cirru --check-only \
-          --ns 'stir-template.$meta' --ns stir-template.alias --ns stir-template.core \
-          --ns stir-template.main --ns stir-template.schema --ns stir-template.ui --summary-only
         calcit calcit.cirru test --require-match --summary-only --format json
 
     - name: "test"
