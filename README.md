@@ -15,7 +15,7 @@ Based on old works on:
 Add the module dependency to `deps.cirru`; the canonical snapshot is `calcit.cirru`.
 
 ```cirru
-{} (:calcit-version |0.30.0)
+{} (:calcit-version |0.30.1-alpha.5)
   :dependencies $ {} $ |calcit-lang/stir-template |0.0.18
 ```
 
@@ -40,13 +40,25 @@ make-page $ {} $ :content
   div nil $ span nil "|some text"
 ```
 
-### 正式 0.30 迁移
+### 0.30.1 候选验收注意事项
 
-本源码分支使用正式 Calcit 0.30.0 / Caps 0.1.1。上方模块 0.0.18 已正式发布；
-本轮只对齐工具链和 CI，不改变模块版本、模板源码或类型合同。
+本分支对齐 Calcit `0.30.1-alpha.5`，不改变已发布的模块 `0.0.18`、模板源码、
+HTML escaping 或公开类型合同，也不发布新 tag。正式 `0.30.1` 的 release tag 已存在，
+但当前尚无可安装的 CLI release 资产，因此暂用明确标注的候选版本，不称作正式版。
+本模块是 native-only，无需 `@calcit/procs`，也没有前端 COS/CDN 部署产物。
+
+CI 用一个 `--check-only --all-defs` 覆盖所有定义，替代重复的入口与逐 namespace
+检查；保留完整 strict、原有附带断言及原 HTML demo，不新增验证脚本或质量预算。
+两项附带测试有四条真实 `assert=`；demo 是渲染冒烟检查，不把它当作额外断言。
+仍保留异构 HTML 输入与 variadic API，不以工具链升级为理由伪造固定类型。
+
+### 0.30.0 迁移记录
+
+上一轮使用正式 Calcit 0.30.0 / Caps 0.1.1。上方模块 0.0.18 已正式发布；
+该轮只对齐工具链和 CI，不改变模块版本、模板源码或类型合同。
 原 HTML demo 的内容、标签及属性值保留；Map 遍历导致属性和 style 声明顺序不固定，
 旧版本多次运行也会不同，不把输出描述为字节完全一致。
-Calcit 0.30.1 尚未正式发布，不混入 alpha/hash 依赖。旧的开放 HTML 边界仍明确保留，
+当时尚未进入 0.30.1 候选验收。旧的开放 HTML 边界仍明确保留，
 不为升级增加硬编码规则、checker、预算或断言。此原生模块无需 @calcit/procs。
 本模块负责原生 HTML 字符串生成，不是前端应用模板；源码合同以
 `calcit.cirru` 为准，依赖与工具链版本以 `deps.cirru` 为准。
@@ -77,8 +89,8 @@ CI 保留原 native demo，公开门禁和附带测试直接使用 Calcit，未�
 描述为已被公开检查全部替代。严格入口与全 namespace 的 `--check-only --ns`
 检查类型合同，附带测试与 demo 检查渲染行为；它们不证明动态债务或 deprecated
 调用清零。需要定位迁移时仍可按需运行原分析命令，由 AI 根据诊断修改项目代码。
-此次按需复查得到 52 个 partial 定义、50 个定义中 89 个 unresolved 动态槽，
-deprecated 调用为 0；这些是当前清单，不是新增质量预算，也不是长期零债务承诺。
+0.30.0 迁移时的按需复查得到 52 个 partial 定义、50 个定义中 89 个 unresolved 动态槽，
+deprecated 调用为 0；这些是历史清单，不是新增质量预算，也不是长期零债务承诺。
 
 0.29 迁移将 `join-str`、`some?`、`turn-str`、`case-default` 与旧 Option helper
 改为当前首选写法。HTML Map/List 输入由运行时 `decode-map-as` 校验，不再用
