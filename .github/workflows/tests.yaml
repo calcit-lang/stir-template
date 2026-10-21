@@ -36,7 +36,7 @@ jobs:
         calcit calcit.cirru edit format
         git diff --exit-code -- calcit.cirru
         calcit calcit.cirru --check-only --all-defs
-        calcit calcit.cirru fix --workflow strict --verify --format json
+        calcit calcit.cirru fix --workflow strict --verify --format json | jq -e 'if .data.workflow.status == "passed" and .diagnostics == [] then true else ., false end'
         calcit calcit.cirru test --require-match --summary-only --format json
 
     - name: "test"
