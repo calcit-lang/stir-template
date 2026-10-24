@@ -50,7 +50,6 @@ jobs:
       run: |
         set -euo pipefail
         env=ci calcit calcit.cirru | tee acceptance/demo.txt
-        calcit eval --dep "$GITHUB_WORKSPACE/calcit.cirru" --stdin < acceptance/resources.cirru
 
     - name: Preserve prepared source and original native rendering
       if: always()

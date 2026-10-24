@@ -60,7 +60,9 @@ make-page $ {} $ :content
 
 CI 用一个 `--check-only --all-defs` 覆盖所有定义，替代重复的入口与逐 namespace
 检查；保留完整 strict、原有附带断言及原 HTML demo，不新增验证脚本或质量预算。
-两项附带测试有四条真实 `assert=`；demo 是渲染冒烟检查，不把它当作额外断言。
+原两项附带测试的四条 `assert=` 保留；本轮将样式、内联样式及两种脚本的资源装配
+合为 `make-page` 的一个正向附带用例，使用原测试入口，不另建 runner。
+demo 是渲染冒烟检查，不把它当作额外断言。
 仍保留异构 HTML 输入与 variadic API，不以工具链升级为理由伪造固定类型。
 
 ### 0.30.0 迁移记录

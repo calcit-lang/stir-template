@@ -4,14 +4,14 @@ import {mkdirSync,readFileSync,writeFileSync} from 'node:fs';
 const run=(...args)=>execFileSync(process.env.STIR_QUERY_CLI||'calcit',args,{encoding:'utf8',maxBuffer:20*1024*1024,stdio:['ignore','pipe','ignore']});
 const q=(...args)=>JSON.parse(run('query',...args,'--format','json')).data;
 mkdirSync('acceptance',{recursive:true});
-function inventory(){
+function inventory(testCount=2){
   const ds=[];
   for(const ns of q('ns').namespaces){
     const names=run('query','defs',ns).split('\n').filter(l=>/^  \S/.test(l)).map(l=>l.trim().split(' ')[0]);
     assert.equal(names.length,q('ns',ns).definition_count);
     for(const n of names)ds.push(q('def',`${ns}/${n}`));
   }
-  assert.equal(ds.length,66);assert.equal(ds.reduce((n,d)=>n+d.tests.length,0),2);
+  assert.equal(ds.length,66);assert.equal(ds.reduce((n,d)=>n+d.tests.length,0),testCount);
   assert.equal(q('ns').namespaces.length,6);return ds;
 }
 if(process.argv[2]==='inventory'){
@@ -49,9 +49,13 @@ for(const name of ['StirPageResources','StirScriptResource']){
   const d=expected.find(d=>d.id===`stir-template.schema/${name}`);assert.equal(d.code[0],'defstruct');assert.equal(d.schema,"'Struct");
   d.schema="'StructDef";operations.push(['edit','schema',d.id,'--input-format','json-ast','--code',JSON.stringify(d.schema)]);
 }
+const resources=['{}',[':content','|CONTENT'],[':styles',['[]','|/a.css']],[':inline-styles',['[]','|.a{color:red;}']],[':scripts',['[]','|/a.js',['{}',[':src','|/m.js'],[':type',':module'],[':defer?','true']]]]];
+const testCode=['let',[['page',['make-page',resources]]],...['|/a.css','|.a{color:red;}','|/a.js','|/m.js','|CONTENT'].map(text=>['assert=','2',['.len',['split','page',text]]])];
+assert.deepEqual(page.tests,[]);page.tests.push({code:testCode,name:'renders-page-resources',tags:['unit']});
+operations.push(['edit','add-test',page.id,'renders-page-resources','--tags','unit','--input-format','json-ast','--code',JSON.stringify(testCode)]);
 writeFileSync('acceptance/before.json',JSON.stringify(before,null,2));writeFileSync('acceptance/operations.json',JSON.stringify(operations,null,2));
 const args=['edit','transaction','--file','acceptance/operations.json','--format','json'];
 const preview=JSON.parse(run(...args,'--dry-run'));assert.ok(preview.scoped_revision);
 writeFileSync('acceptance/preview.json',JSON.stringify(preview,null,2));writeFileSync('acceptance/applied.json',run(...args,'--expect-revision',preview.scoped_revision));
-assert.deepEqual(inventory(),expected,'Whole views:9heads/3concretecallbacks/2definition-kinds;allotherpubliccontracts/variadic/escaping/HTML/tests/config unchanged');assert.deepEqual(q('config'),config);
+assert.deepEqual(inventory(3),expected,'Whole views:9heads/3concretecallbacks/2definition-kinds/1resource-case;originaltests/publiccontracts/variadic/escaping/HTML/config unchanged');assert.deepEqual(q('config'),config);
 writeFileSync('acceptance/after.json',JSON.stringify(expected,null,2));writeFileSync('acceptance/snapshot-blob.txt',execFileSync('git',['hash-object','calcit.cirru'],{encoding:'utf8'}));
