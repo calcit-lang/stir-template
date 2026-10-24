@@ -125,15 +125,21 @@
                       [] $ <*> :meta $ {} (:class ssr)
                   ->
                     .unwrap-or (:styles resources) ([])
-                    map $ fn (path)
+                    .map $ fn (path)
+                      hint-fn $ {}
+                        :args $ [] 'String
+                        :return $ :: 'Map 'Tag 'Dynamic
                       link $ {} (:rel |stylesheet) (:type |text/css) (:href path)
                   ->
                     .unwrap-or (:inline-styles resources) ([])
-                    map $ fn (content)
+                    .map $ fn (content)
+                      hint-fn $ {}
+                        :args $ [] 'String
+                        :return $ :: 'Map 'Tag 'Dynamic
                       style $ {} $ :innerHTML content
                   ->
                     .unwrap-or (:scripts resources) ([])
-                    map $ fn (path)
+                    .map $ fn (path)
                       if (string? path)
                         script $ {} $ :src path
                         let
@@ -171,6 +177,18 @@
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
             :args $ [] 'Dynamic
+          :tests $ [] $ %{} 'TestEntry (:name |renders-page-resources)
+            :code $ quote $ let
+                page $ make-page $ {} (:content |CONTENT)
+                  :styles $ [] |/a.css
+                  :inline-styles $ [] |.a{color:red;}
+                  :scripts $ [] |/a.js $ {} (:src |/m.js) (:type :module) (:defer? true)
+              assert= 2 $ .len $ split page |/a.css
+              assert= 2 $ .len $ split page |.a{color:red;}
+              assert= 2 $ .len $ split page |/a.js
+              assert= 2 $ .len $ split page |/m.js
+              assert= 2 $ .len $ split page |CONTENT
+            :tags $ #{} :unit
         'meta $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn meta (attrs & children) (<*> :meta attrs & children)
           :examples $ []
@@ -230,7 +248,7 @@
         'child->strings $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn child->strings (child)
             if (list? child)
-              map
+              .map
                 decode-map-as child $ :: 'List 'Dynamic
                 , element->string
               [] $ element->string child
@@ -240,7 +258,7 @@
             :return $ :: 'List 'String
         'doctype-html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn doctype-html (& args)
-            &str:concat "|<!DOCTYPE html>" $ -> args (map element->string) (join-string |)
+            &str:concat "|<!DOCTYPE html>" $ -> args (.map element->string) (join-string |)
           :examples $ []
           :schema $ :: 'Fn $ {} (:rest 'Dynamic) (:return 'String)
             :args $ []
@@ -278,7 +296,7 @@
                       mapcat child->strings
                   str |< tag-name
                     if
-                      > (count props-in-string) 0
+                      > (.len props-in-string) 0
                       , "| " |
                     , props-in-string |>
                       if (non-nil? text-inside) text-inside $ join-string children |
@@ -332,7 +350,7 @@
             :args $ [] 'String
         'props->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn props->string (props)
-            -> (map-entries props) (map entry->string) (join-string "| ")
+            -> (map-entries props) (.map entry->string) (join-string "| ")
           :examples $ []
           :schema $ :: 'Fn $ {} (:return 'String)
             :args $ [] $ :: 'Map 'Tag 'Dynamic
@@ -343,7 +361,10 @@
         'style->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn style->string (styles)
             -> (map-entries styles)
-              map $ fn (entry)
+              .map $ fn (entry)
+                hint-fn $ {}
+                  :args $ [] $ :: 'MapEntry 'Tag 'Dynamic
+                  :return 'String
                 let
                     k $ :key entry
                     v $ :value entry
@@ -427,14 +448,14 @@
             :inline-html $ :: 'Option 'String
             :append-html $ :: 'Option 'String
           :examples $ []
-          :schema $ :: 'Struct
+          :schema $ :: 'StructDef
         'StirScriptResource $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct StirScriptResource
             :type $ :: 'Option 'Tag
             :src 'String
             :defer? $ :: 'Option 'Bool
           :examples $ []
-          :schema $ :: 'Struct
+          :schema $ :: 'StructDef
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns stir-template.schema
     'stir-template.ui $ %{} 'FileEntry
@@ -525,7 +546,7 @@
             :args $ [] 'Number 'Number 'Number
         'input $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def input
-            merge global $ {} (:border :none) (:outline :none)
+            .merge global $ {} (:border :none) (:outline :none)
               :border $ str "|1px solid " $ hsl 0 0 80
               :border-radius |4px
               :font-size |14px
