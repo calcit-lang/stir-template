@@ -10,4 +10,3 @@ let
   assert= 2 $ .len $ split page |/m.js
   assert= 2 $ .len $ split page |CONTENT
   echo |Stir-resource-rendering-passed
-  &unit
