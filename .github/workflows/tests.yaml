@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - prepare/stir-source031
   pull_request: {}
 
 permissions:
@@ -24,6 +25,11 @@ jobs:
         deps-file: deps.cirru
         caps-version: "0.1.1"
 
+    - uses: actions/setup-node@v6.5.0
+      with:
+        node-version: 24
+        package-manager-cache: false
+
     - name: "load deps"
       run: caps --strict --ci
 
@@ -33,11 +39,25 @@ jobs:
     - name: Validate Calcit snapshot and types
       run: |
         set -euo pipefail
+        node prepare-source.mjs
         calcit calcit.cirru edit format
-        git diff --exit-code -- calcit.cirru
+        test "$(git hash-object calcit.cirru)" = "$(cat acceptance/snapshot-blob.txt)"
         calcit calcit.cirru --check-only --all-defs
         calcit calcit.cirru fix --workflow strict --verify --format json | jq -e 'if .data.workflow.status == "passed" and .diagnostics == [] then true else ., false end'
         calcit calcit.cirru test --require-match --summary-only --format json
 
     - name: "test"
-      run: env=ci calcit calcit.cirru
+      run: |
+        set -euo pipefail
+        env=ci calcit calcit.cirru | tee acceptance/demo.txt
+        calcit eval --dep calcit.cirru --stdin < acceptance/resources.cirru
+
+    - name: Preserve prepared source and original native rendering
+      if: always()
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+      with:
+        name: stir-source-prepared
+        path: |
+          calcit.cirru
+          acceptance/
+        retention-days: 3

@@ -4,10 +4,16 @@ Stir Template
 
 > for Calcit
 
-使用者注意：候选模块 **0.0.19** 配对正式 Calcit **0.30.1**。本库是 native HTML
+使用者注意：候选模块 **0.0.20** 配对正式 Calcit **0.30.1**。本库是 native HTML
 字符串生成库，无 npm runtime 或前端 COS/CDN 产物，不承诺 JS/WASM 支持。
-本次模板源码、escaping、variadic API 与公开类型合同不变；正式 tag 发布前不使用
-候选号代替已发布依赖。HTML 属性及 style 顺序本来可能变化，不承诺逐字节一致。
+本次迁移九处旧方法调用，并为三个实际已知类型的回调补充合同；escaping、variadic
+API 与公开调用参数/返回合同不变。两个资源 defstruct 的元数据从实例 Struct 纠正为
+StructDef，不把定义对象冒充实例。正式 tag 发布前不使用候选号代替已发布依赖。
+HTML 属性及 style 顺序本来可能变化，不承诺逐字节一致。
+
+本轮保留开放 HTML 值、scripts 的混合 String/Map 输入及未知 script type 的原分支，
+不以假 String/Fn 合同隐藏真实 Dynamic，不新增强转、预算或永久迁移脚本。
+只通过官方结构化事务编辑 Snapshot，完整定义视图、原测试与 demo 守卫原有行为。
 
 Based on old works on:
 
@@ -45,11 +51,11 @@ make-page $ {} $ :content
   div nil $ span nil "|some text"
 ```
 
-### 0.30.1 候选验收注意事项
+### 0.30.1 配对与历史 0.0.19 验收
 
-本分支从既有 alpha.5 配对升级到正式 Calcit `0.30.1`，验收后发布模块 `0.0.19`。
-不改变模板源码、HTML escaping 或公开类型合同；原 alpha 结果不冒充本次正式验收。
-当前依赖声明示例只有在对应正式 tag 发布后才能安装，不混用 main/hash 版本。
+0.0.19 已从既有 alpha.5 配对升级并发布到正式 Calcit `0.30.1`。
+该历史版本不改变模板源码、HTML escaping 或公开类型合同；原 alpha 结果不冒充正式验收。
+上方依赖声明仍使用已发布 0.0.19；本轮 0.0.20 正式 tag 发布后再升级，不混用 main/hash。
 本模块是 native-only，无需 `@calcit/procs`，也没有前端 COS/CDN 部署产物。
 
 CI 用一个 `--check-only --all-defs` 覆盖所有定义，替代重复的入口与逐 namespace

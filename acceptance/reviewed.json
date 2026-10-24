@@ -1,0 +1,4498 @@
+[
+  {
+    "code": [
+      "def",
+      "calcit-dirname",
+      "|"
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.$meta/calcit-dirname",
+    "js_ffi": null,
+    "schema": null,
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "calcit-filename",
+      "|calcit.cirru"
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.$meta/calcit-filename",
+    "js_ffi": null,
+    "schema": null,
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "a",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":a",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/a",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "body",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":body",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/body",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "button",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":button",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/button",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "canvas",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":canvas",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/canvas",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "code",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":code",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/code",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "div",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":div",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/div",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "h1",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":h1",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/h1",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "h2",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":h2",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/h2",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "h3",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":h3",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/h3",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "head",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":head",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/head",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "html",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":html",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/html",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "img",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":img",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/img",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defmacro",
+      "input",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "quasiquote",
+        [
+          "<*>",
+          ":input",
+          [
+            "~",
+            "attrs"
+          ],
+          [
+            "~@",
+            "children"
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/input",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Macro",
+      [
+        "{}",
+        [
+          ":capabilities",
+          [
+            "#{}"
+          ]
+        ],
+        [
+          ":expansion",
+          [
+            "::",
+            "'Expr",
+            "'Dynamic"
+          ]
+        ],
+        [
+          ":required",
+          [
+            "[]",
+            [
+              "::",
+              "'Expr",
+              "'Dynamic"
+            ]
+          ]
+        ],
+        [
+          ":rest",
+          [
+            "::",
+            "'Expr",
+            "'Dynamic"
+          ]
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "link",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":link",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/link",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "make-page",
+      [
+        "raw-resources"
+      ],
+      [
+        "let",
+        [
+          [
+            "resources",
+            [
+              "decode-map-as",
+              "raw-resources",
+              "stir-template.schema/StirPageResources"
+            ]
+          ]
+        ],
+        [
+          "doctype-html",
+          [
+            "html",
+            [
+              "{}"
+            ],
+            [
+              "<*>",
+              ":head",
+              [
+                "{}"
+              ],
+              [
+                "let",
+                [
+                  [
+                    "t",
+                    [
+                      ".unwrap-or",
+                      [
+                        ":title",
+                        "resources"
+                      ],
+                      "|"
+                    ]
+                  ]
+                ],
+                [
+                  "if",
+                  [
+                    "string?",
+                    "t"
+                  ],
+                  [
+                    "title",
+                    [
+                      "{}",
+                      [
+                        ":innerHTML",
+                        "t"
+                      ]
+                    ]
+                  ],
+                  [
+                    "title",
+                    "t"
+                  ]
+                ]
+              ],
+              [
+                ".fold",
+                [
+                  ":icon",
+                  "resources"
+                ],
+                [
+                  "fn",
+                  [],
+                  [
+                    "[]"
+                  ]
+                ],
+                [
+                  "fn",
+                  [
+                    "icon"
+                  ],
+                  [
+                    "[]",
+                    [
+                      "link",
+                      [
+                        "{}",
+                        [
+                          ":rel",
+                          "|icon"
+                        ],
+                        [
+                          ":type",
+                          "|image/png"
+                        ],
+                        [
+                          ":href",
+                          "icon"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                ".fold",
+                [
+                  ":manifest",
+                  "resources"
+                ],
+                [
+                  "fn",
+                  [],
+                  [
+                    "[]"
+                  ]
+                ],
+                [
+                  "fn",
+                  [
+                    "manifest"
+                  ],
+                  [
+                    "[]",
+                    [
+                      "link",
+                      [
+                        "{}",
+                        [
+                          ":rel",
+                          "|manifest"
+                        ],
+                        [
+                          ":href",
+                          "manifest"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "<*>",
+                ":meta",
+                [
+                  "{}",
+                  [
+                    ":charset",
+                    "|utf8"
+                  ]
+                ]
+              ],
+              [
+                "<*>",
+                ":meta",
+                [
+                  "{}",
+                  [
+                    ":name",
+                    "|viewport"
+                  ],
+                  [
+                    ":content",
+                    [
+                      ".unwrap-or",
+                      [
+                        ":viewport",
+                        "resources"
+                      ],
+                      "|width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                ".fold",
+                [
+                  ":ssr",
+                  "resources"
+                ],
+                [
+                  "fn",
+                  [],
+                  [
+                    "[]"
+                  ]
+                ],
+                [
+                  "fn",
+                  [
+                    "ssr"
+                  ],
+                  [
+                    "[]",
+                    [
+                      "<*>",
+                      ":meta",
+                      [
+                        "{}",
+                        [
+                          ":class",
+                          "ssr"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "->",
+                [
+                  ".unwrap-or",
+                  [
+                    ":styles",
+                    "resources"
+                  ],
+                  [
+                    "[]"
+                  ]
+                ],
+                [
+                  "map",
+                  [
+                    "fn",
+                    [
+                      "path"
+                    ],
+                    [
+                      "link",
+                      [
+                        "{}",
+                        [
+                          ":rel",
+                          "|stylesheet"
+                        ],
+                        [
+                          ":type",
+                          "|text/css"
+                        ],
+                        [
+                          ":href",
+                          "path"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "->",
+                [
+                  ".unwrap-or",
+                  [
+                    ":inline-styles",
+                    "resources"
+                  ],
+                  [
+                    "[]"
+                  ]
+                ],
+                [
+                  "map",
+                  [
+                    "fn",
+                    [
+                      "content"
+                    ],
+                    [
+                      "style",
+                      [
+                        "{}",
+                        [
+                          ":innerHTML",
+                          "content"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "->",
+                [
+                  ".unwrap-or",
+                  [
+                    ":scripts",
+                    "resources"
+                  ],
+                  [
+                    "[]"
+                  ]
+                ],
+                [
+                  "map",
+                  [
+                    "fn",
+                    [
+                      "path"
+                    ],
+                    [
+                      "if",
+                      [
+                        "string?",
+                        "path"
+                      ],
+                      [
+                        "script",
+                        [
+                          "{}",
+                          [
+                            ":src",
+                            "path"
+                          ]
+                        ]
+                      ],
+                      [
+                        "let",
+                        [
+                          [
+                            "resource",
+                            [
+                              "decode-map-as",
+                              "path",
+                              "stir-template.schema/StirScriptResource"
+                            ]
+                          ],
+                          [
+                            "script-type",
+                            [
+                              ".unwrap-or",
+                              [
+                                ":type",
+                                "resource"
+                              ],
+                              ":script"
+                            ]
+                          ]
+                        ],
+                        [
+                          "match",
+                          "script-type",
+                          [
+                            ":module",
+                            [
+                              "script",
+                              [
+                                "let",
+                                [
+                                  [
+                                    "base",
+                                    [
+                                      "{}",
+                                      [
+                                        ":type",
+                                        "|module"
+                                      ],
+                                      [
+                                        ":src",
+                                        [
+                                          ":src",
+                                          "resource"
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  "if",
+                                  [
+                                    ".unwrap-or",
+                                    [
+                                      ":defer?",
+                                      "resource"
+                                    ],
+                                    "false"
+                                  ],
+                                  [
+                                    "assoc",
+                                    "base",
+                                    ":defer",
+                                    "|defer"
+                                  ],
+                                  "base"
+                                ]
+                              ]
+                            ]
+                          ],
+                          [
+                            ":script",
+                            [
+                              "script",
+                              [
+                                "let",
+                                [
+                                  [
+                                    "base",
+                                    [
+                                      "{}",
+                                      [
+                                        ":src",
+                                        [
+                                          ":src",
+                                          "resource"
+                                        ]
+                                      ]
+                                    ]
+                                  ]
+                                ],
+                                [
+                                  "if",
+                                  [
+                                    ".unwrap-or",
+                                    [
+                                      ":defer?",
+                                      "resource"
+                                    ],
+                                    "false"
+                                  ],
+                                  [
+                                    "assoc",
+                                    "base",
+                                    ":defer",
+                                    "|defer"
+                                  ],
+                                  "base"
+                                ]
+                              ]
+                            ]
+                          ],
+                          [
+                            "_",
+                            [
+                              "println",
+                              "|[Shell Page]: unknown script type",
+                              "script-type"
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "body",
+              [
+                "{}"
+              ],
+              [
+                "let",
+                [
+                  [
+                    "content",
+                    [
+                      ".unwrap-or",
+                      [
+                        ":content",
+                        "resources"
+                      ],
+                      "nil"
+                    ]
+                  ]
+                ],
+                [
+                  "if",
+                  [
+                    "string?",
+                    "content"
+                  ],
+                  [
+                    "div",
+                    [
+                      "{}",
+                      [
+                        ":class-name",
+                        "|app"
+                      ],
+                      [
+                        ":innerHTML",
+                        "content"
+                      ]
+                    ]
+                  ],
+                  "content"
+                ]
+              ],
+              [
+                ".fold",
+                [
+                  ":inline-html",
+                  "resources"
+                ],
+                [
+                  "fn",
+                  [],
+                  [
+                    "[]"
+                  ]
+                ],
+                [
+                  "fn",
+                  [
+                    "content"
+                  ],
+                  [
+                    "[]",
+                    [
+                      "div",
+                      [
+                        "{}",
+                        [
+                          ":innerHTML",
+                          "content"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                ".fold",
+                [
+                  ":append-html",
+                  "resources"
+                ],
+                [
+                  "fn",
+                  [],
+                  [
+                    "[]"
+                  ]
+                ],
+                [
+                  "fn",
+                  [
+                    "content"
+                  ],
+                  [
+                    "[]",
+                    [
+                      "div",
+                      [
+                        "{}",
+                        [
+                          ":innerHTML",
+                          "content"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/make-page",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'String"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "meta",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":meta",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/meta",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "script",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":script",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/script",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "span",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":span",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/span",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "style",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":style",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/style",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "textarea",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":textarea",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/textarea",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "title",
+      [
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "<*>",
+        ":title",
+        "attrs",
+        "&",
+        "children"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.alias/title",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'Map",
+          "'Tag",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defmacro",
+      "<*>",
+      [
+        "tag-name",
+        "attrs",
+        "&",
+        "children"
+      ],
+      [
+        "quasiquote",
+        [
+          "&let",
+          [
+            "attrs-value",
+            [
+              "~",
+              "attrs"
+            ]
+          ],
+          [
+            "assert",
+            "|a map for attrs",
+            [
+              "or",
+              [
+                "nil?",
+                "attrs-value"
+              ],
+              [
+                "map?",
+                "attrs-value"
+              ]
+            ]
+          ],
+          [
+            "{}",
+            [
+              ":name",
+              [
+                "~",
+                "tag-name"
+              ]
+            ],
+            [
+              ":attrs",
+              [
+                "either",
+                "attrs-value",
+                [
+                  "{}"
+                ]
+              ]
+            ],
+            [
+              ":children",
+              [
+                "[]",
+                [
+                  "~@",
+                  "children"
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/<*>",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Macro",
+      [
+        "{}",
+        [
+          ":capabilities",
+          [
+            "#{}"
+          ]
+        ],
+        [
+          ":expansion",
+          [
+            "::",
+            "'Expr",
+            "'Dynamic"
+          ]
+        ],
+        [
+          ":required",
+          [
+            "[]",
+            [
+              "::",
+              "'Expr",
+              "'Dynamic"
+            ],
+            [
+              "::",
+              "'Expr",
+              "'Dynamic"
+            ]
+          ]
+        ],
+        [
+          ":rest",
+          [
+            "::",
+            "'Expr",
+            "'Dynamic"
+          ]
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "child->strings",
+      [
+        "child"
+      ],
+      [
+        "if",
+        [
+          "list?",
+          "child"
+        ],
+        [
+          "map",
+          [
+            "decode-map-as",
+            "child",
+            [
+              "::",
+              "'List",
+              "'Dynamic"
+            ]
+          ],
+          "element->string"
+        ],
+        [
+          "[]",
+          [
+            "element->string",
+            "child"
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/child->strings",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":return",
+        [
+          "::",
+          "'List",
+          "'String"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "doctype-html",
+      [
+        "&",
+        "args"
+      ],
+      [
+        "&str:concat",
+        "|<!DOCTYPE html>",
+        [
+          "->",
+          "args",
+          [
+            "map",
+            "element->string"
+          ],
+          [
+            "join-string",
+            "|"
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/doctype-html",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Dynamic"
+      ],
+      [
+        ":return",
+        "'String"
+      ],
+      [
+        ":args",
+        [
+          "[]"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "element->string",
+      [
+        "element"
+      ],
+      [
+        "cond",
+        [
+          [
+            "nil?",
+            "element"
+          ],
+          "|"
+        ],
+        [
+          [
+            "string?",
+            "element"
+          ],
+          [
+            "escape-html",
+            "element"
+          ]
+        ],
+        [
+          [
+            "number?",
+            "element"
+          ],
+          [
+            "&str",
+            "element"
+          ]
+        ],
+        [
+          [
+            "bool?",
+            "element"
+          ],
+          [
+            "&str",
+            "element"
+          ]
+        ],
+        [
+          [
+            "map?",
+            "element"
+          ],
+          [
+            "let",
+            [
+              [
+                "name-value",
+                [
+                  "decode-map-as",
+                  [
+                    ".unwrap-or",
+                    [
+                      "get",
+                      "element",
+                      ":name"
+                    ],
+                    ":unknown"
+                  ],
+                  "'Tag"
+                ]
+              ],
+              [
+                "tag-name",
+                [
+                  "to-string",
+                  "name-value"
+                ]
+              ],
+              [
+                "attrs",
+                [
+                  "decode-map-as",
+                  [
+                    ".unwrap-or",
+                    [
+                      "get",
+                      "element",
+                      ":attrs"
+                    ],
+                    [
+                      "{}"
+                    ]
+                  ],
+                  [
+                    "::",
+                    "'Map",
+                    "'Tag",
+                    "'Dynamic"
+                  ]
+                ]
+              ],
+              [
+                "styles",
+                [
+                  "decode-map-as",
+                  [
+                    ".unwrap-or",
+                    [
+                      "get",
+                      "element",
+                      ":style"
+                    ],
+                    [
+                      "{}"
+                    ]
+                  ],
+                  [
+                    "::",
+                    "'Map",
+                    "'Tag",
+                    "'Dynamic"
+                  ]
+                ]
+              ],
+              [
+                "text-inside",
+                [
+                  "if",
+                  [
+                    "=",
+                    "name-value",
+                    ":textarea"
+                  ],
+                  [
+                    "escape-html",
+                    [
+                      ".unwrap-or",
+                      [
+                        "get",
+                        "attrs",
+                        ":value"
+                      ],
+                      "|"
+                    ]
+                  ],
+                  [
+                    ".unwrap-or",
+                    [
+                      "get",
+                      "attrs",
+                      ":innerHTML"
+                    ],
+                    [
+                      "text->html",
+                      [
+                        ".unwrap-or",
+                        [
+                          "get",
+                          "attrs",
+                          ":inner-text"
+                        ],
+                        "nil"
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "tailored-props",
+                [
+                  "->",
+                  "attrs",
+                  [
+                    "dissoc",
+                    ":innerHTML"
+                  ],
+                  [
+                    "dissoc",
+                    ":inner-text"
+                  ],
+                  [
+                    [
+                      "fn",
+                      [
+                        "props"
+                      ],
+                      [
+                        "if",
+                        [
+                          "empty?",
+                          "styles"
+                        ],
+                        "props",
+                        [
+                          "assoc",
+                          "props",
+                          ":style",
+                          "styles"
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ],
+              [
+                "props-in-string",
+                [
+                  "props->string",
+                  "tailored-props"
+                ]
+              ],
+              [
+                "children",
+                [
+                  "->",
+                  [
+                    "decode-map-as",
+                    [
+                      ".unwrap-or",
+                      [
+                        "get",
+                        "element",
+                        ":children"
+                      ],
+                      [
+                        "[]"
+                      ]
+                    ],
+                    [
+                      "::",
+                      "'List",
+                      "'Dynamic"
+                    ]
+                  ],
+                  [
+                    "mapcat",
+                    "child->strings"
+                  ]
+                ]
+              ]
+            ],
+            [
+              "str",
+              "|<",
+              "tag-name",
+              [
+                "if",
+                [
+                  ">",
+                  [
+                    "count",
+                    "props-in-string"
+                  ],
+                  "0"
+                ],
+                "| ",
+                "|"
+              ],
+              "props-in-string",
+              "|>",
+              [
+                "if",
+                [
+                  "non-nil?",
+                  "text-inside"
+                ],
+                "text-inside",
+                [
+                  "join-string",
+                  "children",
+                  "|"
+                ]
+              ],
+              "|</",
+              "tag-name",
+              "|>"
+            ]
+          ]
+        ],
+        [
+          "true",
+          [
+            "raise",
+            [
+              "str",
+              "|Unknown element: ",
+              [
+                "to-lispy-string",
+                "element"
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/element->string",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'String"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "ensure-string",
+      [
+        "x"
+      ],
+      [
+        "cond",
+        [
+          [
+            "string?",
+            "x"
+          ],
+          "x"
+        ],
+        [
+          [
+            "tag?",
+            "x"
+          ],
+          [
+            "to-string",
+            "x"
+          ]
+        ],
+        [
+          "true",
+          [
+            "str",
+            "x"
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/ensure-string",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'String"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "entry->string",
+      [
+        "entry"
+      ],
+      [
+        "let",
+        [
+          [
+            "k",
+            [
+              ":key",
+              "entry"
+            ]
+          ],
+          [
+            "v",
+            [
+              ":value",
+              "entry"
+            ]
+          ]
+        ],
+        [
+          "str",
+          [
+            "prop->attr",
+            [
+              "to-string",
+              "k"
+            ]
+          ],
+          "|=",
+          [
+            "&str:escape",
+            [
+              "cond",
+              [
+                [
+                  "=",
+                  "k",
+                  ":style"
+                ],
+                [
+                  "style->string",
+                  [
+                    "decode-map-as",
+                    "v",
+                    [
+                      "::",
+                      "'Map",
+                      "'Tag",
+                      "'Dynamic"
+                    ]
+                  ]
+                ]
+              ],
+              [
+                [
+                  "bool?",
+                  "v"
+                ],
+                [
+                  "str",
+                  "v"
+                ]
+              ],
+              [
+                [
+                  "number?",
+                  "v"
+                ],
+                [
+                  "str",
+                  "v"
+                ]
+              ],
+              [
+                [
+                  "tag?",
+                  "v"
+                ],
+                [
+                  "to-string",
+                  "v"
+                ]
+              ],
+              [
+                [
+                  "string?",
+                  "v"
+                ],
+                [
+                  "escape-html",
+                  "v"
+                ]
+              ],
+              [
+                "true",
+                [
+                  "str",
+                  "v"
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/entry->string",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'String"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          [
+            "::",
+            "'MapEntry",
+            "'Tag",
+            "'Dynamic"
+          ]
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "escape-html",
+      [
+        "text"
+      ],
+      [
+        "if",
+        [
+          "nil?",
+          "text"
+        ],
+        "|",
+        [
+          "if",
+          [
+            "string?",
+            "text"
+          ],
+          [
+            "->",
+            "text",
+            [
+              "&str:replace",
+              "|&",
+              "|&amp;"
+            ],
+            [
+              "&str:replace",
+              "|\"",
+              "|&quot;"
+            ],
+            [
+              "&str:replace",
+              "|<",
+              "|&lt;"
+            ],
+            [
+              "&str:replace",
+              "|>",
+              "|&gt;"
+            ],
+            [
+              "&str:replace",
+              "|\\n",
+              "|&#13;&#10;"
+            ]
+          ],
+          [
+            "raise",
+            "|HTML escaping expected a String or nil"
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/escape-html",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'String"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "prop->attr",
+      [
+        "x"
+      ],
+      [
+        "when",
+        [
+          "includes?",
+          "x",
+          "|?"
+        ],
+        [
+          "println",
+          "|[Respo] warning: property contains `?` in",
+          "x"
+        ]
+      ],
+      [
+        "case",
+        "x",
+        [
+          "|class-name",
+          "|class"
+        ],
+        [
+          "|tab-index",
+          "|tabindex"
+        ],
+        [
+          "|read-only",
+          "|readonly"
+        ],
+        [
+          "x",
+          "x"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/prop->attr",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'String"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'String"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "props->string",
+      [
+        "props"
+      ],
+      [
+        "->",
+        [
+          "map-entries",
+          "props"
+        ],
+        [
+          "map",
+          "entry->string"
+        ],
+        [
+          "join-string",
+          "| "
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/props->string",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'String"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          [
+            "::",
+            "'Map",
+            "'Tag",
+            "'Dynamic"
+          ]
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": [
+      {
+        "code": [
+          "do",
+          [
+            "assert=",
+            "|title=\"&lt;&amp;&gt;\"",
+            [
+              "props->string",
+              [
+                "{}",
+                [
+                  ":title",
+                  "|<&>"
+                ]
+              ]
+            ]
+          ],
+          [
+            "assert=",
+            "|disabled=\"true\"",
+            [
+              "props->string",
+              [
+                "{}",
+                [
+                  ":disabled",
+                  "true"
+                ]
+              ]
+            ]
+          ]
+        ],
+        "name": "typed-attributes",
+        "tags": []
+      }
+    ]
+  },
+  {
+    "code": [
+      "defn",
+      "style->string",
+      [
+        "styles"
+      ],
+      [
+        "->",
+        [
+          "map-entries",
+          "styles"
+        ],
+        [
+          "map",
+          [
+            "fn",
+            [
+              "entry"
+            ],
+            [
+              "let",
+              [
+                [
+                  "k",
+                  [
+                    ":key",
+                    "entry"
+                  ]
+                ],
+                [
+                  "v",
+                  [
+                    ":value",
+                    "entry"
+                  ]
+                ]
+              ],
+              [
+                "str",
+                [
+                  "to-string",
+                  "k"
+                ],
+                "|:",
+                [
+                  "if",
+                  [
+                    "string?",
+                    "v"
+                  ],
+                  [
+                    "escape-html",
+                    "v"
+                  ],
+                  [
+                    "ensure-string",
+                    "v"
+                  ]
+                ],
+                "|;"
+              ]
+            ]
+          ]
+        ],
+        [
+          "join-string",
+          "|"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/style->string",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'String"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          [
+            "::",
+            "'Map",
+            "'Tag",
+            "'Dynamic"
+          ]
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": [
+      {
+        "code": [
+          "do",
+          [
+            "assert=",
+            "|color:red;",
+            [
+              "style->string",
+              [
+                "{}",
+                [
+                  ":color",
+                  "|red"
+                ]
+              ]
+            ]
+          ],
+          [
+            "assert=",
+            "|color:&lt;&amp;&gt;;",
+            [
+              "style->string",
+              [
+                "{}",
+                [
+                  ":color",
+                  "|<&>"
+                ]
+              ]
+            ]
+          ]
+        ],
+        "name": "typed-style",
+        "tags": []
+      }
+    ]
+  },
+  {
+    "code": [
+      "defn",
+      "text->html",
+      [
+        "x"
+      ],
+      [
+        "if",
+        [
+          "non-nil?",
+          "x"
+        ],
+        [
+          "->",
+          [
+            "str",
+            "x"
+          ],
+          [
+            "&str:replace",
+            "|&",
+            "|&amp;"
+          ],
+          [
+            "&str:replace",
+            "|>",
+            "|&gt;"
+          ],
+          [
+            "&str:replace",
+            "|<",
+            "|&lt;"
+          ]
+        ],
+        "nil"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.core/text->html",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'Dynamic"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Dynamic"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "main!",
+      [],
+      [
+        "render-page"
+      ],
+      [
+        "echo",
+        "|Started"
+      ],
+      "&unit"
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.main/main!",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'Unit"
+      ],
+      [
+        ":args",
+        [
+          "[]"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "on-error",
+      [
+        "message"
+      ],
+      [
+        ";",
+        "draw-error-message",
+        "message"
+      ],
+      "&unit"
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.main/on-error",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'Unit"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'String"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "reload!",
+      [],
+      [
+        "echo",
+        "|Reload!"
+      ],
+      [
+        "render-page"
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.main/reload!",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'Unit"
+      ],
+      [
+        ":args",
+        [
+          "[]"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "render-page",
+      [],
+      [
+        "echo",
+        [
+          "doctype-html",
+          [
+            "head",
+            [
+              "{}"
+            ]
+          ],
+          [
+            "body",
+            [
+              "{}",
+              [
+                ":style",
+                "ui/global"
+              ]
+            ],
+            [
+              "div",
+              [
+                "{}"
+              ],
+              [
+                "div",
+                [
+                  "{}",
+                  [
+                    ":class",
+                    "|DEMO DE"
+                  ],
+                  [
+                    ":inner-text",
+                    "|demo"
+                  ]
+                ]
+              ],
+              [
+                "textarea",
+                [
+                  "{}",
+                  [
+                    ":value",
+                    "|1"
+                  ]
+                ]
+              ],
+              [
+                "input",
+                [
+                  "{}",
+                  [
+                    ":value",
+                    "|A"
+                  ]
+                ]
+              ],
+              [
+                "input",
+                [
+                  "{}",
+                  [
+                    ":value",
+                    "|b l a n k"
+                  ]
+                ]
+              ],
+              [
+                "a",
+                [
+                  "{}",
+                  [
+                    ":href",
+                    "|http://demo.com"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      [
+        "echo",
+        [
+          "make-page",
+          [
+            "{}",
+            [
+              ":content",
+              "|CONTENT"
+            ]
+          ]
+        ]
+      ],
+      [
+        "echo",
+        [
+          "make-page",
+          [
+            "{}",
+            [
+              ":content",
+              [
+                "div",
+                [
+                  "{}",
+                  [
+                    ":class",
+                    "|DEMO DE"
+                  ],
+                  [
+                    ":inner-text",
+                    "|demo"
+                  ]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ],
+      [
+        "echo",
+        [
+          "doctype-html",
+          [
+            "span",
+            "nil",
+            [
+              "span",
+              "nil"
+            ],
+            [
+              "span",
+              "nil"
+            ],
+            "1",
+            "nil",
+            "|demo",
+            "|with space<>"
+          ]
+        ]
+      ],
+      "&unit"
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.main/render-page",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":return",
+        "'Unit"
+      ],
+      [
+        ":args",
+        [
+          "[]"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defstruct",
+      "StirPageResources",
+      [
+        ":title",
+        [
+          "::",
+          "'Option",
+          "'String"
+        ]
+      ],
+      [
+        ":icon",
+        [
+          "::",
+          "'Option",
+          "'String"
+        ]
+      ],
+      [
+        ":manifest",
+        [
+          "::",
+          "'Option",
+          "'String"
+        ]
+      ],
+      [
+        ":viewport",
+        [
+          "::",
+          "'Option",
+          "'String"
+        ]
+      ],
+      [
+        ":ssr",
+        [
+          "::",
+          "'Option",
+          "'String"
+        ]
+      ],
+      [
+        ":styles",
+        [
+          "::",
+          "'Option",
+          [
+            "::",
+            "'List",
+            "'String"
+          ]
+        ]
+      ],
+      [
+        ":inline-styles",
+        [
+          "::",
+          "'Option",
+          [
+            "::",
+            "'List",
+            "'String"
+          ]
+        ]
+      ],
+      [
+        ":scripts",
+        [
+          "::",
+          "'Option",
+          [
+            "::",
+            "'List",
+            "'Dynamic"
+          ]
+        ]
+      ],
+      [
+        ":content",
+        [
+          "::",
+          "'Option",
+          "'Dynamic"
+        ]
+      ],
+      [
+        ":inline-html",
+        [
+          "::",
+          "'Option",
+          "'String"
+        ]
+      ],
+      [
+        ":append-html",
+        [
+          "::",
+          "'Option",
+          "'String"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.schema/StirPageResources",
+    "js_ffi": null,
+    "schema": "'Struct",
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defstruct",
+      "StirScriptResource",
+      [
+        ":type",
+        [
+          "::",
+          "'Option",
+          "'Tag"
+        ]
+      ],
+      [
+        ":src",
+        "'String"
+      ],
+      [
+        ":defer?",
+        [
+          "::",
+          "'Option",
+          "'Bool"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.schema/StirScriptResource",
+    "js_ffi": null,
+    "schema": "'Struct",
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "button",
+      [
+        "{}",
+        [
+          ":min-width",
+          "|80px"
+        ],
+        [
+          ":line-height",
+          "|30px"
+        ],
+        [
+          ":border-radius",
+          "|16px"
+        ],
+        [
+          ":font-size",
+          "|14px"
+        ],
+        [
+          ":text-align",
+          "|center"
+        ],
+        [
+          ":border",
+          [
+            "str",
+            "|1px solid ",
+            [
+              "hsl",
+              "200",
+              "100",
+              "76"
+            ]
+          ]
+        ],
+        [
+          ":color",
+          [
+            "hsl",
+            "200",
+            "100",
+            "76"
+          ]
+        ],
+        [
+          ":cursor",
+          "|pointer"
+        ],
+        [
+          ":display",
+          "|inline-block"
+        ],
+        [
+          ":padding",
+          "|0 8px"
+        ],
+        [
+          ":outline",
+          ":none"
+        ],
+        [
+          ":vertical-align",
+          ":top"
+        ],
+        [
+          ":background-color",
+          ":white"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/button",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "center",
+      [
+        "{}",
+        [
+          ":display",
+          "|flex"
+        ],
+        [
+          ":flex-direction",
+          "|column"
+        ],
+        [
+          ":justify-content",
+          "|center"
+        ],
+        [
+          ":align-items",
+          "|center"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/center",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "column",
+      [
+        "{}",
+        [
+          ":display",
+          "|flex"
+        ],
+        [
+          ":align-items",
+          "|stretch"
+        ],
+        [
+          ":flex-direction",
+          "|column"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/column",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "column-dispersive",
+      [
+        "{}",
+        [
+          ":display",
+          "|flex"
+        ],
+        [
+          ":align-items",
+          "|center"
+        ],
+        [
+          ":justify-content",
+          "|space-around"
+        ],
+        [
+          ":flex-direction",
+          "|column"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/column-dispersive",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "column-evenly",
+      [
+        "{}",
+        [
+          ":display",
+          "|flex"
+        ],
+        [
+          ":align-items",
+          "|center"
+        ],
+        [
+          ":justify-content",
+          "|space-evenly"
+        ],
+        [
+          ":flex-direction",
+          "|column"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/column-evenly",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "column-parted",
+      [
+        "{}",
+        [
+          ":display",
+          ":flex"
+        ],
+        [
+          ":align-items",
+          ":stretch"
+        ],
+        [
+          ":justify-content",
+          ":space-between"
+        ],
+        [
+          ":flex-direction",
+          ":column"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/column-parted",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "default-fonts",
+      "|Hind,Verdana,'Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft Yahei',sans-serif"
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/default-fonts",
+    "js_ffi": null,
+    "schema": "'String",
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "expand",
+      [
+        "{}",
+        [
+          ":flex",
+          "1"
+        ],
+        [
+          ":overflow",
+          ":auto"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/expand",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "flex",
+      [
+        "{}",
+        [
+          ":flex",
+          "1"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/flex",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "font-code",
+      "|Source Code Pro, Menlo, Ubuntu Mono, Consolas, monospace"
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/font-code",
+    "js_ffi": null,
+    "schema": "'String",
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "font-fancy",
+      "|Josefin Sans, Helvetica neue, Arial, sans-serif"
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/font-fancy",
+    "js_ffi": null,
+    "schema": "'String",
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "font-normal",
+      "|Hind, Helvatica, Arial, sans-serif"
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/font-normal",
+    "js_ffi": null,
+    "schema": "'String",
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "fullscreen",
+      [
+        "{}",
+        [
+          ":position",
+          "|absolute"
+        ],
+        [
+          ":left",
+          "|0px"
+        ],
+        [
+          ":top",
+          "|0px"
+        ],
+        [
+          ":width",
+          "|100%"
+        ],
+        [
+          ":height",
+          "|100%"
+        ],
+        [
+          ":overflow",
+          ":auto"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/fullscreen",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "global",
+      [
+        "{}",
+        [
+          ":line-height",
+          "|2"
+        ],
+        [
+          ":font-size",
+          "|14px"
+        ],
+        [
+          ":font-family",
+          "default-fonts"
+        ],
+        [
+          ":color",
+          [
+            "hsl",
+            "0",
+            "0",
+            "20"
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/global",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "defn",
+      "hsl",
+      [
+        "h",
+        "s",
+        "l",
+        "&",
+        "args"
+      ],
+      [
+        "if",
+        [
+          "empty?",
+          "args"
+        ],
+        [
+          "str",
+          "|hsl(",
+          "h",
+          "|, ",
+          "s",
+          "|%, ",
+          "l",
+          "|%)"
+        ],
+        [
+          "&let",
+          [
+            "a",
+            [
+              ".unwrap",
+              [
+                "first",
+                "args"
+              ]
+            ]
+          ],
+          [
+            "str",
+            "|hsl(",
+            "h",
+            "|, ",
+            "s",
+            "|%, ",
+            "l",
+            "|%, ",
+            "a",
+            "|)"
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/hsl",
+    "js_ffi": null,
+    "schema": [
+      "{}",
+      [
+        ":kind",
+        ":fn"
+      ],
+      [
+        ":rest",
+        "'Number"
+      ],
+      [
+        ":return",
+        "'String"
+      ],
+      [
+        ":args",
+        [
+          "[]",
+          "'Number",
+          "'Number",
+          "'Number"
+        ]
+      ]
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "input",
+      [
+        "merge",
+        "global",
+        [
+          "{}",
+          [
+            ":border",
+            ":none"
+          ],
+          [
+            ":outline",
+            ":none"
+          ],
+          [
+            ":border",
+            [
+              "str",
+              "|1px solid ",
+              [
+                "hsl",
+                "0",
+                "0",
+                "80"
+              ]
+            ]
+          ],
+          [
+            ":border-radius",
+            "|4px"
+          ],
+          [
+            ":font-size",
+            "|14px"
+          ],
+          [
+            ":padding",
+            "|8px 8px"
+          ],
+          [
+            ":min-width",
+            "|120px"
+          ],
+          [
+            ":line-height",
+            "|16px"
+          ],
+          [
+            ":height",
+            "|32px"
+          ],
+          [
+            ":font-family",
+            "default-fonts"
+          ],
+          [
+            ":vertical-align",
+            ":top"
+          ]
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/input",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "link",
+      [
+        "{}",
+        [
+          ":color",
+          [
+            "hsl",
+            "200",
+            "100",
+            "76"
+          ]
+        ],
+        [
+          ":text-decoration",
+          ":underline"
+        ],
+        [
+          ":user-select",
+          ":no-select"
+        ],
+        [
+          ":height",
+          "|24px"
+        ],
+        [
+          ":line-height",
+          "|24px"
+        ],
+        [
+          ":margin",
+          "|4px"
+        ],
+        [
+          ":display",
+          ":inline-block"
+        ],
+        [
+          ":cursor",
+          ":pointer"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/link",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "row",
+      [
+        "{}",
+        [
+          ":display",
+          "|flex"
+        ],
+        [
+          ":align-items",
+          "|stretch"
+        ],
+        [
+          ":flex-direction",
+          "|row"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/row",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "row-center",
+      [
+        "{}",
+        [
+          ":display",
+          "|flex"
+        ],
+        [
+          ":align-items",
+          "|center"
+        ],
+        [
+          ":justify-content",
+          "|center"
+        ],
+        [
+          ":flex-direction",
+          "|row"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/row-center",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "row-dispersive",
+      [
+        "{}",
+        [
+          ":display",
+          "|flex"
+        ],
+        [
+          ":align-items",
+          "|center"
+        ],
+        [
+          ":justify-content",
+          "|space-around"
+        ],
+        [
+          ":flex-direction",
+          "|row"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/row-dispersive",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "row-evenly",
+      [
+        "{}",
+        [
+          ":display",
+          "|flex"
+        ],
+        [
+          ":align-items",
+          "|center"
+        ],
+        [
+          ":flex-direction",
+          "|row"
+        ],
+        [
+          ":justify-content",
+          "|space-evenly"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/row-evenly",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "row-middle",
+      [
+        "{}",
+        [
+          ":display",
+          ":flex"
+        ],
+        [
+          ":align-items",
+          ":center"
+        ],
+        [
+          ":justify-content",
+          ":flex-start"
+        ],
+        [
+          ":flex-direction",
+          ":row"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/row-middle",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "row-parted",
+      [
+        "{}",
+        [
+          ":display",
+          "|flex"
+        ],
+        [
+          ":align-items",
+          "|center"
+        ],
+        [
+          ":justify-content",
+          "|space-between"
+        ],
+        [
+          ":flex-direction",
+          "|row"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/row-parted",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "select",
+      [
+        "{}",
+        [
+          ":height",
+          "|32px"
+        ],
+        [
+          ":outline",
+          ":none"
+        ],
+        [
+          ":font-size",
+          "|14px"
+        ],
+        [
+          ":min-width",
+          "|120px"
+        ],
+        [
+          ":border",
+          [
+            "str",
+            "|1px solid ",
+            [
+              "hsl",
+              "0",
+              "0",
+              "80"
+            ]
+          ]
+        ],
+        [
+          ":border-radius",
+          "|4px"
+        ],
+        [
+          ":font-family",
+          "default-fonts"
+        ],
+        [
+          ":vertical-align",
+          ":top"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/select",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "text-label",
+      [
+        "{}",
+        [
+          ":line-height",
+          "|32px"
+        ],
+        [
+          ":font-size",
+          "|14px"
+        ],
+        [
+          ":color",
+          [
+            "hsl",
+            "0",
+            "0",
+            "20"
+          ]
+        ],
+        [
+          ":display",
+          ":inline-block"
+        ],
+        [
+          ":vertical-align",
+          ":top"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/text-label",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  },
+  {
+    "code": [
+      "def",
+      "textarea",
+      [
+        "{}",
+        [
+          ":outline",
+          ":none"
+        ],
+        [
+          ":border",
+          ":none"
+        ],
+        [
+          ":font-size",
+          "|14px"
+        ],
+        [
+          ":font-family",
+          "default-fonts"
+        ],
+        [
+          ":border",
+          [
+            "str",
+            "|1px solid ",
+            [
+              "hsl",
+              "0",
+              "0",
+              "80"
+            ]
+          ]
+        ],
+        [
+          ":border-radius",
+          "|4px"
+        ],
+        [
+          ":padding",
+          "|8px"
+        ],
+        [
+          ":min-width",
+          "|240px"
+        ],
+        [
+          ":vertical-align",
+          ":top"
+        ]
+      ]
+    ],
+    "doc": "",
+    "examples": [],
+    "ffi": null,
+    "ffi_edn": null,
+    "id": "stir-template.ui/textarea",
+    "js_ffi": null,
+    "schema": [
+      "::",
+      "'Map",
+      "'Tag",
+      "'Dynamic"
+    ],
+    "tags": [],
+    "tests": []
+  }
+]
