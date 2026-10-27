@@ -4,16 +4,13 @@ Stir Template
 
 > for Calcit
 
-使用者注意：候选模块 **0.0.20** 配对正式 Calcit **0.30.1**。本库是 native HTML
-字符串生成库，无 npm runtime 或前端 COS/CDN 产物，不承诺 JS/WASM 支持。
-本次迁移九处旧方法调用，并为三个实际已知类型的回调补充合同；escaping、variadic
-API 与公开调用参数/返回合同不变。两个资源 defstruct 的元数据从实例 Struct 纠正为
-StructDef，不把定义对象冒充实例。正式 tag 发布前不使用候选号代替已发布依赖。
-HTML 属性及 style 顺序本来可能变化，不承诺逐字节一致。
+使用者注意：候选模块 **0.0.21** 配对正式 Calcit **0.31.0**，需同步升级调用方工具链。
+本库是 native HTML 字符串生成库，无 npm runtime 或前端 COS/CDN 产物，
+不承诺 JS/WASM 支持。正式 tag 发布前不要把候选号当作已发布依赖。
 
-本轮保留开放 HTML 值、scripts 的混合 String/Map 输入及未知 script type 的原分支，
-不以假 String/Fn 合同隐藏真实 Dynamic，不新增强转、预算或永久迁移脚本。
-只通过官方结构化事务编辑 Snapshot，完整定义视图、原测试与 demo 守卫原有行为。
+本轮相对已发布 0.0.20 仅更新工具链和版本声明，Snapshot、escaping、variadic API
+及公开参数/返回合同不变。保留异构 HTML 值和 scripts 的混合 String/Map 输入，
+不新增强转、预算或迁移脚本；属性及 style 顺序仍不承诺逐字节一致。
 
 Based on old works on:
 
@@ -24,10 +21,11 @@ Based on old works on:
 ### Usages
 
 Add the module dependency to `deps.cirru`; the canonical snapshot is `calcit.cirru`.
+以下是已发布 0.0.20 的旧配对。0.0.21 发布后，将 CLI 与模块一起更新到 0.31.0 / 0.0.21。
 
 ```cirru
 {} (:calcit-version |0.30.1)
-  :dependencies $ {} $ |calcit-lang/stir-template |0.0.19
+  :dependencies $ {} $ |calcit-lang/stir-template |0.0.20
 ```
 
 声明依赖后安装正式模块：
@@ -55,7 +53,7 @@ make-page $ {} $ :content
 
 0.0.19 已从既有 alpha.5 配对升级并发布到正式 Calcit `0.30.1`。
 该历史版本不改变模板源码、HTML escaping 或公开类型合同；原 alpha 结果不冒充正式验收。
-上方依赖声明仍使用已发布 0.0.19；本轮 0.0.20 正式 tag 发布后再升级，不混用 main/hash。
+0.0.20 已正式发布并迁移九处旧调用、修正回调与 StructDef 元数据；上方历史配对使用已发布版本，不混用 main/hash。
 本模块是 native-only，无需 `@calcit/procs`，也没有前端 COS/CDN 部署产物。
 
 CI 用一个 `--check-only --all-defs` 覆盖所有定义，替代重复的入口与逐 namespace
