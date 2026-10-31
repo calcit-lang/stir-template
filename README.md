@@ -37,6 +37,8 @@ make-page $ {} $ :content
 
 `escape-html` 检查 String，nil 渲染为空字符串，非法类型报错而非隐式转换。HTML Map/List 与 `:style` 使用运行时解码；属性和 style 的遍历顺序不保证字节一致。
 
+`make-page` 的 `:title` 和字符串 `:content` 会作为 `:innerHTML` 插入，不会自动转义；不受信任的纯文本应先调用 `stir-template.core/escape-html`。`:inline-html` / `:append-html` 也保留原始 HTML 合同；文本转义不等于任意 HTML 净化，不改变现有渲染行为。
+
 从旧版直接升级时注意：`entry->string` 自 `0.0.16` 起接收 `MapEntry<Tag,Dynamic>`，不再接收二元 List；普通属性渲染无需修改。`style->string` / `props->string` 仍接收 `Map<Tag,Dynamic>` 并返回 String。`0.0.20` 已迁移旧调用、回调与 StructDef 元数据；`0.0.22` 更新至 0.32 类型标注语法。这些历史 API 变化不属于本轮 patch。
 
 修改 Snapshot 前读取 `calcit docs agents --contract`，仅通过官方 `query`、`tree`、`edit` 修改。迁移问题见 [issue #22](https://github.com/calcit-lang/stir-template/issues/22)；不在编译器新增项目专用 fix/proof 或长期迁移脚本。
@@ -44,6 +46,8 @@ make-page $ {} $ :content
 ## 验证与维护
 
 原 CI 保留规范化检查、全定义、完整 strict、附带测试和 HTML demo；不增加预算、强转或验证框架。原有两项附带测试的四条 `assert=` 与 `make-page` 的资源装配正向用例保持；demo 仅作渲染冒烟，不当作额外断言。
+
+以下检查命令按干净 checkout / CI 编写。若已存在未暂存的源码修改，`git diff` 会同时报告这些修改；先通过官方视图审阅并暂存预期修改，再运行格式化及其后的 diff，不能把已有差异误认为 formatter 新增的改动。
 
 ```bash
 caps --strict --ci
