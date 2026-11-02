@@ -1,16 +1,16 @@
 # Stir Template
 
-使用者注意：候选模块 **0.0.23** 配对正式 Calcit **0.32.1**。调用方升级时应同步工具链和精确模块版本；候选尚未发布，当前已发布的 `0.0.22` 保留 `0.32.0` 配对，不移动历史 tag。相对 `0.0.22`，本轮仅对齐工具链及使用说明，Snapshot、公开类型、HTML escaping 和 variadic API 保持。
+使用者注意：候选模块 **0.1.0** 配对正式 Calcit **0.34.0**。20 个字面量样式常量声明为 `Map Tag StyleValue`，其中 `StyleValue` 是 `String | Number | Tag` 的具名 union；使用这些样式值时可通过类型模式区分成员。常量内容、HTML escaping 和 variadic API 保持。调用方若把样式常量当成任意数据 Map 使用，需要改为独立的开放 Map；HTML 描述和属性入口仍保留原开放合同。候选尚未发布，状态以同名 Git tag 为准；已发布 `0.0.22` 的 `0.32.0` 配对保持。
 
 本库用于 **native HTML 字符串生成**，不是前端应用模板；没有 npm runtime、COS/CDN 产物或部署任务，不承诺 JS/WASM 支持。源码与入口以 `calcit.cirru` 为准，版本以 `deps.cirru` 为准。
 
 ## 使用
 
-以下使用已发布版本；`0.0.23` 正式发布后再一起更新为 CLI `0.32.1` 与模块 `0.0.23`：
+`0.1.0` 正式发布后使用以下精确配对；发布前继续使用原已发布版本：
 
 ```cirru
-{} (:calcit-version |0.32.0)
-  :dependencies $ {} $ |calcit-lang/stir-template |0.0.22
+{} (:calcit-version |0.34.0)
+  :dependencies $ {} $ |calcit-lang/stir-template |0.1.0
 ```
 
 ```bash
@@ -33,13 +33,15 @@ make-page $ {} $ :content
 
 ## 类型与升级边界
 
+`stir-template.ui` 的 20 个直接字面量样式使用闭合 union；合并而成的 `input` 样式及 HTML/属性入口继续保持开放 Map，避免把声明误当作对合并表达式的独立证明。本次也由官方 formatter 规范现有解码目标及 Struct 字段的类型写法。
+
 普通标签函数（如 `div`、`span`）返回 `Map<Tag, Dynamic>` 元素描述；`input` 是宏，保持表达式合同。HTML 内容、属性、子元素及 scripts 的混合 String/Map 输入仍是开放边界，不声称 Dynamic/Nil 债务清零，也不为消除诊断伪造固定类型。
 
 `escape-html` 检查 String，nil 渲染为空字符串，非法类型报错而非隐式转换。HTML Map/List 与 `:style` 使用运行时解码；属性和 style 的遍历顺序不保证字节一致。
 
 `make-page` 的 `:title` 和字符串 `:content` 会作为 `:innerHTML` 插入，不会自动转义；不受信任的纯文本应先调用 `stir-template.core/escape-html`。`:inline-html` / `:append-html` 也保留原始 HTML 合同；文本转义不等于任意 HTML 净化，不改变现有渲染行为。
 
-从旧版直接升级时注意：`entry->string` 自 `0.0.16` 起接收 `MapEntry<Tag,Dynamic>`，不再接收二元 List；普通属性渲染无需修改。`style->string` / `props->string` 仍接收 `Map<Tag,Dynamic>` 并返回 String。`0.0.20` 已迁移旧调用、回调与 StructDef 元数据；`0.0.22` 更新至 0.32 类型标注语法。这些历史 API 变化不属于本轮 patch。
+从旧版直接升级时注意：`entry->string` 自 `0.0.16` 起接收 `MapEntry<Tag,Dynamic>`，不再接收二元 List；普通属性渲染无需修改。`style->string` / `props->string` 仍接收 `Map<Tag,Dynamic>` 并返回 String。`0.0.20` 已迁移旧调用、回调与 StructDef 元数据；`0.0.22` 更新至 0.32 类型标注语法。这些历史 API 变化不属于本轮改动。
 
 修改 Snapshot 前读取 `calcit docs agents --contract`，仅通过官方 `query`、`tree`、`edit` 修改。迁移问题见 [issue #22](https://github.com/calcit-lang/stir-template/issues/22)；不在编译器新增项目专用 fix/proof 或长期迁移脚本。
 
