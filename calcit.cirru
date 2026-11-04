@@ -417,6 +417,7 @@
         'StyleValue $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defunion StyleValue String Number Tag
           :examples $ []
+          :schema $ quote UnionDef
         'button $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def button
             {} (:min-width |80px) (:line-height |30px) (:border-radius |16px) (:font-size |14px) (:text-align |center)
