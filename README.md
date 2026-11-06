@@ -1,16 +1,16 @@
 # Stir Template
 
-使用者注意：候选模块 **0.1.1** 配对正式 Calcit **0.35.1**。20 个字面量样式常量和合并样式 `input` 声明为 `Map Tag StyleValue`，其中 `StyleValue` 是 `String | Number | Tag` 的具名 union；使用这些样式值时可通过类型模式区分成员。常量内容、HTML escaping 和 variadic API 保持。调用方若把样式常量当成任意数据 Map 使用，需要改为独立的开放 Map；HTML 描述和属性入口仍保留原开放合同。候选尚未发布，状态以同名 Git tag 为准；已发布 `0.0.22` 的 `0.32.0` 配对保持。
+使用者注意：候选模块 **0.2.0** 配对正式 Calcit **0.35.1**。20 个字面量样式常量和合并样式 `input` 声明为 `Map Tag StyleValue`，其中 `StyleValue` 是 `String | Number | Tag` 的具名 union；使用这些样式值时可通过类型模式区分成员。常量内容、HTML escaping 和 variadic API 保持。调用方若把样式常量当成任意数据 Map 使用，需要改为独立的开放 Map；HTML 描述和属性入口仍保留原开放合同。候选发布状态以同名 Git tag 为准；已发布 `0.1.1` 仍配对 Calcit `0.34.2`。
 
 本库用于 **native HTML 字符串生成**，不是前端应用模板；没有 npm runtime、COS/CDN 产物或部署任务，不承诺 JS/WASM 支持。源码与入口以 `calcit.cirru` 为准，版本以 `deps.cirru` 为准。
 
 ## 使用
 
-`0.1.1` 正式发布后使用以下精确配对；发布前继续使用原已发布版本：
+`0.2.0` 正式发布后使用以下精确配对；发布前继续使用原已发布版本：
 
 ```cirru
 {} (:calcit-version |0.35.1)
-  :dependencies $ {} $ |calcit-lang/stir-template |0.1.1
+  :dependencies $ {} $ |calcit-lang/stir-template |0.2.0
 ```
 
 ```bash
