@@ -219,7 +219,7 @@
           :code $ quote $ defn child->strings (child)
             if (list? child)
               .map
-                decode-map-as child $ quote $ List Dynamic
+                decode-map-as child $ List Dynamic
                 , element->string
               [] $ element->string child
           :examples $ []
@@ -246,10 +246,10 @@
                     tag-name $ to-string name-value
                     attrs $ decode-map-as
                       .unwrap-or (get element :attrs) ({})
-                      quote $ Map Tag Dynamic
+                      Map Tag Dynamic
                     styles $ decode-map-as
                       .unwrap-or (get element :style) ({})
-                      quote $ Map Tag Dynamic
+                      Map Tag Dynamic
                     text-inside $ if (= name-value :textarea)
                       escape-html $ .unwrap-or (get attrs :value) |
                       .unwrap-or (get attrs :innerHTML)
@@ -260,7 +260,7 @@
                     children $ ->
                       decode-map-as
                         .unwrap-or (get element :children) ([])
-                        quote $ List Dynamic
+                        List Dynamic
                       mapcat child->strings
                   str |< tag-name
                     if
@@ -290,7 +290,7 @@
                 prop->attr $ to-string k
                 , |= $ &str:escape $ cond
                     = k :style
-                    style->string $ decode-map-as v $ quote (Map Tag Dynamic)
+                    style->string $ decode-map-as v $ Map Tag Dynamic
                   (bool? v) (str v)
                   (number? v) (str v)
                   (tag? v) (to-string v)
@@ -390,24 +390,24 @@
       :defs $ {}
         'StirPageResources $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct StirPageResources
-            :title $ quote $ Option String
-            :icon $ quote $ Option String
-            :manifest $ quote $ Option String
-            :viewport $ quote $ Option String
-            :ssr $ quote $ Option String
-            :styles $ quote $ Option (List String)
-            :inline-styles $ quote $ Option (List String)
-            :scripts $ quote $ Option (List Dynamic)
-            :content $ quote $ Option Dynamic
-            :inline-html $ quote $ Option String
-            :append-html $ quote $ Option String
+            :title $ Option String
+            :icon $ Option String
+            :manifest $ Option String
+            :viewport $ Option String
+            :ssr $ Option String
+            :styles $ Option $ List String
+            :inline-styles $ Option $ List String
+            :scripts $ Option $ List Dynamic
+            :content $ Option Dynamic
+            :inline-html $ Option String
+            :append-html $ Option String
           :examples $ []
           :schema $ quote StructDef
         'StirScriptResource $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct StirScriptResource
-            :type $ quote $ Option Tag
+            :type $ Option Tag
             :src String
-            :defer? $ quote $ Option Bool
+            :defer? $ Option Bool
           :examples $ []
           :schema $ quote StructDef
       :ns $ %{} 'NsEntry (:doc |)
@@ -514,7 +514,7 @@
               :font-family default-fonts
               :vertical-align :top
           :examples $ []
-          :schema $ quote $ Map Tag Dynamic
+          :schema $ quote $ Map Tag stir-template.ui/StyleValue
         'link $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def link
             {}
