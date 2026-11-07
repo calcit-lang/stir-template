@@ -1,16 +1,16 @@
 # Stir Template
 
-使用者注意：候选模块 **0.2.0** 配对正式 Calcit **0.35.1**。20 个字面量样式常量和合并样式 `input` 声明为 `Map Tag StyleValue`，其中 `StyleValue` 是 `String | Number | Tag` 的具名 union；使用这些样式值时可通过类型模式区分成员。常量内容、HTML escaping 和 variadic API 保持。调用方若把样式常量当成任意数据 Map 使用，需要改为独立的开放 Map；HTML 描述和属性入口仍保留原开放合同。候选发布状态以同名 Git tag 为准；已发布 `0.1.1` 仍配对 Calcit `0.34.2`。
+使用者注意：候选模块 **0.2.1** 配对 Calcit **0.37.0**。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
 
 本库用于 **native HTML 字符串生成**，不是前端应用模板；没有 npm runtime、COS/CDN 产物或部署任务，不承诺 JS/WASM 支持。源码与入口以 `calcit.cirru` 为准，版本以 `deps.cirru` 为准。
 
 ## 使用
 
-`0.2.0` 正式发布后使用以下精确配对；发布前继续使用原已发布版本：
+使用以下精确配对前，请确认 `0.2.1` Git tag 已发布。使用 Calcit 0.35.1 的项目可继续锁定 `0.2.0`。
 
 ```cirru
-{} (:calcit-version |0.35.1)
-  :dependencies $ {} $ |calcit-lang/stir-template |0.2.0
+{} (:calcit-version |0.37.0)
+  :dependencies $ {} $ |calcit-lang/stir-template |0.2.1
 ```
 
 ```bash
@@ -31,13 +31,13 @@ make-page $ {} $ :content
   div nil $ span nil "|some text"
 ```
 
-0.34.1 修复样式集合的静态成员检查：例如把 `center` 的 `:display` 错写为 Bool，现在会被原类型门禁拒绝。旧0.34.0会漏检这一反例，不能作为本候选的充分类型保证。此次只更新正式CLI配对，原样式内容与合同保持。
+0.34.1 修复样式集合的静态成员检查：例如把 `center` 的 `:display` 错写为 Bool，现在会被原类型门禁拒绝。旧0.34.0会漏检这一反例，不能作为本候选的充分类型保证。样式常量保持原值。
 
 ## 类型与升级边界
 
 `stir-template.ui` 的 20 个字面量样式和合并样式 `input` 使用同一个闭合 union。正式 0.35.1 已修复 [Calcit #2589](https://github.com/calcit-lang/calcit/issues/2589)，原混合 Map 反例和真实 `input` 的非法 Bool 变体均被拒绝。合法样式值与渲染输出保持原样。
 
-普通标签函数（如 `div`、`span`）返回 `Map<Tag, Dynamic>` 元素描述；`input` 是宏，保持表达式合同。HTML 内容、属性、子元素及 scripts 的混合 String/Map 输入仍是开放边界，不声称 Dynamic/Nil 债务清零，也不为消除诊断伪造固定类型。
+普通标签函数（如 `div`、`span`）返回 `Map<Tag, Dynamic>` 元素描述；`input` 是宏，保持表达式合同。HTML 内容、属性和子元素保留开放的旧数据格式。脚本路径和资源配置在输入边界解码后分别按 String 与具名 Struct 处理。
 
 `escape-html` 检查 String，nil 渲染为空字符串，非法类型报错而非隐式转换。HTML Map/List 与 `:style` 使用运行时解码；属性和 style 的遍历顺序不保证字节一致。
 
@@ -49,9 +49,9 @@ make-page $ {} $ :content
 
 ## 验证与维护
 
-本地 0.35.1 的 67 个定义、完整 strict、原三项附带测试、HTML demo 和 Caps 工具链校验通过。`input` 的样式表达式保持原样。
+本地 0.37.0 的 68 个定义、完整 strict、四项附带测试、HTML demo 和 Caps 工具链校验通过。
 
-原 CI 保留规范化检查、全定义、完整 strict、附带测试和 HTML demo；不增加预算、强转或验证框架。原有两项附带测试的四条 `assert=` 与 `make-page` 的资源装配正向用例保持；demo 仅作渲染冒烟，不当作额外断言。
+原 CI 保留规范化检查、全定义、完整 strict、附带测试和 HTML demo；不增加预算、强转或验证框架。附带测试覆盖属性、样式、脚本资源装配及正文回退顺序。
 
 以下检查命令按干净 checkout / CI 编写。若已存在未暂存的源码修改，`git diff` 会同时报告这些修改；先通过官方视图审阅并暂存预期修改，再运行格式化及其后的 diff，不能把已有差异误认为 formatter 新增的改动。
 
