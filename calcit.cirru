@@ -13,73 +13,74 @@
         'a $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn a (attrs & children) (<*> :a attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'body $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn body (attrs & children) (<*> :body attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'button $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn button (attrs & children) (<*> :button attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'canvas $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn canvas (attrs & children) (<*> :canvas attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'code $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn code (attrs & children) (<*> :code attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'div $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn div (attrs & children) (<*> :div attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'h1 $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn h1 (attrs & children) (<*> :h1 attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'h2 $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn h2 (attrs & children) (<*> :h2 attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'h3 $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn h3 (attrs & children) (<*> :h3 attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'head $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn head (attrs & children) (<*> :head attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn html (attrs & children) (<*> :html attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'img $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn img (attrs & children) (<*> :img attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'input $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defmacro input (attrs & children)
             quasiquote $ <*> :input (~ attrs) (~@ children)
           :examples $ []
-          :schema $ quote $ Macro (Expr Dynamic) & (Expr Dynamic)
+          :schema $ quote $ Macro (Expr Dynamic)
+            & $ Expr Dynamic
             -> $ Expr Dynamic
         'link $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn link (attrs & children) (<*> :link attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'make-page $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn make-page (raw-resources)
@@ -119,33 +120,33 @@
                       style $ {} $ :innerHTML content
                   ->
                     .unwrap-or (:scripts resources) ([])
-                    .map $ fn (path)
-                      if (string? path)
-                        script $ {} $ :src path
-                        let
-                            resource $ decode-map-as path stir-template.schema/StirScriptResource
-                            script-type $ .unwrap-or (:type resource) :script
-                          match script-type
-                            :module $ script $ let
-                                base $ {} (:type |module)
-                                  :src $ :src resource
-                              if
-                                .unwrap-or (:defer? resource) false
-                                assoc base :defer |defer
-                                , base
-                            :script $ script $ let
-                                base $ {} $ :src (:src resource)
-                              if
-                                .unwrap-or (:defer? resource) false
-                                assoc base :defer |defer
-                                , base
-                            _ $ println "|[Shell Page]: unknown script type" script-type
+                    mapcat $ fn (source)
+                      hint-fn $ Fn stir-template.schema/ScriptSource $ ->
+                        List $ Map Tag Dynamic
+                      match source
+                        (String path)
+                          [] $ script $ {} (:src path)
+                        (stir-template.schema/StirScriptResource resource)
+                          let
+                              script-type $ .unwrap-or (:type resource) :script
+                              module? $ = script-type :module
+                            if
+                              or module? $ = script-type :script
+                              [] $ script $ let
+                                  base $ {} $ :src (:src resource)
+                                  attrs $ if module? (assoc base :type |module) base
+                                if
+                                  .unwrap-or (:defer? resource) false
+                                  assoc attrs :defer |defer
+                                  , attrs
+                              do (println "|[Shell Page]: unknown script type" script-type) ([])
                 body ({})
-                  let
-                      content $ .unwrap-or (:content resources) nil
-                    if (string? content)
-                      div $ {} (:class-name |app) (:innerHTML content)
-                      , content
+                  match (:content resources)
+                    (:some content)
+                      if (string? content)
+                        div $ {} (:class-name |app) (:innerHTML content)
+                        , content
+                    (:none) ([])
                   .fold (:inline-html resources)
                     fn () $ []
                     fn (content)
@@ -171,32 +172,32 @@
         'meta $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn meta (attrs & children) (<*> :meta attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'script $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn script (attrs & children) (<*> :script attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'span $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn span (attrs & children) (<*> :span attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'style $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn style (attrs & children) (<*> :style attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'textarea $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn textarea (attrs & children) (<*> :textarea attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
         'title $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn title (attrs & children) (<*> :title attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic & Dynamic
+          :schema $ quote $ Fn Dynamic (& Dynamic)
             -> $ Map Tag Dynamic
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns stir-template.alias
@@ -213,7 +214,8 @@
                 :attrs $ either attrs-value $ {}
                 :children $ [] $ ~@ children
           :examples $ []
-          :schema $ quote $ Macro (Expr Dynamic) (Expr Dynamic) & (Expr Dynamic)
+          :schema $ quote $ Macro (Expr Dynamic) (Expr Dynamic)
+            & $ Expr Dynamic
             -> $ Expr Dynamic
         'child->strings $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn child->strings (child)
@@ -229,7 +231,7 @@
           :code $ quote $ defn doctype-html (& args)
             &str:concat "|<!DOCTYPE html>" $ -> args (.map element->string) (join-string |)
           :examples $ []
-          :schema $ quote $ Fn & Dynamic (-> String)
+          :schema $ quote $ Fn (& Dynamic) (-> String)
         'element->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn element->string (element)
             cond
@@ -251,9 +253,16 @@
                       .unwrap-or (get element :style) ({})
                       Map Tag Dynamic
                     text-inside $ if (= name-value :textarea)
-                      escape-html $ .unwrap-or (get attrs :value) |
-                      .unwrap-or (get attrs :innerHTML)
-                        text->html $ .unwrap-or (get attrs :inner-text) nil
+                      Option :some $ escape-html $ .unwrap-or (get attrs :value) |
+                      match (get attrs :innerHTML)
+                        (:some html)
+                          if (nil? html) (Option :none) (Option :some html)
+                        (:none)
+                          match (get attrs :inner-text)
+                            (:some text)
+                              if (nil? text) (Option :none)
+                                Option :some $ text->html text
+                            (:none) (Option :none)
                     tailored-props $ -> attrs (dissoc :innerHTML) (dissoc :inner-text)
                       (fn (props) (if (empty? styles) props (assoc props :style styles)))
                     props-in-string $ props->string tailored-props
@@ -267,11 +276,24 @@
                       > (.len props-in-string) 0
                       , "| " |
                     , props-in-string |>
-                      if (non-nil? text-inside) text-inside $ join-string children |
+                      match text-inside
+                        (:some text) text
+                        (:none) (join-string children |)
                       , |</ tag-name |>
               true $ raise $ str "|Unknown element: " (to-lispy-string element)
           :examples $ []
           :schema $ quote $ Fn Dynamic (-> String)
+          :tests $ [] $ %{} 'TestEntry (:name |preserves-inline-content-precedence)
+            :code $ quote $ do
+              assert= |<div>child</div> $ element->string $ {} (:name :div)
+                :attrs $ {} (:innerHTML nil) (:inner-text |ignored)
+                :children $ [] |child
+              assert= |<div>&lt;&amp;&gt;</div> $ element->string $ {} (:name :div)
+                :attrs $ {} $ :inner-text |<&>
+                :children $ [] |ignored
+              assert= |<div></div> $ element->string $ {} (:name :div)
+                :attrs $ {} $ :innerHTML |
+                :children $ [] |ignored
         'ensure-string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn ensure-string (x)
             cond
@@ -388,6 +410,10 @@
             stir-template.ui :as ui
     'stir-template.schema $ %{} 'FileEntry
       :defs $ {}
+        'ScriptSource $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defunion ScriptSource String stir-template.schema/StirScriptResource
+          :examples $ []
+          :schema $ quote UnionDef
         'StirPageResources $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defstruct StirPageResources
             :title $ Option String
@@ -397,7 +423,7 @@
             :ssr $ Option String
             :styles $ Option $ List String
             :inline-styles $ Option $ List String
-            :scripts $ Option $ List Dynamic
+            :scripts $ Option $ List stir-template.schema/ScriptSource
             :content $ Option Dynamic
             :inline-html $ Option String
             :append-html $ Option String
@@ -500,7 +526,7 @@
                 a $ .unwrap $ first args
                 str "|hsl(" h "|, " s "|%, " l "|%, " a "|)"
           :examples $ []
-          :schema $ quote $ Fn Number Number Number & Number (-> String)
+          :schema $ quote $ Fn Number Number Number (& Number) (-> String)
         'input $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def input
             .merge global $ {} (:border :none) (:outline :none)
