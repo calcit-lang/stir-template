@@ -355,6 +355,10 @@
             :code $ quote $ do
               assert= |color:red; $ style->string $ {} (:color |red)
               assert= |color:&lt;&amp;&gt;; $ style->string $ {} (:color |<&>)
+              let
+                  css $ style->string stir-template.ui/expand
+                assert= true $ .includes? css |flex:1;
+                assert= true $ .includes? css |overflow:auto;
         'text->html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn text->html (x)
             if (non-nil? x)
