@@ -1,16 +1,16 @@
 # Stir Template
 
-使用者注意：候选模块 **0.2.2** 配对 Calcit **0.38.0**。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
+使用者注意：候选模块 **0.2.3** 配对 Calcit **0.40.0**。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
 
 本库用于 **native HTML 字符串生成**，不是前端应用模板；没有 npm runtime、COS/CDN 产物或部署任务，不承诺 JS/WASM 支持。源码与入口以 `calcit.cirru` 为准，版本以 `deps.cirru` 为准。
 
 ## 使用
 
-正式发布 `0.2.2` 后可使用以下配对。当前已发布的 `0.2.1` 对应 Calcit 0.37.0，使用 Calcit 0.35.1 的项目可继续锁定 `0.2.0`。
+正式发布 `0.2.3` 后可使用以下配对。当前已发布的 `0.2.1` 对应 Calcit 0.37.0，使用 Calcit 0.35.1 的项目可继续锁定 `0.2.0`。
 
 ```cirru
-{} (:calcit-version |0.38.0)
-  :dependencies $ {} $ |calcit-lang/stir-template |0.2.2
+{} (:calcit-version |0.40.0)
+  :dependencies $ {} $ |calcit-lang/stir-template |0.2.3
 ```
 
 ```bash
@@ -43,13 +43,13 @@ make-page $ {} $ :content
 
 `make-page` 的 `:title` 和字符串 `:content` 会作为 `:innerHTML` 插入，不会自动转义；不受信任的纯文本应先调用 `stir-template.core/escape-html`。`:inline-html` / `:append-html` 也保留原始 HTML 合同；文本转义不等于任意 HTML 净化，不改变现有渲染行为。
 
-从旧版直接升级时注意：`entry->string` 自 `0.0.16` 起接收 `MapEntry<Tag,Dynamic>`，不再接收二元 List；普通属性渲染无需修改。`style->string` / `props->string` 仍接收 `Map<Tag,Dynamic>` 并返回 String。`0.0.20` 已迁移旧调用、回调与 StructDef 元数据；`0.0.22` 更新至 0.32 类型标注语法。这些历史 API 变化不属于本轮改动。
+从旧版直接升级时注意，`entry->string` 自 `0.0.16` 起接收 `MapEntry`，旧二元 List 调用需先迁移。现在 `entry->string` 接收 `MapEntry<Tag,V>`，`style->string` 和 `props->string` 接收 `Map<Tag,V>`。三个函数都返回 String，调用时由属性值推导 `V`，也可使用现有的开放属性 Map。
 
 修改 Snapshot 前读取 `calcit docs agents --contract`，仅通过官方 `query`、`tree`、`edit` 修改。迁移问题见 [issue #22](https://github.com/calcit-lang/stir-template/issues/22)；不在编译器新增项目专用 fix/proof 或长期迁移脚本。
 
 ## 验证与维护
 
-本地 0.38.0 的 68 个定义、完整 strict、四项附带测试、HTML demo 和 Caps 工具链校验通过。
+本地 0.40.0 的 68 个定义、完整 strict、附带测试、HTML demo 和 Caps 工具链校验通过。
 
 原 CI 保留规范化检查、全定义、完整 strict、附带测试和 HTML demo；不增加预算、强转或验证框架。附带测试覆盖属性、样式、脚本资源装配及正文回退顺序。
 

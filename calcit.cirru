@@ -111,18 +111,14 @@
                   ->
                     .unwrap-or (:styles resources) ([])
                     .map $ fn (path)
-                      hint-fn $ Fn String $ -> (Map Tag Dynamic)
                       link $ {} (:rel |stylesheet) (:type |text/css) (:href path)
                   ->
                     .unwrap-or (:inline-styles resources) ([])
                     .map $ fn (content)
-                      hint-fn $ Fn String $ -> (Map Tag Dynamic)
                       style $ {} $ :innerHTML content
                   ->
                     .unwrap-or (:scripts resources) ([])
                     mapcat $ fn (source)
-                      hint-fn $ Fn stir-template.schema/ScriptSource $ ->
-                        List $ Map Tag Dynamic
                       match source
                         (String path)
                           [] $ script $ {} (:src path)
@@ -319,7 +315,7 @@
                   (string? v) (escape-html v)
                   true $ str v
           :examples $ []
-          :schema $ quote $ Fn (MapEntry Tag Dynamic) (-> String)
+          :schema $ quote $ Fn (MapEntry Tag V) (-> String) (:generics V)
         'escape-html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn escape-html (text)
             if (nil? text) | $ if (string? text)
@@ -337,7 +333,7 @@
           :code $ quote $ defn props->string (props)
             -> (map-entries props) (.map entry->string) (join-string "| ")
           :examples $ []
-          :schema $ quote $ Fn (Map Tag Dynamic) (-> String)
+          :schema $ quote $ Fn (Map Tag V) (-> String) (:generics V)
           :tests $ [] $ %{} 'TestEntry (:name |typed-attributes)
             :code $ quote $ do
               assert= "|title=\"&lt;&amp;&gt;\"" $ props->string $ {} (:title |<&>)
@@ -346,7 +342,6 @@
           :code $ quote $ defn style->string (styles)
             -> (map-entries styles)
               .map $ fn (entry)
-                hint-fn $ Fn (MapEntry Tag Dynamic) (-> String)
                 let
                     k $ :key entry
                     v $ :value entry
@@ -355,11 +350,15 @@
                     , |;
               join-string |
           :examples $ []
-          :schema $ quote $ Fn (Map Tag Dynamic) (-> String)
+          :schema $ quote $ Fn (Map Tag V) (-> String) (:generics V)
           :tests $ [] $ %{} 'TestEntry (:name |typed-style)
             :code $ quote $ do
               assert= |color:red; $ style->string $ {} (:color |red)
               assert= |color:&lt;&amp;&gt;; $ style->string $ {} (:color |<&>)
+              let
+                  css $ style->string stir-template.ui/expand
+                assert= true $ .includes? css |flex:1;
+                assert= true $ .includes? css |overflow:auto;
         'text->html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn text->html (x)
             if (non-nil? x)
