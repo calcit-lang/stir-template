@@ -249,16 +249,15 @@
                       .unwrap-or (get element :style) ({})
                       Map Tag Dynamic
                     text-inside $ if (= name-value :textarea)
-                      Option :some $ escape-html $ .unwrap-or (get attrs :value) |
+                      Some $ escape-html $ .unwrap-or (get attrs :value) |
                       match (get attrs :innerHTML)
                         (:some html)
-                          if (nil? html) (Option :none) (Option :some html)
+                          if (nil? html) None $ Some html
                         (:none)
                           match (get attrs :inner-text)
                             (:some text)
-                              if (nil? text) (Option :none)
-                                Option :some $ text->html text
-                            (:none) (Option :none)
+                              if (nil? text) None $ Some $ text->html text
+                            (:none) None
                     tailored-props $ -> attrs (dissoc :innerHTML) (dissoc :inner-text)
                       (fn (props) (if (empty? styles) props (assoc props :style styles)))
                     props-in-string $ props->string tailored-props
@@ -455,32 +454,32 @@
               :vertical-align :top
               :background-color :white
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'center $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def center
             {} (:display |flex) (:flex-direction |column) (:justify-content |center) (:align-items |center)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'column $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def column
             {} (:display |flex) (:align-items |stretch) (:flex-direction |column)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'column-dispersive $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def column-dispersive
             {} (:display |flex) (:align-items |center) (:justify-content |space-around) (:flex-direction |column)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'column-evenly $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def column-evenly
             {} (:display |flex) (:align-items |center) (:justify-content |space-evenly) (:flex-direction |column)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'column-parted $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def column-parted
             {} (:display :flex) (:align-items :stretch) (:justify-content :space-between) (:flex-direction :column)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'default-fonts $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def default-fonts "|Hind,Verdana,'Hiragino Sans GB','WenQuanYi Micro Hei','Microsoft Yahei',sans-serif"
           :examples $ []
@@ -489,12 +488,12 @@
           :code $ quote $ def expand
             {} (:flex 1) (:overflow :auto)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'flex $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def flex
             {} $ :flex 1
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'font-code $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def font-code "|Source Code Pro, Menlo, Ubuntu Mono, Consolas, monospace"
           :examples $ []
@@ -511,13 +510,13 @@
           :code $ quote $ def fullscreen
             {} (:position |absolute) (:left |0px) (:top |0px) (:width |100%) (:height |100%) (:overflow :auto)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'global $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def global
             {} (:line-height |2) (:font-size |14px) (:font-family default-fonts)
               :color $ hsl 0 0 20
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'hsl $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn hsl (h s l & args)
             if (empty? args) (str "|hsl(" h "|, " s "|%, " l "|%)")
@@ -539,7 +538,7 @@
               :font-family default-fonts
               :vertical-align :top
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'link $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def link
             {}
@@ -552,37 +551,37 @@
               :display :inline-block
               :cursor :pointer
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'row $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def row
             {} (:display |flex) (:align-items |stretch) (:flex-direction |row)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'row-center $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def row-center
             {} (:display |flex) (:align-items |center) (:justify-content |center) (:flex-direction |row)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'row-dispersive $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def row-dispersive
             {} (:display |flex) (:align-items |center) (:justify-content |space-around) (:flex-direction |row)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'row-evenly $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def row-evenly
             {} (:display |flex) (:align-items |center) (:flex-direction |row) (:justify-content |space-evenly)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'row-middle $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def row-middle
             {} (:display :flex) (:align-items :center) (:justify-content :flex-start) (:flex-direction :row)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'row-parted $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def row-parted
             {} (:display |flex) (:align-items |center) (:justify-content |space-between) (:flex-direction |row)
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'select $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def select
             {} (:height |32px) (:outline :none) (:font-size |14px) (:min-width |120px)
@@ -591,7 +590,7 @@
               :font-family default-fonts
               :vertical-align :top
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'text-label $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def text-label
             {} (:line-height |32px) (:font-size |14px)
@@ -599,7 +598,7 @@
               :display :inline-block
               :vertical-align :top
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
         'textarea $ %{} 'CodeEntry (:doc |)
           :code $ quote $ def textarea
             {} (:outline :none) (:border :none) (:font-size |14px) (:font-family default-fonts)
@@ -609,6 +608,6 @@
               :min-width |240px
               :vertical-align :top
           :examples $ []
-          :schema $ quote $ Map Tag stir-template.ui/StyleValue
+          :schema $ quote $ Map Tag StyleValue
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns stir-template.ui
