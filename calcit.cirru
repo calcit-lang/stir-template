@@ -316,7 +316,7 @@
               (tag? x) (to-string x)
               true $ str x
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> String)
+          :schema $ quote $ Fn T (-> String) (:generics T)
         'entry->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn entry->string (entry)
             let
@@ -396,7 +396,7 @@
               escape-inline-text $ str x
               , nil
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> Dynamic)
+          :schema $ quote $ Fn T (-> Dynamic) (:generics T)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns stir-template.core
     'stir-template.main $ %{} 'FileEntry
