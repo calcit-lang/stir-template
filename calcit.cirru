@@ -213,6 +213,10 @@
           :schema $ quote $ Macro (Expr Dynamic) (Expr Dynamic)
             & $ Expr Dynamic
             -> $ Expr Dynamic
+        'HtmlText $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defunion HtmlText String Number Bool
+          :examples $ []
+          :schema $ quote UnionDef
         'child->strings $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn child->strings (child)
             if (list? child)
@@ -221,8 +225,9 @@
                 , element->string
               [] $ element->string child
           :examples $ []
-          :schema $ quote $ Fn Dynamic
+          :schema $ quote $ Fn T
             -> $ List String
+            :generics T
         'doctype-html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn doctype-html (& args)
             &str:concat "|<!DOCTYPE html>" $ -> args (.map element->string) (join-string |)
@@ -233,9 +238,6 @@
             cond
                 nil? element
                 , |
-              (string? element) (escape-html element)
-              (number? element) (&str element)
-              (bool? element) (&str element)
               (map? element)
                 let
                     name-value $ decode-map-as
@@ -252,11 +254,11 @@
                       Some $ escape-html $ .unwrap-or (get attrs :value) |
                       match (get attrs :innerHTML)
                         (:some html)
-                          if (nil? html) None $ Some html
+                          if (nil? html) None $ Some $ str html
                         (:none)
                           match (get attrs :inner-text)
                             (:some text)
-                              if (nil? text) None $ Some $ text->html text
+                              if (nil? text) None $ Some $ escape-inline-text (str text)
                             (:none) None
                     tailored-props $ -> attrs (dissoc :innerHTML) (dissoc :inner-text)
                       (fn (props) (if (empty? styles) props (assoc props :style styles)))
@@ -275,20 +277,37 @@
                         (:some text) text
                         (:none) (join-string children |)
                       , |</ tag-name |>
-              true $ raise $ str "|Unknown element: " (to-lispy-string element)
+              true $ match (try-decode-map-as element stir-template.core/HtmlText)
+                (:ok text) (render-html-text text)
+                (:err _)
+                  raise $ str "|Unknown element: " $ to-lispy-string element
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> String)
-          :tests $ [] $ %{} 'TestEntry (:name |preserves-inline-content-precedence)
-            :code $ quote $ do
-              assert= |<div>child</div> $ element->string $ {} (:name :div)
-                :attrs $ {} (:innerHTML nil) (:inner-text |ignored)
-                :children $ [] |child
-              assert= |<div>&lt;&amp;&gt;</div> $ element->string $ {} (:name :div)
-                :attrs $ {} $ :inner-text |<&>
-                :children $ [] |ignored
-              assert= |<div></div> $ element->string $ {} (:name :div)
-                :attrs $ {} $ :innerHTML |
-                :children $ [] |ignored
+          :schema $ quote $ Fn T (-> String) (:generics T)
+          :tests $ []
+            %{} 'TestEntry (:name |preserves-inline-content-precedence)
+              :code $ quote $ do
+                assert= |<div>child</div> $ element->string $ {} (:name :div)
+                  :attrs $ {} (:innerHTML nil) (:inner-text |ignored)
+                  :children $ [] |child
+                assert= |<div>&lt;&amp;&gt;</div> $ element->string $ {} (:name :div)
+                  :attrs $ {} $ :inner-text |<&>
+                  :children $ [] |ignored
+                assert= |<div></div> $ element->string $ {} (:name :div)
+                  :attrs $ {} $ :innerHTML |
+                  :children $ [] |ignored
+            %{} 'TestEntry (:name |text-and-raw-html-keep-rendering-contracts)
+              :code $ quote $ do
+                assert= |false $ element->string false
+                assert= |0 $ element->string 0
+                assert= |&lt;&amp;&gt; $ element->string |<&>
+                assert= |<div>false</div> $ element->string $ {} (:name :div)
+                  :attrs $ {} $ :inner-text false
+                assert= |<div><b>raw</b></div> $ element->string $ {} (:name :div)
+                  :attrs $ {} (:innerHTML |<b>raw</b>) (:inner-text |ignored)
+                assert= |<div>child</div> $ element->string $ {} (:name :div)
+                  :attrs $ {} (:innerHTML nil) (:inner-text |ignored)
+                  :children $ [] |child
+                assert= nil $ text->html nil
         'ensure-string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn ensure-string (x)
             cond
@@ -321,7 +340,12 @@
               -> text (&str:replace |& |&amp;) (&str:replace "|\"" |&quot;) (&str:replace |< |&lt;) (&str:replace |> |&gt;) (&str:replace |\n |&#13;&#10;)
               raise "|HTML escaping expected a String or nil"
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> String)
+          :schema $ quote $ Fn T (-> String) (:generics T)
+        'escape-inline-text $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn escape-inline-text (text)
+            -> text (&str:replace |& |&amp;) (&str:replace |> |&gt;) (&str:replace |< |&lt;)
+          :examples $ []
+          :schema $ quote $ Fn String (-> String)
         'prop->attr $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn prop->attr (x)
             when (includes? x |?) (println "|[Respo] warning: property contains `?` in" x)
@@ -337,6 +361,14 @@
             :code $ quote $ do
               assert= "|title=\"&lt;&amp;&gt;\"" $ props->string $ {} (:title |<&>)
               assert= "|disabled=\"true\"" $ props->string $ {} (:disabled true)
+        'render-html-text $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn render-html-text (text)
+            match text
+              (String value) (escape-html value)
+              (Number value) (&str value)
+              (Bool value) (&str value)
+          :examples $ []
+          :schema $ quote $ Fn HtmlText (-> String)
         'style->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn style->string (styles)
             -> (map-entries styles)
@@ -361,7 +393,7 @@
         'text->html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn text->html (x)
             if (non-nil? x)
-              -> (str x) (&str:replace |& |&amp;) (&str:replace |> |&gt;) (&str:replace |< |&lt;)
+              escape-inline-text $ str x
               , nil
           :examples $ []
           :schema $ quote $ Fn Dynamic (-> Dynamic)
