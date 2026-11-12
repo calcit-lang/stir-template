@@ -1,6 +1,6 @@
 # Stir Template
 
-使用者注意：候选模块 **0.2.3** 配对 Calcit **0.41.1**。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
+使用者注意：候选模块 **0.2.3** 配对 Calcit **0.42.1**。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
 
 本库用于 **native HTML 字符串生成**，不是前端应用模板；没有 npm runtime、COS/CDN 产物或部署任务，不承诺 JS/WASM 支持。源码与入口以 `calcit.cirru` 为准，版本以 `deps.cirru` 为准。
 
@@ -9,7 +9,7 @@
 正式发布 `0.2.3` 后可使用以下配对。当前已发布的 `0.2.1` 对应 Calcit 0.37.0，使用 Calcit 0.35.1 的项目可继续锁定 `0.2.0`。
 
 ```cirru
-{} (:calcit-version |0.41.1)
+{} (:calcit-version |0.42.1)
   :dependencies $ {} $ |calcit-lang/stir-template |0.2.3
 ```
 
@@ -49,7 +49,7 @@ make-page $ {} $ :content
 
 ## 验证与维护
 
-本地 0.41.1 的 71 个定义、完整 strict、附带测试、HTML demo 和 Caps 工具链校验通过。
+本地 0.42.1 的 71 个定义、完整 strict、附带测试、HTML demo 和 Caps 工具链校验通过。
 
 原 CI 保留规范化检查、全定义、完整 strict、附带测试和 HTML demo；不增加预算、强转或验证框架。附带测试覆盖属性、样式、脚本资源装配及正文回退顺序。
 
