@@ -152,7 +152,7 @@
                     fn (content)
                       [] $ div $ {} (:innerHTML content)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> String)
+          :schema $ quote $ Fn Dynamic (-> String) (:features :io)
           :tests $ [] $ %{} 'TestEntry (:name |renders-page-resources)
             :code $ quote $ let
                 page $ make-page $ {} (:content |CONTENT)
@@ -228,11 +228,12 @@
           :schema $ quote $ Fn T
             -> $ List String
             :generics T
+            :features :io
         'doctype-html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn doctype-html (& args)
             &str:concat "|<!DOCTYPE html>" $ -> args (.map element->string) (join-string |)
           :examples $ []
-          :schema $ quote $ Fn (& Dynamic) (-> String)
+          :schema $ quote $ Fn (& Dynamic) (-> String) (:features :io)
         'element->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn element->string (element)
             cond
@@ -282,7 +283,7 @@
                 (:err _)
                   raise $ str "|Unknown element: " $ to-lispy-string element
           :examples $ []
-          :schema $ quote $ Fn T (-> String) (:generics T)
+          :schema $ quote $ Fn T (-> String) (:generics T) (:features :io)
           :tests $ []
             %{} 'TestEntry (:name |preserves-inline-content-precedence)
               :code $ quote $ do
@@ -333,7 +334,7 @@
                   (string? v) (escape-html v)
                   true $ str v
           :examples $ []
-          :schema $ quote $ Fn (MapEntry Tag V) (-> String) (:generics V)
+          :schema $ quote $ Fn (MapEntry Tag V) (-> String) (:generics V) (:features :io)
         'escape-html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn escape-html (text)
             if (nil? text) | $ if (string? text)
@@ -351,12 +352,12 @@
             when (includes? x |?) (println "|[Respo] warning: property contains `?` in" x)
             case x (|class-name |class) (|tab-index |tabindex) (|read-only |readonly) (x x)
           :examples $ []
-          :schema $ quote $ Fn String (-> String)
+          :schema $ quote $ Fn String (-> String) (:features :io)
         'props->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn props->string (props)
             -> (map-entries props) (.map entry->string) (join-string "| ")
           :examples $ []
-          :schema $ quote $ Fn (Map Tag V) (-> String) (:generics V)
+          :schema $ quote $ Fn (Map Tag V) (-> String) (:generics V) (:features :io)
           :tests $ [] $ %{} 'TestEntry (:name |typed-attributes)
             :code $ quote $ do
               assert= "|title=\"&lt;&amp;&gt;\"" $ props->string $ {} (:title |<&>)
@@ -404,7 +405,7 @@
         'main! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn main! () (render-page) (echo |Started) &unit
           :examples $ []
-          :schema $ quote $ Fn (-> Unit)
+          :schema $ quote $ Fn (-> Unit) (:features :io)
         'on-error $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn on-error (message) (; draw-error-message message) &unit
           :examples $ []
@@ -412,7 +413,7 @@
         'reload! $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn reload! () (echo |Reload!) (render-page)
           :examples $ []
-          :schema $ quote $ Fn (-> Unit)
+          :schema $ quote $ Fn (-> Unit) (:features :io)
         'render-page $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-page ()
             echo $ doctype-html
@@ -431,7 +432,7 @@
             echo $ doctype-html $ span nil (span nil) (span nil) 1 nil |demo "|with space<>"
             , &unit
           :examples $ []
-          :schema $ quote $ Fn (-> Unit)
+          :schema $ quote $ Fn (-> Unit) (:features :io)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns stir-template.main
           :require
