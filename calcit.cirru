@@ -13,63 +13,75 @@
         'a $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn a (attrs & children) (<*> :a attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'body $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn body (attrs & children) (<*> :body attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'button $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn button (attrs & children) (<*> :button attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'canvas $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn canvas (attrs & children) (<*> :canvas attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'code $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn code (attrs & children) (<*> :code attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'div $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn div (attrs & children) (<*> :div attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'h1 $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn h1 (attrs & children) (<*> :h1 attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'h2 $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn h2 (attrs & children) (<*> :h2 attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'h3 $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn h3 (attrs & children) (<*> :h3 attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'head $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn head (attrs & children) (<*> :head attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'html $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn html (attrs & children) (<*> :html attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'img $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn img (attrs & children) (<*> :img attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'input $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defmacro input (attrs & children)
             quasiquote $ <*> :input (~ attrs) (~@ children)
@@ -80,8 +92,9 @@
         'link $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn link (attrs & children) (<*> :link attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'make-page $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn make-page (raw-resources)
             let
@@ -168,33 +181,39 @@
         'meta $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn meta (attrs & children) (<*> :meta attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'script $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn script (attrs & children) (<*> :script attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'span $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn span (attrs & children) (<*> :span attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'style $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn style (attrs & children) (<*> :style attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'textarea $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn textarea (attrs & children) (<*> :textarea attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
         'title $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn title (attrs & children) (<*> :title attrs & children)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (& Dynamic)
+          :schema $ quote $ Fn Attrs (& Dynamic)
             -> $ Map Tag Dynamic
+            :generics Attrs
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns stir-template.alias
           :require $ stir-template.core :refer $ <*> doctype-html
