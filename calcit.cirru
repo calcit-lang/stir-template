@@ -152,7 +152,7 @@
                     fn (content)
                       [] $ div $ {} (:innerHTML content)
           :examples $ []
-          :schema $ quote $ Fn Dynamic (-> String) (:features :io)
+          :schema $ quote $ Fn Resources (-> String) (:generics Resources) (:features :io)
           :tests $ [] $ %{} 'TestEntry (:name |renders-page-resources)
             :code $ quote $ let
                 page $ make-page $ {} (:content |CONTENT)
