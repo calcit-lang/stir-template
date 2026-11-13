@@ -233,7 +233,7 @@
           :code $ quote $ defn doctype-html (& args)
             &str:concat "|<!DOCTYPE html>" $ -> args (.map element->string) (join-string |)
           :examples $ []
-          :schema $ quote $ Fn (& Dynamic) (-> String) (:features :io)
+          :schema $ quote $ Fn (& T) (-> String) (:generics T) (:features :io)
         'element->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn element->string (element)
             cond
