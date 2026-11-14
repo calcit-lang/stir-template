@@ -422,9 +422,9 @@
           :code $ quote $ defn render-node (node)
             match node
               (HtmlElement element) (render-element element)
-              (String text) (escape-html text)
-              (Number number) (&str number)
-              (Bool flag) (&str flag)
+              (String text) (render-html-text text)
+              (Number number) (render-html-text number)
+              (Bool flag) (render-html-text flag)
           :examples $ []
           :schema $ quote $ Fn HtmlNode (-> String) (:features :io)
         'style->string $ %{} 'CodeEntry (:doc |)
