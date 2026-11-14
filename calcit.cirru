@@ -232,6 +232,13 @@
           :schema $ quote $ Macro (Expr Dynamic) (Expr Dynamic)
             & $ Expr Dynamic
             -> $ Expr Dynamic
+        'HtmlElement $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defstruct HtmlElement (:name Tag)
+            :attrs $ Map Tag Dynamic
+            :style $ Map Tag Dynamic
+            :children $ List Dynamic
+          :examples $ []
+          :schema $ quote StructDef
         'HtmlText $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defunion HtmlText String Number Bool
           :examples $ []
@@ -259,44 +266,21 @@
                 nil? element
                 , |
               (map? element)
-                let
-                    name-value $ decode-map-as
-                      .unwrap-or (get element :name) :unknown
-                      , 'Tag
-                    tag-name $ to-string name-value
-                    attrs $ decode-map-as
+                render-element $ HtmlElement :name
+                  decode-map-as
+                    .unwrap-or (get element :name) :unknown
+                    , Tag
+                  , :attrs
+                    decode-map-as
                       .unwrap-or (get element :attrs) ({})
                       Map Tag Dynamic
-                    styles $ decode-map-as
-                      .unwrap-or (get element :style) ({})
-                      Map Tag Dynamic
-                    text-inside $ if (= name-value :textarea)
-                      Some $ escape-html $ .unwrap-or (get attrs :value) |
-                      match (get attrs :innerHTML)
-                        (:some html)
-                          if (nil? html) None $ Some $ str html
-                        (:none)
-                          match (get attrs :inner-text)
-                            (:some text)
-                              if (nil? text) None $ Some $ escape-inline-text (str text)
-                            (:none) None
-                    tailored-props $ -> attrs (dissoc :innerHTML) (dissoc :inner-text)
-                      (fn (props) (if (empty? styles) props (assoc props :style styles)))
-                    props-in-string $ props->string tailored-props
-                    children $ ->
+                    , :style
                       decode-map-as
+                        .unwrap-or (get element :style) ({})
+                        Map Tag Dynamic
+                      , :children $ decode-map-as
                         .unwrap-or (get element :children) ([])
                         List Dynamic
-                      mapcat child->strings
-                  str |< tag-name
-                    if
-                      > (.len props-in-string) 0
-                      , "| " |
-                    , props-in-string |>
-                      match text-inside
-                        (:some text) text
-                        (:none) (join-string children |)
-                      , |</ tag-name |>
               true $ match (try-decode-map-as element stir-template.core/HtmlText)
                 (:ok text) (render-html-text text)
                 (:err _)
@@ -381,6 +365,38 @@
             :code $ quote $ do
               assert= "|title=\"&lt;&amp;&gt;\"" $ props->string $ {} (:title |<&>)
               assert= "|disabled=\"true\"" $ props->string $ {} (:disabled true)
+        'render-element $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn render-element (element)
+            let
+                name-value $ :name element
+                tag-name $ to-string name-value
+                attrs $ :attrs element
+                styles $ :style element
+                text-inside $ if (= name-value :textarea)
+                  Some $ escape-html $ .unwrap-or (get attrs :value) |
+                  match (get attrs :innerHTML)
+                    (:some html)
+                      if (nil? html) None $ Some $ str html
+                    (:none)
+                      match (get attrs :inner-text)
+                        (:some text)
+                          if (nil? text) None $ Some $ escape-inline-text (str text)
+                        (:none) None
+                tailored-props $ -> attrs (dissoc :innerHTML) (dissoc :inner-text)
+                  (fn (props) (if (empty? styles) props (assoc props :style styles)))
+                props-in-string $ props->string tailored-props
+                children $ mapcat (:children element) child->strings
+              str |< tag-name
+                if
+                  > (.len props-in-string) 0
+                  , "| " |
+                , props-in-string |>
+                  match text-inside
+                    (:some text) text
+                    (:none) (join-string children |)
+                  , |</ tag-name |>
+          :examples $ []
+          :schema $ quote $ Fn HtmlElement (-> String) (:features :io)
         'render-html-text $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-html-text (text)
             match text
