@@ -239,6 +239,10 @@
             :children $ List Dynamic
           :examples $ []
           :schema $ quote StructDef
+        'HtmlNode $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defunion HtmlNode HtmlElement HtmlText
+          :examples $ []
+          :schema $ quote UnionDef
         'HtmlText $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defunion HtmlText String Number Bool
           :examples $ []
@@ -262,29 +266,9 @@
           :schema $ quote $ Fn (& T) (-> String) (:generics T) (:features :io)
         'element->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn element->string (element)
-            cond
-                nil? element
-                , |
-              (map? element)
-                render-element $ HtmlElement :name
-                  decode-map-as
-                    .unwrap-or (get element :name) :unknown
-                    , Tag
-                  , :attrs
-                    decode-map-as
-                      .unwrap-or (get element :attrs) ({})
-                      Map Tag Dynamic
-                    , :style
-                      decode-map-as
-                        .unwrap-or (get element :style) ({})
-                        Map Tag Dynamic
-                      , :children $ decode-map-as
-                        .unwrap-or (get element :children) ([])
-                        List Dynamic
-              true $ match (try-decode-map-as element stir-template.core/HtmlText)
-                (:ok text) (render-html-text text)
-                (:err _)
-                  raise $ str "|Unknown element: " $ to-lispy-string element
+            match (read-html-node element)
+              (:none) |
+              (:some node) (render-node node)
           :examples $ []
           :schema $ quote $ Fn T (-> String) (:generics T) (:features :io)
           :tests $ []
@@ -365,6 +349,35 @@
             :code $ quote $ do
               assert= "|title=\"&lt;&amp;&gt;\"" $ props->string $ {} (:title |<&>)
               assert= "|disabled=\"true\"" $ props->string $ {} (:disabled true)
+        'read-html-node $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn read-html-node (element)
+            cond
+                nil? element
+                , None
+              (map? element)
+                Some $ HtmlElement :name
+                  decode-map-as
+                    .unwrap-or (get element :name) :unknown
+                    , Tag
+                  , :attrs
+                    decode-map-as
+                      .unwrap-or (get element :attrs) ({})
+                      Map Tag Dynamic
+                    , :style
+                      decode-map-as
+                        .unwrap-or (get element :style) ({})
+                        Map Tag Dynamic
+                      , :children $ decode-map-as
+                        .unwrap-or (get element :children) ([])
+                        List Dynamic
+              true $ match (try-decode-map-as element stir-template.core/HtmlText)
+                (:ok text) (Some text)
+                (:err _)
+                  raise $ str "|Unknown element: " $ to-lispy-string element
+          :examples $ []
+          :schema $ quote $ Fn T
+            -> $ Option HtmlNode
+            :generics T
         'render-element $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn render-element (element)
             let
@@ -405,6 +418,15 @@
               (Bool value) (&str value)
           :examples $ []
           :schema $ quote $ Fn HtmlText (-> String)
+        'render-node $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn render-node (node)
+            match node
+              (HtmlElement element) (render-element element)
+              (String text) (escape-html text)
+              (Number number) (&str number)
+              (Bool flag) (&str flag)
+          :examples $ []
+          :schema $ quote $ Fn HtmlNode (-> String) (:features :io)
         'style->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn style->string (styles)
             -> (map-entries styles)
