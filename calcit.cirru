@@ -416,7 +416,9 @@
               escape-inline-text $ str x
               , nil
           :examples $ []
-          :schema $ quote $ Fn T (-> Dynamic) (:generics T)
+          :schema $ quote $ Fn T
+            -> $ JsNullish String
+            :generics T
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns stir-template.core
     'stir-template.main $ %{} 'FileEntry
