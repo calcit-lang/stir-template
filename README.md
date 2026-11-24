@@ -1,6 +1,6 @@
 # Stir Template
 
-使用者注意：当前源码配对 Calcit **0.45.0**（已发布模块 **0.2.3** 配对 Calcit **0.44.0**）。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
+使用者注意：候选 0.2.4 配对 Calcit **0.45.1**（已发布模块 **0.2.3** 配对 Calcit **0.44.0**）。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
 
 本库用于 **native HTML 字符串生成**，不是前端应用模板；没有 npm runtime、COS/CDN 产物或部署任务，不承诺 JS/WASM 支持。源码与入口以 `calcit.cirru` 为准，版本以 `deps.cirru` 为准。
 
