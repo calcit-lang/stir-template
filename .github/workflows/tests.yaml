@@ -18,11 +18,11 @@ jobs:
       with:
         persist-credentials: false
 
-    - uses: calcit-lang/setup-calcit@v1.5.1
+    - uses: calcit-lang/setup-calcit@v1.5.2
       with:
         tools: calcit,caps
         deps-file: deps.cirru
-        caps-version: "0.1.1"
+        caps-version: "0.1.2"
 
     - name: "load deps"
       run: caps --strict --ci
