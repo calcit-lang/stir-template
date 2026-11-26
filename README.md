@@ -39,6 +39,17 @@ make-page $ {} $ :content
 
 普通标签函数（如 `div`、`span`）返回 `Map<Tag, Dynamic>` 元素描述；`input` 是宏，保持表达式合同。HTML 内容、属性和子元素保留开放的旧数据格式。脚本路径和资源配置在输入边界解码后分别按 String 与具名 Struct 处理。
 
+尚未发布的 0.2.6 候选新增 `TypedHtmlNode`、`TypedHtmlElement` 和 `render-typed-node`。元素的 `:children` 是 `List<TypedHtmlNode>`，成员可以是嵌套元素、String、Number 或 Bool；`:attrs` 和 `:style` 的键为 Tag，值限于 String、Number、Bool 或 Tag。非法成员可在类型检查时发现。渲染前会转换为旧描述并沿用原有渲染逻辑。
+
+新入口不接收 `nil`、旧元素 Map 或嵌套的子节点 List；不要在 `:attrs` 中使用 `:style`，请使用元素的 `:style` 字段。类型检查约束值的形状，并不保证每个属性都接受所有这些值：例如 textarea 的 `:value` 仍按原渲染规则要求 String。已有这些输入或其他开放属性值的调用方继续使用原有接口，无需迁移。
+
+```cirru
+ns demo.typed $ :require $ stir-template.core :refer (TypedHtmlElement render-typed-node)
+
+render-typed-node $ TypedHtmlElement :name :div :attrs ({}) :style ({}) :children
+  [] $ TypedHtmlElement :name :span :attrs ({}) :style ({}) :children $ [] |hello
+```
+
 `escape-html` 检查 String，nil 渲染为空字符串，非法类型报错而非隐式转换。HTML Map/List 与 `:style` 使用运行时解码；属性和 style 的遍历顺序不保证字节一致。
 
 `make-page` 的 `:title` 和字符串 `:content` 会作为 `:innerHTML` 插入，不会自动转义；不受信任的纯文本应先调用 `stir-template.core/escape-html`。`:inline-html` / `:append-html` 也保留原始 HTML 合同；文本转义不等于任意 HTML 净化，不改变现有渲染行为。
