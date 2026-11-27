@@ -1,6 +1,6 @@
 # Stir Template
 
-使用者注意：正式版 **0.2.5** 配对 Calcit **0.46.0**（**0.2.4** 配对 Calcit **0.45.1**，**0.2.3** 配对 **0.44.0**）。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
+使用者注意：当前源码版本 **0.2.6** 配对 Calcit **0.46.0**，正式发布以 Git tag 为准；**0.2.5** 也配对 Calcit **0.46.0**（**0.2.4** 配对 **0.45.1**，**0.2.3** 配对 **0.44.0**）。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
 
 本库用于 **native HTML 字符串生成**，不是前端应用模板；没有 npm runtime、COS/CDN 产物或部署任务，不承诺 JS/WASM 支持。源码与入口以 `calcit.cirru` 为准，版本以 `deps.cirru` 为准。
 
@@ -39,7 +39,7 @@ make-page $ {} $ :content
 
 普通标签函数（如 `div`、`span`）返回 `Map<Tag, Dynamic>` 元素描述；`input` 是宏，保持表达式合同。HTML 内容、属性和子元素保留开放的旧数据格式。脚本路径和资源配置在输入边界解码后分别按 String 与具名 Struct 处理。
 
-尚未发布的 0.2.6 候选新增 `TypedHtmlNode`、`TypedHtmlElement` 和 `render-typed-node`。元素的 `:children` 是 `List<TypedHtmlNode>`，成员可以是嵌套元素、String、Number 或 Bool；`:attrs` 和 `:style` 的键为 Tag，值限于 String、Number、Bool 或 Tag。非法成员可在类型检查时发现。渲染前会转换为旧描述并沿用原有渲染逻辑。
+0.2.6 新增 `TypedHtmlNode`、`TypedHtmlElement` 和 `render-typed-node`。元素的 `:children` 是 `List<TypedHtmlNode>`，成员可以是嵌套元素、String、Number 或 Bool；`:attrs` 和 `:style` 的键为 Tag，值限于 String、Number、Bool 或 Tag。非法成员可在类型检查时发现。渲染前会转换为旧描述并沿用原有渲染逻辑。
 
 新入口不接收 `nil`、旧元素 Map 或嵌套的子节点 List；不要在 `:attrs` 中使用 `:style`，请使用元素的 `:style` 字段。类型检查约束值的形状，并不保证每个属性都接受所有这些值：例如 textarea 的 `:value` 仍按原渲染规则要求 String。已有这些输入或其他开放属性值的调用方继续使用原有接口，无需迁移。
 
@@ -60,7 +60,7 @@ render-typed-node $ TypedHtmlElement :name :div :attrs ({}) :style ({}) :childre
 
 ## 验证与维护
 
-正式 0.46.0 的 76 个定义、完整 strict、附带测试、HTML demo 和 Caps 工具链校验通过。
+正式 0.46.0 的 81 个定义、完整 strict、附带测试、HTML demo 和 Caps 工具链校验通过。
 
 原 CI 保留规范化检查、全定义、完整 strict、附带测试和 HTML demo；不增加预算、强转或验证框架。附带测试覆盖属性、样式、脚本资源装配及正文回退顺序。
 
