@@ -247,6 +247,21 @@
           :code $ quote $ defunion HtmlText String Number Bool
           :examples $ []
           :schema $ quote UnionDef
+        'TypedHtmlElement $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defstruct TypedHtmlElement (:name Tag)
+            :attrs $ Map Tag TypedHtmlValue
+            :style $ Map Tag TypedHtmlValue
+            :children $ List TypedHtmlNode
+          :examples $ []
+          :schema $ quote StructDef
+        'TypedHtmlNode $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defunion TypedHtmlNode TypedHtmlElement String Number Bool
+          :examples $ []
+          :schema $ quote UnionDef
+        'TypedHtmlValue $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defunion TypedHtmlValue String Number Bool Tag
+          :examples $ []
+          :schema $ quote UnionDef
         'child->strings $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn child->strings (child)
             if (list? child)
@@ -427,6 +442,38 @@
               (Bool flag) (render-html-text flag)
           :examples $ []
           :schema $ quote $ Fn HtmlNode (-> String) (:features :io)
+        'render-typed-node $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn render-typed-node (node)
+            element->string $ typed-node-to-legacy node
+          :examples $ []
+          :schema $ quote $ Fn TypedHtmlNode (-> String) (:features :io)
+          :tests $ []
+            %{} 'TestEntry (:name |typed-nested-render)
+              :code $ quote $ assert= |<div><span>&lt;&amp;&gt;</span>false0</div>
+                render-typed-node $ TypedHtmlElement :name :div :attrs ({}) :style ({}) :children $ []
+                  TypedHtmlElement :name :span :attrs ({}) :style ({}) :children $ [] |<&>
+                  , false 0
+            %{} 'TestEntry (:name |typed-raw-html)
+              :code $ quote $ assert= |<div><b>raw</b></div>
+                render-typed-node $ TypedHtmlElement :name :div :attrs
+                  {} $ :innerHTML |<b>raw</b>
+                  , :style ({}) :children $ [] |ignored
+            %{} 'TestEntry (:name |typed-attributes-and-style)
+              :code $ quote $ do
+                assert=
+                  element->string $ {} (:name :div)
+                    :style $ {} $ :font-size 12
+                    :children $ [] |content
+                  render-typed-node $ TypedHtmlElement :name :div :attrs ({}) :style
+                    {} $ :font-size 12
+                    , :children $ [] |content
+                assert=
+                  element->string $ {} (:name :div)
+                    :attrs $ {} $ :hidden false
+                    :children $ [] |content
+                  render-typed-node $ TypedHtmlElement :name :div :attrs
+                    {} $ :hidden false
+                    , :style ({}) :children $ [] |content
         'style->string $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn style->string (styles)
             -> (map-entries styles)
@@ -457,6 +504,20 @@
           :schema $ quote $ Fn T
             -> $ JsNullish String
             :generics T
+        'typed-node-to-legacy $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defn typed-node-to-legacy (node)
+            match node
+              (TypedHtmlElement element)
+                {}
+                  :name $ :name element
+                  :attrs $ :attrs element
+                  :style $ :style element
+                  :children $ map (:children element) typed-node-to-legacy
+              (String text) text
+              (Number number) number
+              (Bool flag) flag
+          :examples $ []
+          :schema $ quote $ Fn TypedHtmlNode (-> Dynamic)
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns stir-template.core
     'stir-template.main $ %{} 'FileEntry
