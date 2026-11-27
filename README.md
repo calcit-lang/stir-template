@@ -44,7 +44,7 @@ make-page $ {} $ :content
 新入口不接收 `nil`、旧元素 Map 或嵌套的子节点 List；不要在 `:attrs` 中使用 `:style`，请使用元素的 `:style` 字段。类型检查约束值的形状，并不保证每个属性都接受所有这些值：例如 textarea 的 `:value` 仍按原渲染规则要求 String。已有这些输入或其他开放属性值的调用方继续使用原有接口，无需迁移。
 
 ```cirru
-ns demo.typed $ :require $ stir-template.core :refer (TypedHtmlElement render-typed-node)
+ns demo.typed $ :require $ stir-template.core :refer $ TypedHtmlElement render-typed-node
 
 render-typed-node $ TypedHtmlElement :name :div :attrs ({}) :style ({}) :children
   [] $ TypedHtmlElement :name :span :attrs ({}) :style ({}) :children $ [] |hello
