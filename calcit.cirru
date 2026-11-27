@@ -262,6 +262,10 @@
           :code $ quote $ defunion TypedHtmlValue String Number Bool Tag
           :examples $ []
           :schema $ quote UnionDef
+        'TypedLegacyValue $ %{} 'CodeEntry (:doc |)
+          :code $ quote $ defunion TypedLegacyValue String Number Bool Tag (List TypedLegacyValue) (Map Tag TypedLegacyValue)
+          :examples $ []
+          :schema $ quote UnionDef
         'child->strings $ %{} 'CodeEntry (:doc |)
           :code $ quote $ defn child->strings (child)
             if (list? child)
@@ -517,7 +521,20 @@
               (Number number) number
               (Bool flag) flag
           :examples $ []
-          :schema $ quote $ Fn TypedHtmlNode (-> Dynamic)
+          :schema $ quote $ Fn TypedHtmlNode (-> TypedLegacyValue)
+          :tests $ [] $ %{} 'TestEntry (:name |closed-recursive-output)
+            :code $ quote $ do
+              assert= |hello $ typed-node-to-legacy |hello
+              assert=
+                {} (:name :div)
+                  :attrs $ {} $ :title |hello
+                  :style $ {} $ :width 3
+                  :children $ [] false 2
+                typed-node-to-legacy $ TypedHtmlElement :name :div :attrs
+                  {} $ :title |hello
+                  , :style
+                    {} $ :width 3
+                    , :children $ [] false 2
       :ns $ %{} 'NsEntry (:doc |)
         :code $ quote $ ns stir-template.core
     'stir-template.main $ %{} 'FileEntry
