@@ -1,6 +1,6 @@
 # Stir Template
 
-使用者注意：当前源码版本 **0.2.7** 配对 Calcit **0.46.0**，正式发布以 Git tag 为准；**0.2.6** 和 **0.2.5** 也配对 Calcit **0.46.0**（**0.2.4** 配对 **0.45.1**，**0.2.3** 配对 **0.44.0**）。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
+使用者注意：候选源码版本 **0.2.8** 配对 Calcit **0.47.1**，正式发布以 Git tag 为准；**0.2.7** 配对 Calcit **0.46.0**，**0.2.6** 和 **0.2.5** 也配对 Calcit **0.46.0**（**0.2.4** 配对 **0.45.1**，**0.2.3** 配对 **0.44.0**）。`make-page` 的 `:scripts` 仍接收路径字符串和脚本配置 Map，已检查的 `StirPageResources` 将这两种输入归一化为 `ScriptSource` union。原始 HTML、文本转义和 HTML 描述 Map 的调用方式沿用原版本。
 
 本库用于 **native HTML 字符串生成**，不是前端应用模板；没有 npm runtime、COS/CDN 产物或部署任务，不承诺 JS/WASM 支持。源码与入口以 `calcit.cirru` 为准，版本以 `deps.cirru` 为准。
 
@@ -62,7 +62,7 @@ render-typed-node $ TypedHtmlElement :name :div :attrs ({}) :style ({}) :childre
 
 ## 验证与维护
 
-正式 0.46.0 的 82 个定义、完整 strict、附带测试、HTML demo 和 Caps 工具链校验通过。
+正式 0.47.1 的 82 个定义、完整 strict、附带测试、HTML demo 和 Caps 工具链校验通过。
 
 原 CI 保留规范化检查、全定义、完整 strict、附带测试和 HTML demo；不增加预算、强转或验证框架。附带测试覆盖属性、样式、脚本资源装配及正文回退顺序。
 
